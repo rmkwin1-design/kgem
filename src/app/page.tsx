@@ -150,22 +150,19 @@ export default function Home() {
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🌏 Dynamic Language Mapping for Agoda
     const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
     const agodaPath = agodaLangs[language] || 'en-us';
-    const hotelSuffix: any = { ko: ' 주변 호텔', en: ' hotels nearby', ja: ' 周辺のホテル' };
-    const suffix = hotelSuffix[language] || hotelSuffix['en'];
 
     const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile && lat && lng) {
-      // 📱 Mobile: 좌표(Lat/Lng) 기반 정밀 검색 + 다국어 경로 적용
-      // searchType=4와 objectType=1을 조합하여 주변 호텔 리스트를 가격표와 함께 노출합니다.
-      const mobileUrl = `https://www.agoda.com/${agodaPath}/search?latitude=${lat}&longitude=${lng}&searchText=${encodeURIComponent(name)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh&searchType=4`;
+      // 📱 Mobile: 아고다 모바일 엔진이 가장 선호하는 '정석 결과 페이지' 규격
+      // 단순 search 대신 DestinationSearchResult를 사용하여 좌표 기반의 리스트와 가격을 강제로 불러옵니다.
+      const mobileUrl = `https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?asq=1&latitude=${lat}&longitude=${lng}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh&languageId=${language === 'ko' ? '9' : '1'}`;
       window.open(mobileUrl, '_blank');
     } else {
-      // 💻 PC: 지역명 기반 안정적 검색 + 다국어 경로 적용
-      const pcUrl = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + suffix)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+      // 💻 PC: 지역명 기반 안정적 검색 (PC 사용자는 검색 필터링이 쉬우므로 기존 방식 유지)
+      const pcUrl = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + ' 주변 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
       window.open(pcUrl, '_blank');
     }
   };
