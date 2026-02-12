@@ -104,29 +104,23 @@ export default function Home() {
   };
 
   const handleDirections = (spot: any) => {
-    if (!navigator.geolocation) {
-      alert(language === 'ko' ? "브라우저가 위치 정보를 지원하지 않습니다." : "Geolocation is not supported by your browser.");
-      return;
+    const query = spot.query || spot.title[language] || spot.title['ko'];
+    let url = "";
+
+    if (language === 'ko') {
+      // Naver Maps: Use search-based directions for maximum compatibility
+      url = `https://map.naver.com/v5/directions/-/${encodeURIComponent(query)}/transit`;
+    } else {
+      // Google Maps: Smartly handles destination only
+      url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
     }
+    window.open(url, '_blank');
+  };
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      const query = spot.query || spot.title[language] || spot.title['ko'];
-
-      let url = "";
-      if (language === 'ko') {
-        // Naver Maps Directions: sname(start), slat, slng, dname(dest)
-        url = `https://map.naver.com/v5/directions/${lat},${lng},현재위치/${encodeURIComponent(query)},,/?c=15,0,0,0,dh`;
-      } else {
-        // Google Maps Directions: saddr(start), daddr(dest)
-        url = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${encodeURIComponent(query)}&travelmode=transit`;
-      }
-      window.open(url, '_blank');
-    }, (error) => {
-      console.error("Geolocation Error:", error);
-      alert(language === 'ko' ? "위치 정보를 가져올 수 없습니다. 권한을 확인해주세요." : "Unable to retrieve your location. Please check permissions.");
-    });
+  const handleAccommodation = (spot: any) => {
+    const query = spot.query || spot.title[language] || spot.title['ko'];
+    const url = `https://www.agoda.com/ko-kr/search?city=${encodeURIComponent(query)}&checkIn=${new Date().toISOString().split('T')[0]}`;
+    window.open(url, '_blank');
   };
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
@@ -537,31 +531,20 @@ export default function Home() {
                       </div>
                       <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{spot.description[language] || spot.description['ko']}</p>
 
-                      {/* Transport Info - Enhanced mobile readability */}
-                      {spot.transport && (
-                        <div className="flex flex-col gap-3 mb-6 text-slate-400 group/transport">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center group-hover/transport:border-indigo-500/50 transition-colors shadow-inner">
-                              <span className="text-sm">🚇</span>
-                            </div>
-                            <p className="text-xs font-bold leading-tight">{(spot.transport as any)[language]}</p>
-                          </div>
-                          <button
-                            onClick={() => handleDirections(spot)}
-                            className="text-xs font-bold text-slate-500 hover:text-indigo-400 flex items-center gap-2 transition-colors pl-1 py-1"
-                          >
-                            🧭 {t.ui.getDirections}
-                          </button>
-                        </div>
-                      )}
-
-                      {/* Revealed Secret Content - Enhanced mobile UX */}
-                      {spot.vipContent && (
-                        <div className="mb-6 p-4 rounded-2xl bg-slate-900 border border-indigo-500/10 shadow-lg">
-                          <p className="text-xs text-indigo-400 font-black mb-1.5 uppercase tracking-tighter">{t.ui.localsSecret}</p>
-                          <p className="text-xs text-slate-300 font-medium leading-snug">{(spot.vipContent.secretMenu as any)[language]}</p>
-                        </div>
-                      )}
+                      <div className="flex gap-2 mb-6">
+                        <button
+                          onClick={() => handleDirections(spot)}
+                          className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                        >
+                          🧭 {t.ui.getDirections}
+                        </button>
+                        <button
+                          onClick={() => handleAccommodation(spot)}
+                          className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                        >
+                          🏨 {t.ui.accommodation}
+                        </button>
+                      </div>
 
                       <div className="flex gap-3 mt-auto">
                         <button
