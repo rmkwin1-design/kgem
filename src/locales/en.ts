@@ -60,9 +60,10 @@ export const en = {
         analyzing: "AI Analyzing...",
         verified: "Verified",
         localsSecret: "Local Secret",
-        getDirections: "Directions",
-        accommodation: "Stay Nearby",
-        gateTitle: "0.1% Secret Gems Await You",
+        getDirections: "Get Directions",
+        accommodation: "Nearby Stays",
+        installApp: "Install App",
+        gateTitle: "0.1% Secret Information Awaits",
         gateDesc: "Log in now to unlock the hidden gems\nthat travelers crave for, completely free.",
         gateButton: "Start Now for Free"
     },

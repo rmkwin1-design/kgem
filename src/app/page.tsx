@@ -49,9 +49,20 @@ const SkeletonCard = () => (
 
 export default function Home() {
   const { t, language, setLanguage } = useTranslation();
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
   const [showIosPrompt, setShowIosPrompt] = useState(false);
 
   useEffect(() => {
+    // 🚀 PWA 설치 프롬프트 제어 로직
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
     // 🚀 영구적 성장 엔진 가동 (마케팅 자동화 및 데이터 동기화)
     growthEngine;
 
@@ -61,7 +72,19 @@ export default function Home() {
     if (isIos && !isStandalone) {
       setShowIosPrompt(true);
     }
+
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
+
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    }
+  };
   const { user, loading, login, logout } = useAuth();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -373,6 +396,15 @@ export default function Home() {
             </div>
           )}
 
+          {isInstallable && (
+            <button
+              onClick={handleInstallApp}
+              className="px-5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-[10px] font-black shadow-lg shadow-indigo-600/20 active:scale-95 transition-all animate-pulse"
+            >
+              {t.ui.installApp}
+            </button>
+          )}
+
           <button
             className="hidden sm:block px-5 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] font-black shadow-lg shadow-emerald-600/20 active:scale-95 transition-all"
           >
@@ -457,6 +489,14 @@ export default function Home() {
             {/* Trending Section */}
             {!searchQuery && activeCategory === 'all' && (
               <div className="mb-24">
+                {isInstallable && (
+                  <button
+                    onClick={handleInstallApp}
+                    className="mb-8 w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-xl shadow-indigo-600/20 active:scale-[0.98]"
+                  >
+                    <span>📱</span> {t.ui.installApp} (Free)
+                  </button>
+                )}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-10">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-2xl">🔥</div>
@@ -698,6 +738,16 @@ export default function Home() {
             {t.footer.powered} • {t.footer.updated}<br />
             {t.footer.copy}
           </p>
+
+          {isInstallable && (
+            <button
+              onClick={handleInstallApp}
+              className="mt-6 px-8 py-3 rounded-2xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-400 font-bold text-xs transition-all border border-indigo-500/10 flex items-center gap-2"
+            >
+              <span>📱</span> {t.ui.installApp} (Free)
+            </button>
+          )}
+
           <div className="mt-8">
             <button
               onClick={handleCopyEmail}
@@ -710,40 +760,42 @@ export default function Home() {
       </footer>
 
       {/* 📱 iOS PWA 설치 안내 툴팁 */}
-      {showIosPrompt && (
-        <div className="fixed bottom-24 left-6 right-6 z-[70] animate-in slide-in-from-bottom duration-700">
-          <div className="relative bg-indigo-600 rounded-[32px] p-6 shadow-2xl shadow-indigo-600/40 border border-indigo-400/30 overflow-hidden text-left">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl pointer-events-none" />
-            <div className="flex items-start gap-4 pr-10">
-              <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
-                📲
+      {
+        showIosPrompt && (
+          <div className="fixed bottom-24 left-6 right-6 z-[70] animate-in slide-in-from-bottom duration-700">
+            <div className="relative bg-indigo-600 rounded-[32px] p-6 shadow-2xl shadow-indigo-600/40 border border-indigo-400/30 overflow-hidden text-left">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl pointer-events-none" />
+              <div className="flex items-start gap-4 pr-10">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                  📲
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-black text-lg text-white mb-1 uppercase tracking-tight">
+                    {t.footer.iosPwaTitle}
+                  </h4>
+                  <p className="text-white/80 text-sm font-medium leading-snug">
+                    {t.footer.iosPwaDesc}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h4 className="font-black text-lg text-white mb-1 uppercase tracking-tight">
-                  {t.footer.iosPwaTitle}
-                </h4>
-                <p className="text-white/80 text-sm font-medium leading-snug">
-                  {t.footer.iosPwaDesc}
-                </p>
-              </div>
+              <button
+                onClick={() => setShowIosPrompt(false)}
+                className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+              >
+                <span className="text-2xl font-light">✕</span>
+              </button>
+              <button
+                onClick={() => setShowIosPrompt(false)}
+                className="mt-6 w-full py-4 rounded-2xl bg-white text-indigo-600 font-extrabold text-sm active:scale-95 transition-all shadow-xl"
+              >
+                {t.footer.iosPwaClose}
+              </button>
             </div>
-            <button
-              onClick={() => setShowIosPrompt(false)}
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
-            >
-              <span className="text-2xl font-light">✕</span>
-            </button>
-            <button
-              onClick={() => setShowIosPrompt(false)}
-              className="mt-6 w-full py-4 rounded-2xl bg-white text-indigo-600 font-extrabold text-sm active:scale-95 transition-all shadow-xl"
-            >
-              {t.footer.iosPwaClose}
-            </button>
+            {/* Tooltip Arrow */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-600 rotate-45 border-r border-b border-indigo-400/30" />
           </div>
-          {/* Tooltip Arrow */}
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-600 rotate-45 border-r border-b border-indigo-400/30" />
-        </div>
-      )}
+        )
+      }
 
       {/* Floating TOP Button */}
       <button

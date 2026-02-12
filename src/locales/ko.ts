@@ -62,6 +62,7 @@ export const ko = {
         localsSecret: "현지인 비밀",
         getDirections: "길찾기",
         accommodation: "주변 숙소",
+        installApp: "앱 다운로드",
         gateTitle: "0.1% 시크릿 정보가 기다리고 있습니다",
         gateDesc: "로그인 한 번으로 전 세계 여행자들이 갈망하는\n진짜 한국의 보석들을 무료로 열람하세요.",
         gateButton: "지금 바로 시작하기 (무료)"

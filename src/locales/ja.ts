@@ -60,9 +60,10 @@ export const ja = {
         analyzing: "AI 分析中...",
         verified: "検証済み",
         localsSecret: "現地の秘密",
-        getDirections: "道順",
-        accommodation: "周辺の宿",
-        gateTitle: "0.1%の秘密の宝石があなたを待っています",
+        getDirections: "道順を表示",
+        accommodation: "周辺の宿泊施設",
+        installApp: "アプリをインストール",
+        gateTitle: "0.1%のシークレット情報が待っています",
         gateDesc: "今すぐログインして、世界中の旅行者が切望する\n本物の韓国の宝石を無料で閲覧しましょう。",
         gateButton: "今すぐ無料で始める"
     },
