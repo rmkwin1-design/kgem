@@ -104,26 +104,51 @@ export default function Home() {
   };
 
   const handleDirections = (spot: any) => {
-    const query = spot.query || spot.title[language] || spot.title['ko'];
-    let url = "";
+    const lat = spot.lat;
+    const lng = spot.lng;
+    const name = spot.title[language] || spot.title['ko'];
+    const query = spot.query || name;
 
-    if (language === 'ko') {
-      // Robust Deep Link for Naver: PC & Mobile compatibility
-      // The format uses empty start point to trigger 'My Location', and specific suffix for destination recognition
-      url = `https://map.naver.com/v5/directions/-,,,/${encodeURIComponent(query)},,,/transit?c=15,0,0,0,dh`;
+    if (lat && lng) {
+      // 🚀 Coordinate-based Deep Linking (0.1% Precision)
+      if (language === 'ko') {
+        // Naver Map PC/Mobile Hybrid with Coordinates
+        const naverUrl = `https://map.naver.com/v5/directions/현재위치,/${encodeURIComponent(name)},${lat},${lng}/transit`;
+        window.open(naverUrl, '_blank');
+      } else {
+        // Google Maps Global Standard with Coordinates
+        const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit`;
+        window.open(googleUrl, '_blank');
+      }
     } else {
-      url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
+      // Fallback to name-based search if coordinates missing
+      const fallbackUrl = language === 'ko'
+        ? `https://map.naver.com/v5/directions/현재위치/${encodeURIComponent(query)}/transit`
+        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
+      window.open(fallbackUrl, '_blank');
     }
-    window.open(url, '_blank');
   };
 
   const handleAccommodation = (spot: any) => {
     const query = spot.query || spot.title[language] || spot.title['ko'];
-    const searchTarget = language === 'ko' ? `${query} 주변 숙소` : `Hotels near ${query}`;
+    const lat = spot.lat;
+    const lng = spot.lng;
 
-    // Agoda Search with optimized params for price list landing
-    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(searchTarget)}&checkIn=${new Date().toISOString().split('T')[0]}&los=1&adults=2`;
-    window.open(url, '_blank');
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+    // 🏨 Agoda Precision Search: Using coordinates if available for better area targeting
+    let baseUrl = "https://www.agoda.com/ko-kr/search?";
+    let params = `searchText=${encodeURIComponent(query + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+
+    if (lat && lng) {
+      // Adding lat/lng to help Agoda find the exact vicinity
+      params += `&latitude=${lat}&longitude=${lng}`;
+    }
+
+    window.open(baseUrl + params, '_blank');
   };
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {

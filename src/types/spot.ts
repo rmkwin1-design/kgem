@@ -28,4 +28,6 @@ export interface TravelSpot {
     vipContent?: VipContent;
     transport?: LocalizedString;
     price?: number;
+    lat?: number;
+    lng?: number;
 }
