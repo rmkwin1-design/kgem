@@ -114,25 +114,22 @@ export default function Home() {
     if (lat && lng) {
       if (language === 'ko') {
         if (isMobile) {
-          // 🚀 Mobile: Naver Map App Direct Call (Highest Stability)
+          // 🚀 Mobile: Naver Map App Direct Call
           const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
-
           const start = Date.now();
           window.location.href = naverAppUrl;
-
-          // Fallback to Web if app not opened
           setTimeout(() => {
             if (Date.now() - start < 2000) {
               window.open(`https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
             }
           }, 1500);
         } else {
-          // 💻 PC: Reverting to stable index.nhn format as requested
+          // 💻 PC: Stable index.nhn
           const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global: Google Maps Precision (Transit Forced)
+        // 🌏 Global (EN/JA): Google Maps Transit Mode
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit`;
         window.open(googleUrl, '_blank');
       }
@@ -148,22 +145,27 @@ export default function Home() {
     const name = spot.title[language] || spot.title['ko'];
     const lat = spot.lat;
     const lng = spot.lng;
-
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
+    // 🌏 Dynamic Language Mapping for Agoda
+    const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
+    const agodaPath = agodaLangs[language] || 'en-us';
+    const hotelSuffix: any = { ko: ' 주변 호텔', en: ' hotels nearby', ja: ' 周辺のホテル' };
+    const suffix = hotelSuffix[language] || hotelSuffix['en'];
+
     const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile && lat && lng) {
-      // 📱 Mobile: 자동 위치 인식(좌표) + 최저가(Price) 우선 노출 엔진
-      // searchType=4와 좌표를 결합하여 에러 없이 주변 리스트를 최저가 순으로 불러옵니다.
-      const mobileUrl = `https://www.agoda.com/ko-kr/search?latitude=${lat}&longitude=${lng}&searchText=${encodeURIComponent(name)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh&searchType=4`;
+      // 📱 Mobile: 좌표(Lat/Lng) 기반 정밀 검색 + 다국어 경로 적용
+      // searchType=4와 objectType=1을 조합하여 주변 호텔 리스트를 가격표와 함께 노출합니다.
+      const mobileUrl = `https://www.agoda.com/${agodaPath}/search?latitude=${lat}&longitude=${lng}&searchText=${encodeURIComponent(name)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh&searchType=4`;
       window.open(mobileUrl, '_blank');
     } else {
-      // 💻 PC: 대표님 요청대로 검색이 쉬운 환경이므로 안정적인 기존 검색 방식 유지 + 가격 정렬 추가
-      const pcUrl = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 주변 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+      // 💻 PC: 지역명 기반 안정적 검색 + 다국어 경로 적용
+      const pcUrl = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + suffix)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
       window.open(pcUrl, '_blank');
     }
   };
