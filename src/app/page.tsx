@@ -127,9 +127,9 @@ export default function Home() {
             }
           }, 1500);
         } else {
-          // 💻 PC: Naver Map v5 Web Format (가장 안정적인 '도도착' 파라미터 규격)
-          const naverWebUrl = `https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit?c=15,0,0,0,dh`;
-          window.open(naverWebUrl, '_blank');
+          // 💻 PC: Reverting to stable index.nhn format as requested
+          const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
+          window.open(naverUrl, '_blank');
         }
       } else {
         // 🌏 Global: Google Maps Precision (Transit Forced)
@@ -138,7 +138,7 @@ export default function Home() {
       }
     } else {
       const fallbackUrl = language === 'ko'
-        ? `https://map.naver.com/v5/directions/현재위치/${encodeURIComponent(query)}/transit`
+        ? `https://map.naver.com/index.nhn?menu=route&pathType=1&etext=${encodeURIComponent(query)}`
         : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
       window.open(fallbackUrl, '_blank');
     }
@@ -146,16 +146,15 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const name = spot.title[language] || spot.title['ko'];
-    const query = spot.query || name;
-
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🏨 아고다 "No-Error" Landing: 좌표 충돌을 피하기 위해 지역명 기반의 검증된 검색 URL 사용
-    // searchText 파라미터에 '호텔' 키워드를 조합하여 리스트 페이지로 안정적으로 유도합니다.
-    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+    // 💻 PC: Simple search, as requested (Easy for PC users)
+    // 📱 Mobile: Strong Keyword Search to avoid Agoda landing errors
+    // Agoda mobile landing is most stable with only searchText + dates.
+    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 주변 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
     window.open(url, '_blank');
   };
 
