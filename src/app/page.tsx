@@ -123,12 +123,12 @@ export default function Home() {
           // Fallback to Web if app not opened
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://map.naver.com/v5/directions/-/${encodeURIComponent(name)},${lat},${lng}/transit`, '_blank');
+              window.open(`https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
             }
           }, 1500);
         } else {
-          // 💻 PC: Naver Map v5 Web Standard
-          const naverWebUrl = `https://map.naver.com/v5/directions/-/${encodeURIComponent(name)},${lat},${lng}/transit?c=15,0,0,0,dh`;
+          // 💻 PC: Naver Map v5 Web Format (가장 안정적인 '도도착' 파라미터 규격)
+          const naverWebUrl = `https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit?c=15,0,0,0,dh`;
           window.open(naverWebUrl, '_blank');
         }
       } else {
@@ -138,24 +138,24 @@ export default function Home() {
       }
     } else {
       const fallbackUrl = language === 'ko'
-        ? `https://map.naver.com/v5/directions/-/${encodeURIComponent(query)}/transit`
+        ? `https://map.naver.com/v5/directions/현재위치/${encodeURIComponent(query)}/transit`
         : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
       window.open(fallbackUrl, '_blank');
     }
   };
 
   const handleAccommodation = (spot: any) => {
-    const query = spot.query || spot.title[language] || spot.title['ko'];
-    const lat = spot.lat;
-    const lng = spot.lng;
+    const name = spot.title[language] || spot.title['ko'];
+    const query = spot.query || name;
 
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🏨 Agoda "Precision Landing": Combining coordinate precision with keyword stability
-    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(query + ' 호텔')}&latitude=${lat}&longitude=${lng}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+    // 🏨 아고다 "No-Error" Landing: 좌표 충돌을 피하기 위해 지역명 기반의 검증된 검색 URL 사용
+    // searchText 파라미터에 '호텔' 키워드를 조합하여 리스트 페이지로 안정적으로 유도합니다.
+    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
     window.open(url, '_blank');
   };
 
