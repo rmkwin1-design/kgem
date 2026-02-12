@@ -129,24 +129,14 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const query = spot.query || spot.title[language] || spot.title['ko'];
-    const lat = spot.lat;
-    const lng = spot.lng;
-
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🏨 Agoda Precision Search: Using coordinates if available for better area targeting
-    let baseUrl = "https://www.agoda.com/ko-kr/search?";
-    let params = `searchText=${encodeURIComponent(query + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
-
-    if (lat && lng) {
-      // Adding lat/lng to help Agoda find the exact vicinity
-      params += `&latitude=${lat}&longitude=${lng}`;
-    }
-
-    window.open(baseUrl + params, '_blank');
+    // 🏨 아고다 '검색 오류' 해결: 좌표 파라미터를 제거하고 강력한 검색 키워드로 안정성 최우선 확보
+    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(query + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
+    window.open(url, '_blank');
   };
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
