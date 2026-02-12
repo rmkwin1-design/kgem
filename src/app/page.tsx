@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from "@/context/LanguageContext";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
@@ -48,6 +48,16 @@ const SkeletonCard = () => (
 
 export default function Home() {
   const { t, language, setLanguage } = useTranslation();
+  const [showIosPrompt, setShowIosPrompt] = useState(false);
+
+  useEffect(() => {
+    // 📱 iOS PWA 설치 유도 로직 (스토어 없는 확산 전략)
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (isIos && !isStandalone) {
+      setShowIosPrompt(true);
+    }
+  }, []);
   const { user, loading, login, logout } = useAuth();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -267,6 +277,8 @@ export default function Home() {
         },
         image: `https://images.unsplash.com/photo-${1500000000000 + (i * 12345) % 1000}?w=800&q=80`,
         rating: (4.7 + Math.random() * 0.3).toFixed(1),
+        lat: 37.5665 + (Math.random() - 0.5) * 0.1, // Simulated lat for SEO/GEO
+        lng: 126.9780 + (Math.random() - 0.5) * 0.1, // Simulated lng
         query: `${searchQuery} ${i + 1}`,
         isTrending: i < 3,
         isFallback: true
@@ -274,8 +286,36 @@ export default function Home() {
     ]
     : filteredSpots;
 
+  // --- GEO 최적화: AI 검색 엔진을 위한 JSON-LD Schema 생성 ---
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": displaySpots.slice(0, 10).map((spot: any, index: number) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "TouristAttraction",
+        "name": spot.title[language] || spot.title['ko'],
+        "description": spot.description[language] || spot.description['ko'],
+        "image": spot.image,
+        "geo": spot.lat && spot.lng ? {
+          "@type": "GeoCoordinates",
+          "latitude": spot.lat,
+          "longitude": spot.lng
+        } : undefined,
+        "url": "https://kgem.vercel.app/"
+      }
+    }))
+  };
+
   return (
     <main className="min-h-screen bg-[#0f172a] text-white font-sans">
+      {/* 🧠 SEO/GEO Schema Injection */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
+
       {/* Navigation */}
       <nav className="nav-blur px-6 py-4 flex justify-between items-center bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800/50">
         <div className="flex items-center gap-2 max-w-[60%]">
@@ -330,6 +370,25 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* 🚀 역발상 마케팅 배지 (GEO/SEO 전략 반영) */}
+      <div className="bg-indigo-600/20 border-y border-indigo-500/30 py-2 overflow-hidden whitespace-nowrap">
+        <div className="flex animate-marquee gap-8 items-center">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+            ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
+          </span>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+            🏯 Navigate Like a Local with K-Gem's Precision Guide.
+          </span>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+            🚀 0.1% Premium Spots Verified by Real-time AI.
+          </span>
+          {/* Repeat for continuous effect */}
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+            ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
+          </span>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-900/20 to-transparent pointer-events-none" />
@@ -380,241 +439,242 @@ export default function Home() {
       </section>
 
       {/* Featured Content & Login Gate */}
-      {user ? (
-        <section className="px-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-1000">
+      {
+        user ? (
+          <section className="px-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-1000">
 
-          {/* Trending Section */}
-          {!searchQuery && activeCategory === 'all' && (
-            <div className="mb-24">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-2xl">🔥</div>
+            {/* Trending Section */}
+            {!searchQuery && activeCategory === 'all' && (
+              <div className="mb-24">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-2xl">🔥</div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.sections.trending}</h2>
+                      <p className="text-slate-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t.header.refreshCycle}</p>
+                    </div>
+                  </div>
+                  <span className="sm:ml-auto px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-400 text-xs font-bold border border-indigo-500/10 uppercase tracking-widest">
+                    {t.ui.realtime}
+                  </span>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {trendingSpots.map((spot, index) => (
+                    <React.Fragment key={`trending-${spot.id}`}>
+                      <div className="glass-card overflow-hidden group relative flex flex-col">
+                        <div className="h-56 overflow-hidden relative">
+                          <img
+                            src={spot.image}
+                            alt={(spot.title as any)[language]}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg">
+                            {t.card.trending}
+                          </div>
+                        </div>
+                        <div className="p-6 flex-1 flex flex-col">
+                          <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{(spot.title as any)[language]}</h3>
+                          <p className="text-slate-400 text-sm mb-6 line-clamp-2 leading-relaxed">{(spot.description as any)[language]}</p>
+
+                          {/* Transport Info - More readable on mobile */}
+                          {spot.transport && (
+                            <div className="flex flex-col gap-3 mb-6">
+                              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 border border-slate-900">
+                                <span className="text-base">🚌</span>
+                                <span className="text-xs text-slate-400 font-bold tracking-tight uppercase leading-tight">{(spot.transport as any)[language]}</span>
+                              </div>
+                              <button
+                                onClick={() => handleDirections(spot)}
+                                className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-2 transition-colors pl-1 py-1"
+                              >
+                                📍 {t.ui.getDirections}
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Revealed Secret Content - Enhanced visibility */}
+                          {spot.vipContent && (
+                            <div className="mb-6 p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
+                                <div className="h-[1px] flex-1 bg-indigo-500/20" />
+                              </div>
+                              <div>
+                                <p className="text-[13px] text-slate-200 font-bold leading-snug">
+                                  ✨ {(spot.vipContent.secretMenu as any)[language]}
+                                </p>
+                                <p className="text-xs text-slate-500 mt-2.5 leading-relaxed italic">
+                                  💡 {(spot.vipContent.ownerTip as any)[language]}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex gap-3 mt-auto">
+                            <button
+                              onClick={(e) => handleAction(e, 'map', spot)}
+                              className="flex-1 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-sm font-bold transition-all border border-slate-700/50 active:scale-95"
+                            >
+                              {t.card.viewMap}
+                            </button>
+                            <button
+                              onClick={(e) => handleAction(e, 'details', spot)}
+                              className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                            >
+                              {t.card.details}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Insert Ad after the 2nd trending card */}
+                      {index === 1 && <NativeAdCard t={t} />}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Ladies Choice Section */}
+            {!searchQuery && activeCategory === 'all' && (
+              <div className="mb-24 p-8 rounded-[40px] bg-gradient-to-br from-indigo-900/20 via-slate-900 to-purple-900/10 border border-indigo-500/10">
+                <div className="flex items-center gap-3 mb-10">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-500/20 flex items-center justify-center text-xl">✨</div>
                   <div>
-                    <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.sections.trending}</h2>
-                    <p className="text-slate-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t.header.refreshCycle}</p>
+                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                      {t.sections.ladies}
+                    </h2>
+                    <p className="text-slate-500 text-sm mt-1">Skin · Cosmetic · Dessert · Cafe</p>
                   </div>
                 </div>
-                <span className="sm:ml-auto px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-400 text-xs font-bold border border-indigo-500/10 uppercase tracking-widest">
-                  {t.ui.realtime}
-                </span>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {trendingSpots.map((spot, index) => (
-                  <React.Fragment key={`trending-${spot.id}`}>
-                    <div className="glass-card overflow-hidden group relative flex flex-col">
-                      <div className="h-56 overflow-hidden relative">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {ladiesSpots.map((spot) => (
+                    <div key={`ladies-${spot.id}`} className="bg-slate-950/50 border border-slate-800 rounded-3xl overflow-hidden group hover:border-purple-500/30 transition-all">
+                      <div className="h-40 overflow-hidden relative">
                         <img
                           src={spot.image}
                           alt={(spot.title as any)[language]}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-500"
                         />
-                        <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg">
-                          {t.card.trending}
+                      </div>
+                      <div className="p-5">
+                        <span className="text-[10px] text-purple-400 font-bold uppercase tracking-widest">{(t.categories as any)[spot.category || 'beauty']}</span>
+                        <h3 className="font-bold mt-1 text-sm line-clamp-1">{(spot.title as any)[language]}</h3>
+                        <div className="flex gap-3 mt-5">
+                          <button onClick={(e) => handleAction(e, 'map', spot)} className="flex-1 text-xs py-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 active:scale-95 transition-all">
+                            {t.ui.map}
+                          </button>
+                          <button onClick={(e) => handleAction(e, 'details', spot)} className="flex-1 text-xs py-3 rounded-xl bg-purple-600 hover:bg-purple-500 font-bold active:scale-95 transition-all">
+                            {t.ui.info}
+                          </button>
                         </div>
                       </div>
-                      <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{(spot.title as any)[language]}</h3>
-                        <p className="text-slate-400 text-sm mb-6 line-clamp-2 leading-relaxed">{(spot.description as any)[language]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                        {/* Transport Info - More readable on mobile */}
-                        {spot.transport && (
-                          <div className="flex flex-col gap-3 mb-6">
-                            <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 border border-slate-900">
-                              <span className="text-base">🚌</span>
-                              <span className="text-xs text-slate-400 font-bold tracking-tight uppercase leading-tight">{(spot.transport as any)[language]}</span>
-                            </div>
-                            <button
-                              onClick={() => handleDirections(spot)}
-                              className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-2 transition-colors pl-1 py-1"
-                            >
-                              📍 {t.ui.getDirections}
-                            </button>
+            <div className="flex items-center gap-4 mb-10">
+              <h2 className="text-3xl font-bold tracking-tight">
+                {searchQuery ? (
+                  <span className="flex items-center gap-3">
+                    {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (10+)`}
+                    {!isAiSearching && <span className="text-emerald-400 text-xs font-black bg-emerald-400/10 px-2 py-1 rounded">{t.ui.verified}</span>}
+                  </span>
+                ) : t.sections.curated}
+              </h2>
+              <div className="h-[1px] flex-1 bg-slate-800/50" />
+            </div>
+
+
+            {isAiSearching ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={`skel-${i}`} />)}
+              </div>
+            ) : displaySpots.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {displaySpots.map((spot: any, index: number) => (
+                  <React.Fragment key={spot.id}>
+                    <div className="glass-card overflow-hidden group flex flex-col h-full border-slate-800/50 hover:bg-slate-800/30">
+                      <div className="relative h-64 overflow-hidden">
+                        <img
+                          src={spot.image}
+                          alt={spot.title[language] || spot.title['ko']}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border border-slate-700/50">
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                          {t.card.adFiltered}
+                        </div>
+                        {spot.isTrending && (
+                          <div className="absolute top-4 right-4 bg-pink-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border border-pink-500/20 shadow-lg">
+                            🔥 {t.card.trending}
                           </div>
                         )}
-
-                        {/* Revealed Secret Content - Enhanced visibility */}
-                        {spot.vipContent && (
-                          <div className="mb-6 p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
-                            <div className="flex items-center gap-2 mb-3">
-                              <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
-                              <div className="h-[1px] flex-1 bg-indigo-500/20" />
-                            </div>
-                            <div>
-                              <p className="text-[13px] text-slate-200 font-bold leading-snug">
-                                ✨ {(spot.vipContent.secretMenu as any)[language]}
-                              </p>
-                              <p className="text-xs text-slate-500 mt-2.5 leading-relaxed italic">
-                                💡 {(spot.vipContent.ownerTip as any)[language]}
-                              </p>
-                            </div>
+                        <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-black border border-indigo-400/30">
+                          ⭐️ {spot.rating}
+                        </div>
+                      </div>
+                      <div className="p-7 flex-1 flex flex-col">
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="text-xl font-bold tracking-tight">{spot.title[language] || spot.title['ko']}</h3>
+                          <div className="flex flex-col items-end">
+                            <span className="text-xs font-black text-indigo-400">{getPriceTag(spot.price)}</span>
                           </div>
-                        )}
+                        </div>
+                        <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{spot.description[language] || spot.description['ko']}</p>
+
+                        <div className="flex gap-2 mb-6">
+                          <button
+                            onClick={() => handleDirections(spot)}
+                            className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                          >
+                            🧭 {t.ui.getDirections}
+                          </button>
+                          <button
+                            onClick={() => handleAccommodation(spot)}
+                            className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                          >
+                            🏨 {t.ui.accommodation}
+                          </button>
+                        </div>
 
                         <div className="flex gap-3 mt-auto">
                           <button
                             onClick={(e) => handleAction(e, 'map', spot)}
-                            className="flex-1 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-sm font-bold transition-all border border-slate-700/50 active:scale-95"
+                            className="flex-1 py-4 rounded-2xl bg-slate-950 hover:bg-slate-900 font-bold text-sm transition-all border border-slate-800 shadow-sm active:scale-95"
                           >
                             {t.card.viewMap}
                           </button>
                           <button
                             onClick={(e) => handleAction(e, 'details', spot)}
-                            className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                            className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-bold text-sm transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
                           >
                             {t.card.details}
+                          </button>
+                          <button
+                            onClick={() => handleShare(spot)}
+                            className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-indigo-500/50 transition-all text-xl"
+                          >
+                            🔗
                           </button>
                         </div>
                       </div>
                     </div>
-                    {/* Insert Ad after the 2nd trending card */}
-                    {index === 1 && <NativeAdCard t={t} />}
+                    {/* Insert Ad after the 3rd card in main grid */}
+                    {index === 2 && <NativeAdCard t={t} />}
                   </React.Fragment>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Ladies Choice Section */}
-          {!searchQuery && activeCategory === 'all' && (
-            <div className="mb-24 p-8 rounded-[40px] bg-gradient-to-br from-indigo-900/20 via-slate-900 to-purple-900/10 border border-indigo-500/10">
-              <div className="flex items-center gap-3 mb-10">
-                <div className="w-10 h-10 rounded-2xl bg-purple-500/20 flex items-center justify-center text-xl">✨</div>
-                <div>
-                  <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                    {t.sections.ladies}
-                  </h2>
-                  <p className="text-slate-500 text-sm mt-1">Skin · Cosmetic · Dessert · Cafe</p>
-                </div>
+            ) : (
+              <div className="text-center py-32 bg-slate-900/30 rounded-[40px] border border-dashed border-slate-800">
+                <p className="text-slate-500 text-lg">"{searchQuery}" {language === 'ko' ? '에 대한 지역 특화 결과를 찾고 있습니다...' : ' - Looking for regional results...'}</p>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {ladiesSpots.map((spot) => (
-                  <div key={`ladies-${spot.id}`} className="bg-slate-950/50 border border-slate-800 rounded-3xl overflow-hidden group hover:border-purple-500/30 transition-all">
-                    <div className="h-40 overflow-hidden relative">
-                      <img
-                        src={spot.image}
-                        alt={(spot.title as any)[language]}
-                        className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-500"
-                      />
-                    </div>
-                    <div className="p-5">
-                      <span className="text-[10px] text-purple-400 font-bold uppercase tracking-widest">{(t.categories as any)[spot.category || 'beauty']}</span>
-                      <h3 className="font-bold mt-1 text-sm line-clamp-1">{(spot.title as any)[language]}</h3>
-                      <div className="flex gap-3 mt-5">
-                        <button onClick={(e) => handleAction(e, 'map', spot)} className="flex-1 text-xs py-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 active:scale-95 transition-all">
-                          {t.ui.map}
-                        </button>
-                        <button onClick={(e) => handleAction(e, 'details', spot)} className="flex-1 text-xs py-3 rounded-xl bg-purple-600 hover:bg-purple-500 font-bold active:scale-95 transition-all">
-                          {t.ui.info}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-3xl font-bold tracking-tight">
-              {searchQuery ? (
-                <span className="flex items-center gap-3">
-                  {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (10+)`}
-                  {!isAiSearching && <span className="text-emerald-400 text-xs font-black bg-emerald-400/10 px-2 py-1 rounded">{t.ui.verified}</span>}
-                </span>
-              ) : t.sections.curated}
-            </h2>
-            <div className="h-[1px] flex-1 bg-slate-800/50" />
-          </div>
-
-
-          {isAiSearching ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={`skel-${i}`} />)}
-            </div>
-          ) : displaySpots.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displaySpots.map((spot: any, index: number) => (
-                <React.Fragment key={spot.id}>
-                  <div className="glass-card overflow-hidden group flex flex-col h-full border-slate-800/50 hover:bg-slate-800/30">
-                    <div className="relative h-64 overflow-hidden">
-                      <img
-                        src={spot.image}
-                        alt={spot.title[language] || spot.title['ko']}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border border-slate-700/50">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                        {t.card.adFiltered}
-                      </div>
-                      {spot.isTrending && (
-                        <div className="absolute top-4 right-4 bg-pink-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border border-pink-500/20 shadow-lg">
-                          🔥 {t.card.trending}
-                        </div>
-                      )}
-                      <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-black border border-indigo-400/30">
-                        ⭐️ {spot.rating}
-                      </div>
-                    </div>
-                    <div className="p-7 flex-1 flex flex-col">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-bold tracking-tight">{spot.title[language] || spot.title['ko']}</h3>
-                        <div className="flex flex-col items-end">
-                          <span className="text-xs font-black text-indigo-400">{getPriceTag(spot.price)}</span>
-                        </div>
-                      </div>
-                      <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{spot.description[language] || spot.description['ko']}</p>
-
-                      <div className="flex gap-2 mb-6">
-                        <button
-                          onClick={() => handleDirections(spot)}
-                          className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
-                        >
-                          🧭 {t.ui.getDirections}
-                        </button>
-                        <button
-                          onClick={() => handleAccommodation(spot)}
-                          className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
-                        >
-                          🏨 {t.ui.accommodation}
-                        </button>
-                      </div>
-
-                      <div className="flex gap-3 mt-auto">
-                        <button
-                          onClick={(e) => handleAction(e, 'map', spot)}
-                          className="flex-1 py-4 rounded-2xl bg-slate-950 hover:bg-slate-900 font-bold text-sm transition-all border border-slate-800 shadow-sm active:scale-95"
-                        >
-                          {t.card.viewMap}
-                        </button>
-                        <button
-                          onClick={(e) => handleAction(e, 'details', spot)}
-                          className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-bold text-sm transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
-                        >
-                          {t.card.details}
-                        </button>
-                        <button
-                          onClick={() => handleShare(spot)}
-                          className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-indigo-500/50 transition-all text-xl"
-                        >
-                          🔗
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Insert Ad after the 3rd card in main grid */}
-                  {index === 2 && <NativeAdCard t={t} />}
-                </React.Fragment>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-32 bg-slate-900/30 rounded-[40px] border border-dashed border-slate-800">
-              <p className="text-slate-500 text-lg">"{searchQuery}" {language === 'ko' ? '에 대한 지역 특화 결과를 찾고 있습니다...' : ' - Looking for regional results...'}</p>
-            </div>
-          )}
-        </section>
-      ) : (
-        <LoginGate />
-      )
+            )}
+          </section>
+        ) : (
+          <LoginGate />
+        )
       }
 
       {/* Footer Branding */}
@@ -637,6 +697,42 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* 📱 iOS PWA 설치 안내 툴팁 */}
+      {showIosPrompt && (
+        <div className="fixed bottom-24 left-6 right-6 z-[70] animate-in slide-in-from-bottom duration-700">
+          <div className="relative bg-indigo-600 rounded-[32px] p-6 shadow-2xl shadow-indigo-600/40 border border-indigo-400/30 overflow-hidden text-left">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl pointer-events-none" />
+            <div className="flex items-start gap-4 pr-10">
+              <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                📲
+              </div>
+              <div className="flex-1">
+                <h4 className="font-black text-lg text-white mb-1 uppercase tracking-tight">
+                  {t.footer.iosPwaTitle}
+                </h4>
+                <p className="text-white/80 text-sm font-medium leading-snug">
+                  {t.footer.iosPwaDesc}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowIosPrompt(false)}
+              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+            >
+              <span className="text-2xl font-light">✕</span>
+            </button>
+            <button
+              onClick={() => setShowIosPrompt(false)}
+              className="mt-6 w-full py-4 rounded-2xl bg-white text-indigo-600 font-extrabold text-sm active:scale-95 transition-all shadow-xl"
+            >
+              {t.footer.iosPwaClose}
+            </button>
+          </div>
+          {/* Tooltip Arrow */}
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-600 rotate-45 border-r border-b border-indigo-400/30" />
+        </div>
+      )}
 
       {/* Floating TOP Button */}
       <button

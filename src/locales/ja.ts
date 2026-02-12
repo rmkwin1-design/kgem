@@ -70,6 +70,9 @@ export const ja = {
         powered: "K-AI 0.1% インテリジェンス基盤",
         updated: "2週間ごとに更新",
         copy: "© 2026 K-Gem. 広告型無料プレミアムコンテンツ。",
-        business: "ビジネス: パートナー提携のお問い合わせ →"
+        business: "ビジネス: パートナー提携のお問い合わせ →",
+        iosPwaTitle: "K-Gem モバイルアプリ体験",
+        iosPwaDesc: "[共有]ボタンをタップして「ホーム画面に追加」を選択すると、アプリとして便利に利用できます。",
+        iosPwaClose: "了解しました"
     }
 };

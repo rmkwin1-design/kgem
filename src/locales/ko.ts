@@ -70,6 +70,9 @@ export const ko = {
         powered: "K-AI 0.1% 인텔리전스 기반",
         updated: "2주마다 업데이트",
         copy: "© 2026 K-Gem (케이젬). 광고형 무료 프리미엄 콘텐츠.",
-        business: "비즈니스: 파트너 제휴 문의 →"
+        business: "비즈니스: 파트너 제휴 문의 →",
+        iosPwaTitle: "K-Gem 모바일 앱 경험",
+        iosPwaDesc: "[공유] 버튼을 누르고 '홈 화면에 추가'를 선택하면 앱처럼 편리하게 이용할 수 있습니다.",
+        iosPwaClose: "확인했습니다"
     }
 };

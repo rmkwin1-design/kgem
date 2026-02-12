@@ -70,6 +70,9 @@ export const en = {
         powered: "Powered by K-AI 0.1% Intelligence",
         updated: "Updated Bi-weekly",
         copy: "© 2026 K-Gem. Ad-Supported Premium Content.",
-        business: "Business: Partner with us →"
+        business: "Business: Partner with us →",
+        iosPwaTitle: "K-Gem Mobile Experience",
+        iosPwaDesc: "Tap [Share] then 'Add to Home Screen' to use K-Gem as an app.",
+        iosPwaClose: "Got it"
     }
 };
