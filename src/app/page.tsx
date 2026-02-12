@@ -110,20 +110,18 @@ export default function Home() {
     const query = spot.query || name;
 
     if (lat && lng) {
-      // 🚀 Coordinate-based Deep Linking (0.1% Precision)
       if (language === 'ko') {
-        // Naver Map PC/Mobile Hybrid with Coordinates
-        const naverUrl = `https://map.naver.com/v5/directions/현재위치,/${encodeURIComponent(name)},${lat},${lng}/transit`;
+        // 🚀 PC/모바일 통합 최강의 네이버 길찾기 링크 (index.nhn 기반)
+        // 이 링크는 PC와 모바일 브라우저 모두에서 '도착지'를 정확히 고정하고 GPS 시도를 통한 출발지 자동 유도를 지원합니다.
+        const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
         window.open(naverUrl, '_blank');
       } else {
-        // Google Maps Global Standard with Coordinates
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit`;
         window.open(googleUrl, '_blank');
       }
     } else {
-      // Fallback to name-based search if coordinates missing
       const fallbackUrl = language === 'ko'
-        ? `https://map.naver.com/v5/directions/현재위치/${encodeURIComponent(query)}/transit`
+        ? `https://map.naver.com/v5/directions/-/${encodeURIComponent(query)}/transit`
         : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
       window.open(fallbackUrl, '_blank');
     }
