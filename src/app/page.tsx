@@ -146,16 +146,26 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const name = spot.title[language] || spot.title['ko'];
+    const lat = spot.lat;
+    const lng = spot.lng;
+
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 💻 PC: Simple search, as requested (Easy for PC users)
-    // 📱 Mobile: Strong Keyword Search to avoid Agoda landing errors
-    // Agoda mobile landing is most stable with only searchText + dates.
-    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 주변 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
-    window.open(url, '_blank');
+    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile && lat && lng) {
+      // 📱 Mobile: 자동 위치 인식(좌표) + 최저가(Price) 우선 노출 엔진
+      // searchType=4와 좌표를 결합하여 에러 없이 주변 리스트를 최저가 순으로 불러옵니다.
+      const mobileUrl = `https://www.agoda.com/ko-kr/search?latitude=${lat}&longitude=${lng}&searchText=${encodeURIComponent(name)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh&searchType=4`;
+      window.open(mobileUrl, '_blank');
+    } else {
+      // 💻 PC: 대표님 요청대로 검색이 쉬운 환경이므로 안정적인 기존 검색 방식 유지 + 가격 정렬 추가
+      const pcUrl = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(name + ' 주변 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
+      window.open(pcUrl, '_blank');
+    }
   };
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
