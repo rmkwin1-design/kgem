@@ -1,7 +1,7 @@
 {
-    "name": "Korea Travel Curator",
-    "short_name": "KR Travel",
-    "description": "AI-verified authentic local gems in Korea",
+    "name": "K-Gem | 0.1% Korea Secret",
+    "short_name": "K-Gem",
+    "description": "Discover authentic local gems in Korea known only to 0.1% of locals.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#0f172a",
@@ -10,12 +10,14 @@
         {
             "src": "/icons/icon-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/icons/icon-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }

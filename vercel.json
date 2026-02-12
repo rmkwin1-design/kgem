@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/api/growth",
+            "schedule": "0 4 * * *"
+        }
+    ]
+}

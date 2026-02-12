@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
+import { growthEngine } from "@/utils/perpetualGrowth";
 
 // --- Ad Component for Premium Aesthetic ---
 const NativeAdCard = ({ t }: { t: any }) => (
@@ -51,6 +52,9 @@ export default function Home() {
   const [showIosPrompt, setShowIosPrompt] = useState(false);
 
   useEffect(() => {
+    // 🚀 영구적 성장 엔진 가동 (마케팅 자동화 및 데이터 동기화)
+    growthEngine;
+
     // 📱 iOS PWA 설치 유도 로직 (스토어 없는 확산 전략)
     const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
@@ -235,10 +239,17 @@ export default function Home() {
   // 14 days rotation logic (2 weeks)
   const rotationTick = Math.floor(Date.now() / (14 * 24 * 60 * 60 * 1000));
 
+  // Next update calculation for UI display
+  const nextUpdateEpoch = (rotationTick + 1) * 14 * 24 * 60 * 60 * 1000;
+  const nextUpdateDate = new Date(nextUpdateEpoch).toLocaleDateString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : 'en-US', {
+    month: 'short', day: 'numeric'
+  });
+
   const getRotatedSpots = (spots: TravelSpot[]) => {
     if (searchQuery.trim().length > 0) return spots; // Don't rotate when searching
     const rotated = [...spots];
-    const offset = rotationTick % Math.max(1, spots.length);
+    // Seed-based stable shuffle for the period
+    const offset = (rotationTick * 7) % Math.max(1, spots.length);
     return [...rotated.slice(offset), ...rotated.slice(0, offset)];
   };
 
