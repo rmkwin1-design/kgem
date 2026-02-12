@@ -98,6 +98,11 @@ export default function Home() {
     }
   };
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('rmkwin@naver.com');
+    alert(language === 'ko' ? '이메일 주소(rmkwin@naver.com)가 복사되었습니다!\n메일 작성 시 붙여넣기 해주세요.' : 'Email address (rmkwin@naver.com) copied!');
+  };
+
   const handleDirections = (spot: any) => {
     if (!navigator.geolocation) {
       alert(language === 'ko' ? "브라우저가 위치 정보를 지원하지 않습니다." : "Geolocation is not supported by your browser.");
@@ -607,12 +612,12 @@ export default function Home() {
             {t.footer.copy}
           </p>
           <div className="mt-8">
-            <a
-              href="mailto:rmkwin@naver.com"
-              className="text-xs text-slate-500 hover:text-indigo-400 transition-colors border-b border-slate-800 hover:border-indigo-400 pb-2 px-6 font-bold inline-block"
+            <button
+              onClick={handleCopyEmail}
+              className="text-xs text-slate-500 hover:text-indigo-400 transition-colors border-b border-slate-800 hover:border-indigo-400 pb-2 px-6 font-bold inline-block bg-transparent"
             >
               {t.footer.business}
-            </a>
+            </button>
           </div>
         </div>
       </footer>
