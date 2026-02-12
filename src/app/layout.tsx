@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   description: "Discover AI-verified authentic local gems and secret spots in Korea. The ultimate alternative to Google Maps for navigating Korea like a local.",
   keywords: ["Korea Travel", "Seoul Guide", "Local Secrets", "K-Gem", "Travel AI", "Naver Map Guide", "Visit Korea 2026"],
   manifest: "/manifest.json",
+  icons: {
+    icon: "/icons/icon.svg",
+    apple: "/icons/icon.svg",
+  },
   alternates: {
     canonical: "https://kgem.vercel.app/",
     languages: {
