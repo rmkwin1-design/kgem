@@ -109,13 +109,30 @@ export default function Home() {
     const name = spot.title[language] || spot.title['ko'];
     const query = spot.query || name;
 
+    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     if (lat && lng) {
       if (language === 'ko') {
-        // 🚀 PC/모바일 통합 최강의 네이버 길찾기 링크 (index.nhn 기반)
-        // 이 링크는 PC와 모바일 브라우저 모두에서 '도착지'를 정확히 고정하고 GPS 시도를 통한 출발지 자동 유도를 지원합니다.
-        const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
-        window.open(naverUrl, '_blank');
+        if (isMobile) {
+          // 🚀 Mobile: Naver Map App Direct Call (Highest Stability)
+          const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
+
+          const start = Date.now();
+          window.location.href = naverAppUrl;
+
+          // Fallback to Web if app not opened
+          setTimeout(() => {
+            if (Date.now() - start < 2000) {
+              window.open(`https://map.naver.com/v5/directions/-/${encodeURIComponent(name)},${lat},${lng}/transit`, '_blank');
+            }
+          }, 1500);
+        } else {
+          // 💻 PC: Naver Map v5 Web Standard
+          const naverWebUrl = `https://map.naver.com/v5/directions/-/${encodeURIComponent(name)},${lat},${lng}/transit?c=15,0,0,0,dh`;
+          window.open(naverWebUrl, '_blank');
+        }
       } else {
+        // 🌏 Global: Google Maps Precision (Transit Forced)
         const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit`;
         window.open(googleUrl, '_blank');
       }
@@ -129,13 +146,16 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const query = spot.query || spot.title[language] || spot.title['ko'];
+    const lat = spot.lat;
+    const lng = spot.lng;
+
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🏨 아고다 '검색 오류' 해결: 좌표 파라미터를 제거하고 강력한 검색 키워드로 안정성 최우선 확보
-    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(query + ' 호텔')}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
+    // 🏨 Agoda "Precision Landing": Combining coordinate precision with keyword stability
+    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(query + ' 호텔')}&latitude=${lat}&longitude=${lng}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
     window.open(url, '_blank');
   };
 
