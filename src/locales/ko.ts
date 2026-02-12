@@ -65,7 +65,11 @@ export const ko = {
         installApp: "앱 다운로드",
         gateTitle: "0.1% 시크릿 정보가 기다리고 있습니다",
         gateDesc: "로그인 한 번으로 전 세계 여행자들이 갈망하는\n진짜 한국의 보석들을 무료로 열람하세요.",
-        gateButton: "지금 바로 시작하기 (무료)"
+        gateButton: "지금 바로 시작하기 (무료)",
+        inAppTitle: "보안 브라우저로 전환이 필요합니다",
+        inAppDesc: "카카오톡/인스타그램 등 인앱 브라우저에서는\n구글 로그인이 제한됩니다. 안전한 이용을 위해\n기본 브라우저(Chrome/Safari)로 열어주세요.",
+        openExternal: "기본 브라우저로 열기",
+        copyUrl: "URL 복사하기"
     },
     footer: {
         powered: "K-AI 0.1% 인텔리전스 기반",

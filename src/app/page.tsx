@@ -52,8 +52,15 @@ export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [showIosPrompt, setShowIosPrompt] = useState(false);
+  const [showInAppModal, setShowInAppModal] = useState(false);
 
   useEffect(() => {
+    // 🧠 인앱 브라우저 감지 로직 (카카오톡, 인스타그램 등)
+    const ua = navigator.userAgent.toLowerCase();
+    const isInApp = /kakaotalk|instagram|fbav|line|naver|pinterst/i.test(ua);
+    if (isInApp) {
+      setShowInAppModal(true);
+    }
     // 🚀 PWA 설치 프롬프트 제어 로직
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
@@ -758,6 +765,52 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* 🛡️ 인앱 브라우저(OAuth 차단) 대응 프리미엄 안내 모달 */}
+      {showInAppModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-6 overflow-hidden">
+          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl animate-in fade-in duration-500" />
+          <div className="relative w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-indigo-500/20 rounded-[40px] p-10 shadow-2xl animate-in zoom-in-95 duration-500">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-20 h-20 rounded-3xl bg-indigo-600/20 flex items-center justify-center text-4xl mb-8 animate-bounce">
+                🛡️
+              </div>
+              <h3 className="text-2xl font-black text-white mb-4 leading-tight">
+                {t.ui.inAppTitle}
+              </h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-10 whitespace-pre-line">
+                {t.ui.inAppDesc}
+              </p>
+
+              <div className="w-full space-y-4">
+                <button
+                  onClick={() => {
+                    const currentUrl = window.location.href;
+                    // iOS 카카오톡/인스타용 인텐트 스키마 등은 브라우저마다 다르므로 
+                    // 가장 확실한 방법은 외부 브라우저 열기 버튼 제공 또는 URL 복사 지원
+                    if (navigator.clipboard) {
+                      navigator.clipboard.writeText(currentUrl);
+                      alert(language === 'ko' ? 'URL이 복사되었습니다. 브라우저 주소창에 붙여넣어주세요!' : 'URL Copied!');
+                    }
+                  }}
+                  className="w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm transition-all shadow-xl shadow-indigo-600/20 active:scale-95"
+                >
+                  {t.ui.copyUrl}
+                </button>
+                <button
+                  onClick={() => setShowInAppModal(false)}
+                  className="w-full py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-bold text-xs transition-all active:scale-95"
+                >
+                  {t.ui.gateButton}
+                </button>
+              </div>
+              <p className="mt-8 text-[10px] text-slate-600 font-bold uppercase tracking-widest animate-pulse">
+                💡 {t.ui.openExternal} (Chrome/Safari)
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 📱 iOS PWA 설치 안내 툴팁 */}
       {

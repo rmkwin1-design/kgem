@@ -65,7 +65,11 @@ export const en = {
         installApp: "Install App",
         gateTitle: "0.1% Secret Information Awaits",
         gateDesc: "Log in now to unlock the hidden gems\nthat travelers crave for, completely free.",
-        gateButton: "Start Now for Free"
+        gateButton: "Start Now for Free",
+        inAppTitle: "Switch to Secure Browser",
+        inAppDesc: "Google login is restricted in In-App browsers (Kakao/Instagram).\nPlease open in your default browser (Chrome/Safari) for a secure experience.",
+        openExternal: "Open in Browser",
+        copyUrl: "Copy URL"
     },
     footer: {
         powered: "Powered by K-AI 0.1% Intelligence",

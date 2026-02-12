@@ -65,7 +65,11 @@ export const ja = {
         installApp: "アプリをインストール",
         gateTitle: "0.1%のシークレット情報が待っています",
         gateDesc: "今すぐログインして、世界中の旅行者が切望する\n本物の韓国の宝石を無料で閲覧しましょう。",
-        gateButton: "今すぐ無料で始める"
+        gateButton: "今すぐ無料で始める",
+        inAppTitle: "標準ブラウザへの切り替えが必要です",
+        inAppDesc: "カカオトークやインスタグラムなどのインアプリブラウザでは\nGoogleログイン이 제한されます。安全のため、\n標準ブラウザ(Chrome/Safari)で開いてください。",
+        openExternal: "ブラウザで開く",
+        copyUrl: "URLをコピー"
     },
     footer: {
         powered: "K-AI 0.1% インテリジェンス基盤",
