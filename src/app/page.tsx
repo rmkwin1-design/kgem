@@ -143,29 +143,17 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const name = spot.title[language] || spot.title['ko'];
-    const lat = spot.lat;
-    const lng = spot.lng;
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
-    // 🎓 NotebookLM 필살기: 아고다 언어 및 필수 파라미터 매핑
     const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
     const agodaPath = agodaLangs[language] || 'en-us';
 
-    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile && lat && lng) {
-      // 📱 Mobile: NotebookLM 권장 '풀 파라미터' 전략 (에러 원천 차단)
-      // 필수값: checkIn, checkOut, adults, rooms, children(0), language, latitude, longitude, searchText
-      const mobileUrl = `https://www.agoda.com/${agodaPath}/search?latitude=${lat}&longitude=${lng}&searchText=${encodeURIComponent(name)}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&children=0&language=${agodaPath}&sort=priceLowToHigh`;
-      window.open(mobileUrl, '_blank');
-    } else {
-      // 💻 PC: 지역명 기반 안정적 검색 (PC 사용자는 필터링이 용이하므로 표준 검색 유지)
-      const pcUrl = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + (language === 'ko' ? ' 주변 호텔' : ' hotels nearby'))}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1&sort=priceLowToHigh`;
-      window.open(pcUrl, '_blank');
-    }
+    // 🏨 최종 안정화 규격: 아고다 서버 부하 및 보안 정책에 가장 덜 구속받는 단순 검색 방식
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + (language === 'ko' ? ' 주변 호텔' : ' hotels nearby'))}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
+    window.open(url, '_blank');
   };
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
