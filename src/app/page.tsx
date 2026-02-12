@@ -108,10 +108,10 @@ export default function Home() {
     let url = "";
 
     if (language === 'ko') {
-      // Naver Maps: Use search-based directions for maximum compatibility
-      url = `https://map.naver.com/v5/directions/-/${encodeURIComponent(query)}/transit`;
+      // Robust Deep Link for Naver: PC & Mobile compatibility
+      // The format uses empty start point to trigger 'My Location', and specific suffix for destination recognition
+      url = `https://map.naver.com/v5/directions/-,,,/${encodeURIComponent(query)},,,/transit?c=15,0,0,0,dh`;
     } else {
-      // Google Maps: Smartly handles destination only
       url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
     }
     window.open(url, '_blank');
@@ -119,7 +119,10 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const query = spot.query || spot.title[language] || spot.title['ko'];
-    const url = `https://www.agoda.com/ko-kr/search?city=${encodeURIComponent(query)}&checkIn=${new Date().toISOString().split('T')[0]}`;
+    const searchTarget = language === 'ko' ? `${query} 주변 숙소` : `Hotels near ${query}`;
+
+    // Agoda Search with optimized params for price list landing
+    const url = `https://www.agoda.com/ko-kr/search?searchText=${encodeURIComponent(searchTarget)}&checkIn=${new Date().toISOString().split('T')[0]}&los=1&adults=2`;
     window.open(url, '_blank');
   };
 
