@@ -609,7 +609,7 @@ export default function Home() {
           <div className="mt-8">
             <a
               href="mailto:rmkwin@naver.com"
-              className="text-xs text-slate-600 hover:text-indigo-400 transition-colors border-b border-slate-800 hover:border-indigo-400 pb-1.5 px-4 font-bold inline-block"
+              className="text-xs text-slate-500 hover:text-indigo-400 transition-colors border-b border-slate-800 hover:border-indigo-400 pb-2 px-6 font-bold inline-block"
             >
               {t.footer.business}
             </a>
