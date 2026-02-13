@@ -182,7 +182,7 @@ export default function Home() {
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://map.naver.com/v5/directions/-,${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
+              window.open(`https://map.naver.com/v5/directions/-,${lng},${lat},${encodeURIComponent(name)}/transit`, '_blank');
             }
           }, 1500);
         } else {
@@ -194,7 +194,7 @@ export default function Home() {
         // 🌏 Global (EN/JA): New Naver Map /v5 engine (stable) with 'lang' parameter for native translation
         const naverLang = language === 'ja' ? 'ja' : 'en';
         // Using '-' as the departure point ensures Naver Map triggers the "Current Location" search automatically
-        const naverWebUrl = `https://map.naver.com/v5/directions/-,${lat},${lng},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
+        const naverWebUrl = `https://map.naver.com/v5/directions/-,${lng},${lat},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
 
         if (isMobile && !isIOS) {
           // Android Native: Try translated App first, fallback to Multilingual Web
