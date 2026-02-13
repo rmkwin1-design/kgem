@@ -211,7 +211,7 @@ export default function Home() {
           // PC or fallback: Use v5 with correct coordinate order (lat,lng) and lang parameter
           // Note: V5 often expects UTM-K, but passing lat,lng in specific formats works.
           // However, for maximum stability with names, we use the search-based params.
-          const naverWebUrl = `https://map.naver.com/v5/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)},PLACE_POI/transit?lang=${naverLang}`;
+          const naverWebUrl = `https://map.naver.com/v5/directions/${encodeURIComponent(startName)},${lat},${lng},${encodeURIComponent(name)},PLACE_POI/transit?lang=${naverLang}`;
           window.open(naverWebUrl, '_blank');
         }
       }
