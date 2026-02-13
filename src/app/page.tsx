@@ -600,6 +600,12 @@ export default function Home() {
                           <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg">
                             {t.card.trending}
                           </div>
+                          {spot.vipContent && (
+                            <div className="absolute top-14 left-4 bg-emerald-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border border-emerald-500/20 shadow-lg">
+                              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                              0.1% SECRET
+                            </div>
+                          )}
                           <SocialProof type="live" count={12} className="absolute bottom-4 left-4 bg-slate-900/60 backdrop-blur-md" />
                         </div>
                         <div className="p-6 flex-1 flex flex-col">
@@ -754,6 +760,12 @@ export default function Home() {
                           <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                           {t.card.adFiltered}
                         </div>
+                        {spot.vipContent && (
+                          <div className="absolute top-14 left-4 bg-emerald-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border border-emerald-500/20 shadow-lg">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            0.1% SECRET
+                          </div>
+                        )}
                         {spot.isTrending && (
                           <div className="absolute top-4 right-4 bg-pink-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border border-pink-500/20 shadow-lg">
                             🔥 {t.card.trending}
