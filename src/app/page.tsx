@@ -183,19 +183,23 @@ export default function Home() {
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): Try Naver App first on Android, then Google Maps
+        // 🌏 Global (EN/JA): Use Naver Map Web with language support for better labels in Korea
+        const naverLang = language === 'ja' ? 'ja' : 'en';
+        const naverWebUrl = `https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
+
         if (isMobile && !isIOS) {
+          // Android: Try Naver App first with translated name, then Naver Web (EN/JA)
           const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
           const start = Date.now();
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`, '_blank');
+              window.open(naverWebUrl, '_blank');
             }
           }, 1500);
         } else {
-          const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
-          window.open(googleUrl, '_blank');
+          // PC or fallback: Naver Web with EN/JA support
+          window.open(naverWebUrl, '_blank');
         }
       }
     } else {
