@@ -26,37 +26,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         let unsubscribeDoc: (() => void) | undefined;
 
         const unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
-            setUser(firebaseUser);
+            try {
+                setUser(firebaseUser);
 
-            if (firebaseUser) {
-                // Subscribe to user document for real-time premium updates
-                const userDocRef = doc(db, 'users', firebaseUser.uid);
+                if (firebaseUser) {
+                    const userDocRef = doc(db, 'users', firebaseUser.uid);
 
-                // Ensure document exists
-                const docSnap = await getDoc(userDocRef);
-                if (!docSnap.exists()) {
-                    await setDoc(userDocRef, {
-                        email: firebaseUser.email,
-                        displayName: firebaseUser.displayName,
-                        createdAt: Date.now(),
-                        premiumUntil: 0
-                    }, { merge: true });
+                    // Fire-and-forget doc creation to not block loading
+                    getDoc(userDocRef).then(docSnap => {
+                        if (!docSnap.exists()) {
+                            setDoc(userDocRef, {
+                                email: firebaseUser.email,
+                                displayName: firebaseUser.displayName,
+                                createdAt: Date.now(),
+                                premiumUntil: 0
+                            }, { merge: true });
+                        }
+                    }).catch(err => console.error("User doc init error:", err));
+
+                    unsubscribeDoc = onSnapshot(userDocRef, (doc) => {
+                        if (doc.exists()) {
+                            const data = doc.data();
+                            const pUntil = data.premiumUntil || 0;
+                            setPremiumUntil(pUntil);
+                            setIsPremium(pUntil > Date.now());
+                        }
+                    }, (err) => console.error("Snapshot error:", err));
+                } else {
+                    setPremiumUntil(null);
+                    setIsPremium(false);
                 }
-
-                unsubscribeDoc = onSnapshot(userDocRef, (doc) => {
-                    if (doc.exists()) {
-                        const data = doc.data();
-                        const pUntil = data.premiumUntil || 0;
-                        setPremiumUntil(pUntil);
-                        setIsPremium(pUntil > Date.now());
-                    }
-                });
-            } else {
-                setPremiumUntil(null);
-                setIsPremium(false);
+            } catch (error) {
+                console.error("Auth state change error:", error);
+            } finally {
+                setLoading(false);
             }
-
-            setLoading(false);
         });
 
         return () => {
