@@ -200,6 +200,26 @@ export default function Home() {
     }
   };
 
+  const handleGoogleDirections = (spot: any) => {
+    const lat = spot.lat;
+    const lng = spot.lng;
+    const name = spot.title[language] || spot.title['ko'];
+    const dName = encodeURIComponent(name);
+
+    const ua = typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : '';
+    const isIOS = /iphone|ipad|ipod/.test(ua);
+
+    if (isIOS) {
+      // iOS: Apple Maps is already very good at English labels in Korea
+      const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${dName}&dirflg=r`;
+      window.open(appleMapsUrl, '_blank');
+    } else {
+      // Android/PC: Google Maps with forced language
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${spot.query || ''}&travelmode=transit&hl=${language}`;
+      window.open(googleMapsUrl, '_blank');
+    }
+  };
+
   const handleAccommodation = (spot: any) => {
     const name = spot.title[language] || spot.title['ko'];
     const today = new Date();
@@ -563,19 +583,27 @@ export default function Home() {
                           <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{(spot.title as any)[language]}</h3>
                           <p className="text-slate-400 text-sm mb-6 line-clamp-2 leading-relaxed">{(spot.description as any)[language]}</p>
 
-                          {/* Transport Info - More readable on mobile */}
+                          {/* Transport Info - More readable on mobile with dual buttons */}
                           {spot.transport && (
                             <div className="flex flex-col gap-3 mb-6">
                               <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 border border-slate-900">
                                 <span className="text-base">🚌</span>
                                 <span className="text-xs text-slate-400 font-bold tracking-tight uppercase leading-tight">{(spot.transport as any)[language]}</span>
                               </div>
-                              <button
-                                onClick={() => handleDirections(spot)}
-                                className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-2 transition-colors pl-1 py-1"
-                              >
-                                📍 {t.ui.getDirections}
-                              </button>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => handleDirections(spot)}
+                                  className="flex-1 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                                >
+                                  🧭 {t.ui.navNaver}
+                                </button>
+                                <button
+                                  onClick={() => handleGoogleDirections(spot)}
+                                  className="flex-1 py-2.5 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                                >
+                                  🌍 {t.ui.navGoogle}
+                                </button>
+                              </div>
                             </div>
                           )}
 
@@ -712,16 +740,22 @@ export default function Home() {
                         </div>
                         <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{spot.description[language] || spot.description['ko']}</p>
 
-                        <div className="flex gap-2 mb-6">
+                        <div className="grid grid-cols-2 gap-2 mb-6">
                           <button
                             onClick={() => handleDirections(spot)}
-                            className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                            className="py-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                           >
-                            🧭 {t.ui.getDirections}
+                            🧭 {t.ui.navNaver}
+                          </button>
+                          <button
+                            onClick={() => handleGoogleDirections(spot)}
+                            className="py-3 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                          >
+                            🌍 {t.ui.navGoogle}
                           </button>
                           <button
                             onClick={() => handleAccommodation(spot)}
-                            className="flex-1 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5"
+                            className="col-span-2 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🏨 {t.ui.accommodation}
                           </button>

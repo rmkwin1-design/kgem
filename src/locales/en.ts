@@ -61,6 +61,8 @@ export const en = {
         verified: "Verified",
         localsSecret: "Local Secret",
         getDirections: "Get Directions",
+        navNaver: "Navigate (Naver)",
+        navGoogle: "EN Guide",
         accommodation: "Nearby Stays",
         installApp: "Install App",
         gateTitle: "0.1% Secret Information Awaits",

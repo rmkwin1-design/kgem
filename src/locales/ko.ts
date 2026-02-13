@@ -61,6 +61,8 @@ export const ko = {
         verified: "검증됨",
         localsSecret: "현지인 비밀",
         getDirections: "길찾기",
+        navNaver: "실시간 길찾기",
+        navGoogle: "외국어 가이드",
         accommodation: "주변 숙소",
         installApp: "앱 다운로드",
         gateTitle: "0.1% 시크릿 정보가 기다리고 있습니다",

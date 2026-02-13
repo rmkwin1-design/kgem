@@ -61,6 +61,8 @@ export const ja = {
         verified: "検証済み",
         localsSecret: "現地の秘密",
         getDirections: "道順を表示",
+        navNaver: "道順 (Naver)",
+        navGoogle: "日本語ガイド",
         accommodation: "周辺の宿泊施設",
         installApp: "アプリをインストール",
         gateTitle: "0.1%のシークレット情報が待っています",
