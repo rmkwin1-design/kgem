@@ -152,70 +152,47 @@ export default function Home() {
     const lat = spot.lat;
     const lng = spot.lng;
     const name = spot.title[language] || spot.title['ko'];
-    const query = spot.query || name;
-
-    const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
-    const isIOS = /iPhone|iPad|iPod/i.test(ua);
-
-    // 📍 Language-aware start location text for better SEO/UX on map providers
-    const startTexts: Record<string, string> = {
-      ko: '현재위치',
-      en: 'Current Location',
-      ja: '現在地'
-    };
-    const startName = startTexts[language] || startTexts['en'];
+    const naverLang = language === 'ja' ? 'ja' : 'en';
 
     if (lat && lng) {
+      const dName = encodeURIComponent(name);
+
+      const ua = typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : '';
+      const isMobile = /iphone|ipad|ipod|android/i.test(ua);
+      const isIOS = /iphone|ipad|ipod/i.test(ua);
+      const isAndroid = /android/i.test(ua);
+
       // 🍎 iOS Global Users: Apple Maps optimization (Top-tier English labels in Korea)
       if (isIOS && language !== 'ko') {
-        const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${encodeURIComponent(name)}&dirflg=r`;
+        const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${dName}&dirflg=r`;
         window.open(appleMapsUrl, '_blank');
         return;
       }
 
-      if (language === 'ko') {
-        if (isMobile) {
-          // 🚀 Mobile: Naver Map App Direct Call
-          const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
-          const start = Date.now();
-          window.location.href = naverAppUrl;
-          setTimeout(() => {
-            if (Date.now() - start < 2000) {
-              // Standard format for Current Location (sname) to Destination on Mobile Web
-              const mobileUrl = `https://m.map.naver.com/route.naver?sname=${encodeURIComponent(startName)}&slat=&slng=&ename=${encodeURIComponent(name)}&elat=${lat}&elng=${lng}&pathType=1`;
-              window.open(mobileUrl, '_blank');
-            }
-          }, 1500);
-        } else {
-          // 💻 PC: Naver Web Stable (index.nhn is still very stable for PC)
-          const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
-          window.open(naverUrl, '_blank');
-        }
-      } else {
-        // 🌏 Global (EN/JA): Use Mobile Web or v5 with correct language forcing
-        const naverLang = language === 'ja' ? 'ja' : 'en';
+      // 🌐 Ultimate Naver Map Strategy (NotebookLM Optimized)
+      // Web Version requires [lng, lat] order!
+      const webUrl = `https://map.naver.com/p/directions/-/${lng},${lat},${dName},,-/transit?lang=${naverLang}`;
+      const appScheme = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${dName}&appname=kgem`;
 
-        if (isMobile && !isIOS) {
-          // Android: Try translated App first, fallback to Mobile Web (Better for transit translation)
-          const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
-          const start = Date.now();
-          window.location.href = naverAppUrl;
-          setTimeout(() => {
-            if (Date.now() - start < 2000) {
-              const mobileUrl = `https://m.map.naver.com/route.naver?sname=${encodeURIComponent(startName)}&slat=&slng=&ename=${encodeURIComponent(name)}&elat=${lat}&elng=${lng}&pathType=1`;
-              window.open(mobileUrl, '_blank');
-            }
-          }, 1500);
-        } else {
-          // PC or fallback: Use v5 with correct coordinate order (lat,lng) and lang parameter
-          // Note: V5 often expects UTM-K, but passing lat,lng in specific formats works.
-          // However, for maximum stability with names, we use the search-based params.
-          const naverWebUrl = `https://map.naver.com/v5/directions/${encodeURIComponent(startName)},${lat},${lng},${encodeURIComponent(name)},PLACE_POI/transit?lang=${naverLang}`;
-          window.open(naverWebUrl, '_blank');
-        }
+      if (isAndroid) {
+        // Android: Use Intent for seamless App/Store transition (Direct App if installed, avoid 404s)
+        window.location.href = `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${dName}&appname=kgem#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;end`;
+      } else if (isIOS) {
+        // iOS Native Fallback (if not Apple Maps): Try Naver App, then Web
+        const start = Date.now();
+        window.location.href = appScheme;
+        setTimeout(() => {
+          if (Date.now() - start < 2000) {
+            window.location.href = webUrl;
+          }
+        }, 1500);
+      } else {
+        // PC or Fallback: New /p/ engine with '-' as Current Location placeholder
+        window.open(webUrl, '_blank');
       }
     } else {
+      // Logic for missing coordinates
+      const query = spot.query || name;
       const fallbackUrl = language === 'ko'
         ? `https://map.naver.com/index.nhn?menu=route&pathType=1&etext=${encodeURIComponent(query)}`
         : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit&hl=${language}`;
