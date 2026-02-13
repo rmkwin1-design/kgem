@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
 import { growthEngine } from "@/utils/perpetualGrowth";
+import { SocialProof } from "@/components/SocialProof";
 
 // --- Ad Component for Premium Aesthetic ---
 const NativeAdCard = ({ t }: { t: any }) => (
@@ -454,6 +455,8 @@ export default function Home() {
             {t.hero.description}
           </p>
 
+          <SocialProof type="trust" className="justify-center mb-10" />
+
           <form
             onSubmit={handleSearch}
             className="max-w-2xl mx-auto relative p-1 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl group focus-within:ring-2 ring-indigo-500/50 transition-all font-sans"
@@ -529,6 +532,7 @@ export default function Home() {
                           <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg">
                             {t.card.trending}
                           </div>
+                          <SocialProof type="live" count={12} className="absolute bottom-4 left-4 bg-slate-900/60 backdrop-blur-md" />
                         </div>
                         <div className="p-6 flex-1 flex flex-col">
                           <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{(spot.title as any)[language]}</h3>
@@ -672,6 +676,7 @@ export default function Home() {
                         <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-black border border-indigo-400/30">
                           ⭐️ {spot.rating}
                         </div>
+                        <SocialProof type="live" count={8} className="absolute bottom-4 left-4 bg-slate-900/60 backdrop-blur-md" />
                       </div>
                       <div className="p-7 flex-1 flex flex-col">
                         <div className="flex justify-between items-start mb-3">

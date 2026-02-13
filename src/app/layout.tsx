@@ -4,6 +4,8 @@ import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { AuthProvider } from "@/context/AuthContext";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -44,6 +46,8 @@ export const viewport = {
   themeColor: "#6366f1",
 };
 
+import ClientTracker from "@/components/ClientTracker";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,7 +58,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <LanguageProvider>
+            <ClientTracker />
             {children}
+            <Analytics />
           </LanguageProvider>
         </AuthProvider>
       </body>
