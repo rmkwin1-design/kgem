@@ -182,32 +182,36 @@ export default function Home() {
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://map.naver.com/v5/directions/-,${lng},${lat},${encodeURIComponent(name)}/transit`, '_blank');
+              // Standard format for Current Location (sname) to Destination on Mobile Web
+              const mobileUrl = `https://m.map.naver.com/route.naver?sname=${encodeURIComponent(startName)}&slat=&slng=&ename=${encodeURIComponent(name)}&elat=${lat}&elng=${lng}&pathType=1`;
+              window.open(mobileUrl, '_blank');
             }
           }, 1500);
         } else {
-          // 💻 PC: Naver Web Stable
+          // 💻 PC: Naver Web Stable (index.nhn is still very stable for PC)
           const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): New Naver Map /v5 engine (stable) with 'lang' parameter for native translation
+        // 🌏 Global (EN/JA): Use Mobile Web or v5 with correct language forcing
         const naverLang = language === 'ja' ? 'ja' : 'en';
-        // Using '-' as the departure point ensures Naver Map triggers the "Current Location" search automatically
-        const naverWebUrl = `https://map.naver.com/v5/directions/-,${lng},${lat},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
 
         if (isMobile && !isIOS) {
-          // Android Native: Try translated App first, fallback to Multilingual Web
+          // Android: Try translated App first, fallback to Mobile Web (Better for transit translation)
           const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
           const start = Date.now();
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(naverWebUrl, '_blank');
+              const mobileUrl = `https://m.map.naver.com/route.naver?sname=${encodeURIComponent(startName)}&slat=&slng=&ename=${encodeURIComponent(name)}&elat=${lat}&elng=${lng}&pathType=1`;
+              window.open(mobileUrl, '_blank');
             }
           }, 1500);
         } else {
-          // PC or iOS alternative: Naver v5 Multilingual interface
+          // PC or fallback: Use v5 with correct coordinate order (lat,lng) and lang parameter
+          // Note: V5 often expects UTM-K, but passing lat,lng in specific formats works.
+          // However, for maximum stability with names, we use the search-based params.
+          const naverWebUrl = `https://map.naver.com/v5/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)},PLACE_POI/transit?lang=${naverLang}`;
           window.open(naverWebUrl, '_blank');
         }
       }
