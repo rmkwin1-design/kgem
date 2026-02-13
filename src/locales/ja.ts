@@ -71,7 +71,10 @@ export const ja = {
         inAppTitle: "標準ブラウザへの切り替えが必要です",
         inAppDesc: "カカオトークやインスタグラムなどのインアプリブラウザでは\nGoogleログイン이 제한されます。安全のため、\n標準ブラウザ(Chrome/Safari)で開いてください。",
         openExternal: "ブラウザで開く",
-        copyUrl: "URLをコピー"
+        copyUrl: "URLをコピー",
+        premiumPassDesc: "24時間すべての0.1%シークレットチップを無制限に閲覧可能",
+        buyPass: "24時間パスを購入 ($4.99)",
+        noSubscription: "定期購入なし • 1回払い"
     },
     footer: {
         powered: "K-AI 0.1% インテリジェンス基盤",

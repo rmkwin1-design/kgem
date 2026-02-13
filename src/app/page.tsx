@@ -7,6 +7,9 @@ import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
 import { growthEngine } from "@/utils/perpetualGrowth";
 import { SocialProof } from "@/components/SocialProof";
+import { activatePremiumPass } from "@/utils/payment";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 // --- Ad Component for Premium Aesthetic ---
 const NativeAdCard = ({ t }: { t: any }) => (
@@ -45,6 +48,26 @@ const SkeletonCard = () => (
         <div className="h-12 bg-slate-800 rounded-2xl flex-1" />
       </div>
     </div>
+  </div>
+);
+
+// --- Premium Gate for Monetization ---
+const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock: () => void }) => (
+  <div className="p-6 rounded-3xl bg-indigo-600/10 border border-indigo-500/20 text-center">
+    <div className="text-3xl mb-4">🔓</div>
+    <h4 className="text-sm font-bold text-white mb-2">{t.vipModal.restricted}</h4>
+    <p className="text-[11px] text-slate-400 mb-6 leading-relaxed">
+      {t.ui.premiumPassDesc || "Get 24h unlimited access to all 0.1% K-Secret Tips"}
+    </p>
+    <button
+      onClick={onUnlock}
+      className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+    >
+      💎 {t.ui.buyPass || "Get 24h Pass ($4.99)"}
+    </button>
+    <p className="mt-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-tight">
+      {t.ui.noSubscription || "No Subscription • One-time Payment"}
+    </p>
   </div>
 );
 
@@ -93,7 +116,7 @@ export default function Home() {
       setDeferredPrompt(null);
     }
   };
-  const { user, loading, login, logout } = useAuth();
+  const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiSearching, setIsAiSearching] = useState(false);
@@ -609,19 +632,29 @@ export default function Home() {
 
                           {/* Revealed Secret Content - Enhanced visibility */}
                           {spot.vipContent && (
-                            <div className="mb-6 p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
-                              <div className="flex items-center gap-2 mb-3">
-                                <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
-                                <div className="h-[1px] flex-1 bg-indigo-500/20" />
-                              </div>
-                              <div>
-                                <p className="text-[13px] text-slate-200 font-bold leading-snug">
-                                  ✨ {(spot.vipContent.secretMenu as any)[language]}
-                                </p>
-                                <p className="text-xs text-slate-500 mt-2.5 leading-relaxed italic">
-                                  💡 {(spot.vipContent.ownerTip as any)[language]}
-                                </p>
-                              </div>
+                            <div className="mb-6">
+                              {isPremium ? (
+                                <div className="p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
+                                    <div className="h-[1px] flex-1 bg-indigo-500/20" />
+                                  </div>
+                                  <div>
+                                    <p className="text-[13px] text-slate-200 font-bold leading-snug">
+                                      ✨ {(spot.vipContent.secretMenu as any)[language]}
+                                    </p>
+                                    <p className="text-xs text-slate-500 mt-2.5 leading-relaxed italic">
+                                      💡 {(spot.vipContent.ownerTip as any)[language]}
+                                    </p>
+                                  </div>
+                                </div>
+                              ) : (
+                                <PremiumGate
+                                  t={t}
+                                  userId={user?.uid || ''}
+                                  onUnlock={() => user ? activatePremiumPass(user.uid) : login()}
+                                />
+                              )}
                             </div>
                           )}
 

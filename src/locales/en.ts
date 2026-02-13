@@ -71,7 +71,10 @@ export const en = {
         inAppTitle: "Switch to Secure Browser",
         inAppDesc: "Google login is restricted in In-App browsers (Kakao/Instagram).\nPlease open in your default browser (Chrome/Safari) for a secure experience.",
         openExternal: "Open in Browser",
-        copyUrl: "Copy URL"
+        copyUrl: "Copy URL",
+        premiumPassDesc: "Get 24h unlimited access to all 0.1% K-Secret Tips",
+        buyPass: "Get 24h Pass ($4.99)",
+        noSubscription: "No Subscription • One-time Payment"
     },
     footer: {
         powered: "Powered by K-AI 0.1% Intelligence",

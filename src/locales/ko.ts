@@ -71,7 +71,10 @@ export const ko = {
         inAppTitle: "보안 브라우저로 전환이 필요합니다",
         inAppDesc: "카카오톡/인스타그램 등 인앱 브라우저에서는\n구글 로그인이 제한됩니다. 안전한 이용을 위해\n기본 브라우저(Chrome/Safari)로 열어주세요.",
         openExternal: "기본 브라우저로 열기",
-        copyUrl: "URL 복사하기"
+        copyUrl: "URL 복사하기",
+        premiumPassDesc: "24시간 모든 0.1% 시크릿 팁을 무제한으로 열람하세요.",
+        buyPass: "24시간 시크릿 패스 구매 ($4.99)",
+        noSubscription: "구독 없음 • 일회성 결제"
     },
     footer: {
         powered: "K-AI 0.1% 인텔리전스 기반",
