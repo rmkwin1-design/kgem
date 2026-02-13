@@ -505,6 +505,14 @@ export default function Home() {
             </button>
           </form>
 
+          {/* 💼 Business Partnership Inquiry Relocated for Visibility */}
+          <div className="mt-5 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
+            <button className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/40 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-indigo-400">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              {t.footer.business}
+            </button>
+          </div>
+
           {/* Category Filter Moved Here */}
           <div className="mt-10 flex overflow-x-auto pb-4 gap-2 no-scrollbar px-2 justify-center">
             {Object.entries(t.categories).map(([key, label]) => (
@@ -792,14 +800,6 @@ export default function Home() {
             </button>
           )}
 
-          <div className="mt-8">
-            <button
-              onClick={handleCopyEmail}
-              className="text-xs text-slate-500 hover:text-indigo-400 transition-colors border-b border-slate-800 hover:border-indigo-400 pb-2 px-6 font-bold inline-block bg-transparent"
-            >
-              {t.footer.business}
-            </button>
-          </div>
         </div>
       </footer>
 
