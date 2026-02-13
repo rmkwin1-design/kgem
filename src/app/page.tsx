@@ -174,14 +174,14 @@ export default function Home() {
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): Google Maps Transit Mode
-        const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit`;
+        // 🌏 Global (EN/JA): Google Maps Transit Mode with language parameter
+        const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
         window.open(googleUrl, '_blank');
       }
     } else {
       const fallbackUrl = language === 'ko'
         ? `https://map.naver.com/index.nhn?menu=route&pathType=1&etext=${encodeURIComponent(query)}`
-        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit`;
+        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit&hl=${language}`;
       window.open(fallbackUrl, '_blank');
     }
   };
