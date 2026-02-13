@@ -158,8 +158,16 @@ export default function Home() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
     const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
+    // 📍 Language-aware start location text for better SEO/UX on map providers
+    const startTexts: Record<string, string> = {
+      ko: '현재위치',
+      en: 'Current Location',
+      ja: '現在地'
+    };
+    const startName = startTexts[language] || startTexts['en'];
+
     if (lat && lng) {
-      // 🍎 iOS Global Users: Apple Maps is surprisingly good with English labels in Korea
+      // 🍎 iOS Global Users: Apple Maps optimization (Top-tier English labels in Korea)
       if (isIOS && language !== 'ko') {
         const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${encodeURIComponent(name)}&dirflg=r`;
         window.open(appleMapsUrl, '_blank');
@@ -174,21 +182,21 @@ export default function Home() {
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
+              window.open(`https://map.naver.com/v5/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
             }
           }, 1500);
         } else {
-          // 💻 PC: Stable Naver Web
+          // 💻 PC: Naver Web Stable
           const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): Use Naver Map Web with language support for better labels in Korea
+        // 🌏 Global (EN/JA): New Naver Map /p/ engine with 'l' parameter for native translation
         const naverLang = language === 'ja' ? 'ja' : 'en';
-        const naverWebUrl = `https://map.naver.com/v5/directions/현재위치,/${lat},${lng},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
+        const naverWebUrl = `https://map.naver.com/p/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)}/transit?l=${naverLang}`;
 
         if (isMobile && !isIOS) {
-          // Android: Try Naver App first with translated name, then Naver Web (EN/JA)
+          // Android Native: Try translated App first, fallback to Native Multilingual Web
           const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
           const start = Date.now();
           window.location.href = naverAppUrl;
@@ -198,7 +206,7 @@ export default function Home() {
             }
           }, 1500);
         } else {
-          // PC or fallback: Naver Web with EN/JA support
+          // PC or iOS alternative: Naver /p/ Multilingual interface
           window.open(naverWebUrl, '_blank');
         }
       }
