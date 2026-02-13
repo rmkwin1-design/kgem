@@ -364,6 +364,10 @@ export default function Home() {
           en: `AI Recommend: ${searchQuery} #${i + 1}`,
           ja: `AI おすすめ: ${searchQuery} #${i + 1}`
         },
+        vipContent: {
+          secretMenu: { ko: "AI 분석 중... 곧 공개됩니다.", en: "Analyzing via AI... Coming soon.", ja: "AI分析中… まもなく公開されます。" },
+          ownerTip: { ko: "이 지역 최고의 히든 스팟을 탐색 중입니다.", en: "Exploring the best hidden spots in this area.", ja: "この地域最高の隠れスポットを探索中です。" }
+        },
         description: {
           ko: `실시간 AI 분석으로 찾은 ${searchQuery} 최고의 0.1% 명소입니다. 전문 큐레이터가 검증한 최신 정보를 제공합니다.`,
           en: `0.1% premium spot in ${searchQuery} area verified via real-time AI. Up-to-date information provided.`,
