@@ -182,7 +182,7 @@ export default function Home() {
           window.location.href = naverAppUrl;
           setTimeout(() => {
             if (Date.now() - start < 2000) {
-              window.open(`https://map.naver.com/v5/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
+              window.open(`https://map.naver.com/v5/directions/-,/${lat},${lng},${encodeURIComponent(name)}/transit`, '_blank');
             }
           }, 1500);
         } else {
@@ -191,12 +191,13 @@ export default function Home() {
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): New Naver Map /p/ engine with 'l' parameter for native translation
+        // 🌏 Global (EN/JA): New Naver Map /v5 engine (stable) with 'lang' parameter for native translation
         const naverLang = language === 'ja' ? 'ja' : 'en';
-        const naverWebUrl = `https://map.naver.com/p/directions/${encodeURIComponent(startName)},/${lat},${lng},${encodeURIComponent(name)}/transit?l=${naverLang}`;
+        // Using '-' as the departure point ensures Naver Map triggers the "Current Location" search automatically
+        const naverWebUrl = `https://map.naver.com/v5/directions/-,/${lat},${lng},${encodeURIComponent(name)}/transit?lang=${naverLang}`;
 
         if (isMobile && !isIOS) {
-          // Android Native: Try translated App first, fallback to Native Multilingual Web
+          // Android Native: Try translated App first, fallback to Multilingual Web
           const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
           const start = Date.now();
           window.location.href = naverAppUrl;
@@ -206,7 +207,7 @@ export default function Home() {
             }
           }, 1500);
         } else {
-          // PC or iOS alternative: Naver /p/ Multilingual interface
+          // PC or iOS alternative: Naver v5 Multilingual interface
           window.open(naverWebUrl, '_blank');
         }
       }
@@ -507,7 +508,10 @@ export default function Home() {
 
           {/* 💼 Business Partnership Inquiry Relocated for Visibility */}
           <div className="mt-5 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
-            <button className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/40 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-indigo-400">
+            <button
+              onClick={handleCopyEmail}
+              className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/40 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-indigo-400"
+            >
               <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
               {t.footer.business}
             </button>
