@@ -154,9 +154,18 @@ export default function Home() {
     const name = spot.title[language] || spot.title['ko'];
     const query = spot.query || name;
 
-    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
     if (lat && lng) {
+      // 🍎 iOS Global Users: Apple Maps is surprisingly good with English labels in Korea
+      if (isIOS && language !== 'ko') {
+        const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${encodeURIComponent(name)}&dirflg=r`;
+        window.open(appleMapsUrl, '_blank');
+        return;
+      }
+
       if (language === 'ko') {
         if (isMobile) {
           // 🚀 Mobile: Naver Map App Direct Call
@@ -169,14 +178,25 @@ export default function Home() {
             }
           }, 1500);
         } else {
-          // 💻 PC: Stable index.nhn
+          // 💻 PC: Stable Naver Web
           const naverUrl = `https://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${lng}&elat=${lat}&etext=${encodeURIComponent(name)}&menu=route&pathType=1`;
           window.open(naverUrl, '_blank');
         }
       } else {
-        // 🌏 Global (EN/JA): Google Maps Transit Mode with language parameter
-        const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
-        window.open(googleUrl, '_blank');
+        // 🌏 Global (EN/JA): Try Naver App first on Android, then Google Maps
+        if (isMobile && !isIOS) {
+          const naverAppUrl = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=kgem`;
+          const start = Date.now();
+          window.location.href = naverAppUrl;
+          setTimeout(() => {
+            if (Date.now() - start < 2000) {
+              window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`, '_blank');
+            }
+          }, 1500);
+        } else {
+          const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
+          window.open(googleUrl, '_blank');
+        }
       }
     } else {
       const fallbackUrl = language === 'ko'
