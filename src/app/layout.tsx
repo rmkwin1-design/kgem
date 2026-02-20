@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { PreferenceProvider } from "@/context/PreferenceContext";
+import { PaymentProvider } from "@/context/PaymentContext";
+
+
 
 import { Analytics } from "@vercel/analytics/react";
 
-const inter = Inter({ subsets: ["latin"] });
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "K-Gem | 0.1% Korea Travel Secret Guide",
@@ -43,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#6366f1",
+  themeColor: "#6d4e73",
 };
 
 import ClientTracker from "@/components/ClientTracker";
@@ -55,12 +59,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className={plusJakartaSans.className}>
         <AuthProvider>
           <LanguageProvider>
-            <ClientTracker />
-            {children}
-            <Analytics />
+            <PreferenceProvider>
+              <PaymentProvider>
+                <ClientTracker />
+                {children}
+                <Analytics />
+              </PaymentProvider>
+            </PreferenceProvider>
+
           </LanguageProvider>
         </AuthProvider>
       </body>

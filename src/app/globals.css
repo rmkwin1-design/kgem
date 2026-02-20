@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #6366f1;
-  --primary-glow: rgba(99, 102, 241, 0.5);
-  --secondary: #ec4899;
-  --accent: #8b5cf6;
-  --bg-dark: #0f172a;
-  --card-bg: rgba(30, 41, 59, 0.7);
-  --glass: rgba(255, 255, 255, 0.03);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --primary: #6d4e73;
+  --primary-glow: rgba(109, 78, 115, 0.4);
+  --secondary: #b5838d;
+  --accent: #e5989b;
+  --bg-dark: #1a161c;
+  --card-bg: rgba(45, 38, 48, 0.7);
+  --glass: rgba(255, 255, 255, 0.05);
+  --text-main: #fcfafc;
+  --text-muted: #a699a6;
+  --radius-premium: 24px;
 }
 
 body {
@@ -22,6 +23,7 @@ body {
 .premium-gradient {
   background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -29,7 +31,7 @@ body {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: var(--radius-premium);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -49,14 +51,27 @@ body {
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-float {

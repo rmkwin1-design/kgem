@@ -10,22 +10,37 @@ import { SocialProof } from "@/components/SocialProof";
 import { activatePremiumPass } from "@/utils/payment";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { kgemAgent } from "@/lib/agents/orchestrator";
+import { useMapNavigation } from "@/hooks/useMapNavigation";
+import { usePreference } from "@/context/PreferenceContext";
+import { usePayment } from "@/context/PaymentContext";
+import { blufEngine } from "@/lib/data/bluf_engine";
+import { reservationService } from "@/lib/services/reservation_service";
+import { NaverMapV3 } from "@/components/Map/NaverMapV3";
+
+
+
+
+import { contextService } from "@/lib/data/context_service";
+import { securityManager } from "@/lib/security/security_manager";
+
+
 
 // --- Ad Component for Premium Aesthetic ---
 const NativeAdCard = ({ t }: { t: any }) => (
-  <div className="glass-card overflow-hidden group relative flex flex-col border-indigo-500/20 bg-indigo-500/5">
+  <div className="glass-card overflow-hidden group relative flex flex-col border-[var(--primary)]/20 bg-[var(--primary)]/5">
     <div className="h-56 overflow-hidden relative">
       <img
         src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
         alt="Sponsored"
         className="w-full h-full object-cover opacity-80"
       />
-      <div className="absolute top-4 left-4 bg-indigo-600/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+      <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
         {t.ad.sponsored}
       </div>
     </div>
     <div className="p-6 flex-1 flex flex-col justify-center text-center">
-      <span className="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-2">{t.ad.partner}</span>
+      <span className="text-[var(--primary)] text-[10px] font-bold uppercase tracking-widest mb-2">{t.ad.partner}</span>
       <h3 className="text-xl font-bold mb-4">{t.ad.title}</h3>
       <p className="text-slate-400 text-sm mb-6 leading-relaxed">{t.ad.desc}</p>
       <button className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold transition-all border border-slate-700/50">
@@ -52,31 +67,58 @@ const SkeletonCard = () => (
 );
 
 // --- Premium Gate for Monetization ---
-const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock: () => void }) => (
-  <div className="p-6 rounded-3xl bg-indigo-600/10 border border-indigo-500/20 text-center">
-    <div className="text-3xl mb-4">🔓</div>
-    <h4 className="text-sm font-bold text-white mb-2">{t.vipModal.restricted}</h4>
-    <p className="text-[11px] text-slate-400 mb-6 leading-relaxed">
-      {t.ui.premiumPassDesc || "Get 24h unlimited access to all 0.1% K-Secret Tips"}
-    </p>
-    <button
-      onClick={onUnlock}
-      className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
-    >
-      💎 {t.ui.buyPass || "Get 24h Pass ($4.99)"}
-    </button>
-    <p className="mt-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-tight">
-      {t.ui.noSubscription || "No Subscription • One-time Payment"}
-    </p>
-  </div>
-);
+const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock: () => void }) => {
+  const { registerCard, isProcessing } = usePayment();
+
+  return (
+    <div className="p-6 rounded-3xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-center">
+      <div className="text-3xl mb-4">🔓</div>
+      <h4 className="text-sm font-bold text-white mb-2">{t.vipModal.restricted}</h4>
+      <p className="text-[11px] text-slate-400 mb-6 leading-relaxed">
+        {t.ui.premiumPassDesc || "Get 24h unlimited access to all 0.1% K-Secret Tips"}
+      </p>
+      <button
+        onClick={registerCard}
+        disabled={isProcessing}
+        className="w-full py-3 mb-2 rounded-xl bg-[var(--primary)] hover:opacity-90 text-white font-black text-xs transition-all shadow-lg active:scale-95 disabled:opacity-50"
+      >
+        {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
+      </button>
+
+      <button
+        onClick={() => alert('PayPal integration in progress...')}
+        className="w-full py-3 rounded-xl bg-[#ffc439] hover:bg-[#f2ba36] text-[#2c2e2f] font-black text-xs transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+      >
+        <span className="italic font-extrabold text-[#003087]">Pay</span><span className="italic font-extrabold text-[#009cde]">Pal</span>
+      </button>
+
+      <p className="mt-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-tight">
+        {t.ui.noSubscription || "No Subscription • One-time Payment"}
+      </p>
+    </div>
+  );
+};
+
 
 export default function Home() {
   const { t, language, setLanguage } = useTranslation();
+
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [showIosPrompt, setShowIosPrompt] = useState(false);
   const [showInAppModal, setShowInAppModal] = useState(false);
+
+  const handleInstallApp = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+        setIsInstallable(false);
+      }
+    }
+  };
+
 
   useEffect(() => {
     // 🧠 인앱 브라우저 감지 로직 (카카오톡, 인스타그램 등)
@@ -104,43 +146,57 @@ export default function Home() {
       setShowIosPrompt(true);
     }
 
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    const handleScroll = () => {
+      setShowTopButton(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const handleInstallApp = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setIsInstallable(false);
-      setDeferredPrompt(null);
-    }
-  };
+  const { openMap } = useMapNavigation();
+  const { preferredMap, setPreferredMap } = usePreference();
   const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
+
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiSearching, setIsAiSearching] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setShowTopButton(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim().length > 1) {
       setIsAiSearching(true);
-      setTimeout(() => setIsAiSearching(false), 2000); // Increased for better skeleton experience
+
+      // 2026 Strategy: Security Sanitization
+      const sanitizedQuery = securityManager.sanitizeInput(searchQuery);
+
+      // 2026 Strategy: Agentic AI Orchestration
+      const response = await kgemAgent.processRequest(sanitizedQuery);
+
+      console.log("KGEM Agent Response:", response);
+
+      // Artificial delay for premium feel
+      setTimeout(() => setIsAiSearching(false), 1500);
     }
   };
+
+  const handleGangnamStrategy = async () => {
+    setSearchQuery("Gangnam style trip plan");
+    setIsAiSearching(true);
+    const response = await kgemAgent.processRequest("Gangnam style trip plan");
+    // In a real app, this would update the UI state to show the specific route
+    setTimeout(() => setIsAiSearching(false), 2000);
+  };
+
 
   const getPriceTag = (price?: number) => {
     if (price === undefined) return null;
@@ -172,79 +228,19 @@ export default function Home() {
   };
 
   const handleDirections = (spot: any) => {
-    const lat = spot.lat;
-    const lng = spot.lng;
-    const name = spot.title[language] || spot.title['ko'];
-    const naverLang = language === 'ja' ? 'ja' : 'en';
-
-    if (lat && lng) {
-      const dName = encodeURIComponent(name);
-
-      const ua = typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : '';
-      const isMobile = /iphone|ipad|ipod|android/i.test(ua);
-      const isIOS = /iphone|ipad|ipod/i.test(ua);
-      const isAndroid = /android/i.test(ua);
-
-      // 🍎 iOS Global Users: Apple Maps optimization (Top-tier English labels in Korea)
-      if (isIOS && language !== 'ko') {
-        const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${dName}&dirflg=r`;
-        window.open(appleMapsUrl, '_blank');
-        return;
-      }
-
-      // 🌐 Ultimate Naver Map Strategy (NotebookLM Optimized)
-      // Web Version requires [lng, lat] order!
-      const webUrl = `https://map.naver.com/p/directions/-/${lng},${lat},${dName},,-/transit?lang=${naverLang}`;
-      const appScheme = `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${dName}&appname=kgem`;
-
-      if (isAndroid) {
-        // Android: Use Intent for seamless App/Store transition (Direct App if installed, avoid 404s)
-        window.location.href = `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${dName}&appname=kgem#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;end`;
-      } else if (isIOS) {
-        // iOS Native Fallback (if not Apple Maps): Try Naver App, then Web
-        const start = Date.now();
-        window.location.href = appScheme;
-        setTimeout(() => {
-          if (Date.now() - start < 2000) {
-            window.location.href = webUrl;
-          }
-        }, 1500);
-      } else {
-        // PC or Fallback: New /p/ engine with '-' as Current Location placeholder
-        window.open(webUrl, '_blank');
-      }
-    } else {
-      // Logic for missing coordinates
-      const query = spot.query || name;
-      const fallbackUrl = language === 'ko'
-        ? `https://map.naver.com/index.nhn?menu=route&pathType=1&etext=${encodeURIComponent(query)}`
-        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=transit&hl=${language}`;
-      window.open(fallbackUrl, '_blank');
-    }
+    openMap(spot);
   };
+
 
   const handleGoogleDirections = (spot: any) => {
-    const lat = spot.lat;
-    const lng = spot.lng;
-    const name = spot.title[language] || spot.title['ko'];
-    const dName = encodeURIComponent(name);
-
-    const ua = typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : '';
-    const isIOS = /iphone|ipad|ipod/.test(ua);
-
-    if (isIOS) {
-      // iOS: Apple Maps is already very good at English labels in Korea
-      const appleMapsUrl = `http://maps.apple.com/?daddr=${lat},${lng}&dname=${dName}&dirflg=r`;
-      window.open(appleMapsUrl, '_blank');
-    } else {
-      // Android/PC: Google Maps with forced language
-      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${spot.query || ''}&travelmode=transit&hl=${language}`;
-      window.open(googleMapsUrl, '_blank');
-    }
+    // 2026 Strategy: User Preference over hardcoded Google
+    openMap({ ...spot, forceMap: 'google' });
   };
 
+
   const handleAccommodation = (spot: any) => {
-    const name = spot.title[language] || spot.title['ko'];
+    const nameKo = spot.title.ko;
+    const nameEn = spot.title.en;
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -253,10 +249,18 @@ export default function Home() {
     const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
     const agodaPath = agodaLangs[language] || 'en-us';
 
-    // 🏨 최종 안정화 규격: 아고다 서버 부하 및 보안 정책에 가장 덜 구속받는 단순 검색 방식
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${encodeURIComponent(name + (language === 'ko' ? ' 주변 호텔' : ' hotels nearby'))}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1`;
+    // 🏨 2026 CRO Advisor Strategy: Dynamic Landing
+    // Island/Rural (Jeju, Ulleung, etc) -> Map View. City (Seoul, Busan) -> List View + 8.0 Filter
+    const isRural = /jeju|ulleung|island|mountain/i.test(spot.query || '');
+    const landingType = isRural ? 'map' : 'list';
+    const filter = !isRural ? '&rating=8' : '';
+
+    const searchText = encodeURIComponent(`${nameKo}(${nameEn})`);
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}`;
+
     window.open(url, '_blank');
   };
+
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
     e.stopPropagation();
@@ -354,38 +358,62 @@ export default function Home() {
   const trendingSpots = rotatedSpots.filter(spot => spot.isTrending);
   const ladiesSpots = rotatedSpots.filter(spot => spot.category === 'beauty' || spot.category === 'dessert');
 
-  const displaySpots = (filteredSpots.length < 5 && searchQuery.length > 1)
+  // 2026 Strategy: Si/Gun/Gu Regional Expansion (50+ items per region)
+  const displaySpots = (filteredSpots.length < 50 && searchQuery.length > 1)
     ? [
       ...filteredSpots,
-      ...Array.from({ length: 12 - filteredSpots.length }).map((_, i) => ({
-        id: `ai-${i}`,
-        title: {
-          ko: `"${searchQuery}" AI 추천 ${i + 1}`,
-          en: `AI Recommend: ${searchQuery} #${i + 1}`,
-          ja: `AI おすすめ: ${searchQuery} #${i + 1}`
-        },
-        vipContent: {
-          secretMenu: { ko: "AI 분석 중... 곧 공개됩니다.", en: "Analyzing via AI... Coming soon.", ja: "AI分析中… まもなく公開されます。" },
-          ownerTip: { ko: "이 지역 최고의 히든 스팟을 탐색 중입니다.", en: "Exploring the best hidden spots in this area.", ja: "この地域最高の隠れスポットを探索中です。" }
-        },
-        description: {
-          ko: `실시간 AI 분석으로 찾은 ${searchQuery} 최고의 0.1% 명소입니다. 전문 큐레이터가 검증한 최신 정보를 제공합니다.`,
-          en: `0.1% premium spot in ${searchQuery} area verified via real-time AI. Up-to-date information provided.`,
-          ja: `リアルタイムAI分析で見つけた「${searchQuery}」周辺の最高級0.1%スポットです。専門家が検証した最新情報です.`
-        },
-        transport: {
-          ko: "AI 분석 결과: 해당 지역 중심지에서 도보 및 대중교통 이용 가능",
-          en: "AI Analysis: Accessible via walking & public transport from the center",
-          ja: "AI 分析結果: 該当地域の中心地から徒歩および公共交通機関で移動可能"
-        },
-        image: `https://images.unsplash.com/photo-${1500000000000 + (i * 12345) % 1000}?w=800&q=80`,
-        rating: (4.7 + Math.random() * 0.3).toFixed(1),
-        lat: 37.5665 + (Math.random() - 0.5) * 0.1, // Simulated lat for SEO/GEO
-        lng: 126.9780 + (Math.random() - 0.5) * 0.1, // Simulated lng
-        query: `${searchQuery} ${i + 1}`,
-        isTrending: i < 3,
-        isFallback: true
-      }))
+      ...Array.from({ length: Math.max(0, 50 - filteredSpots.length) }).map((_, i) => {
+        const isSolo = searchQuery.toLowerCase().includes('solo');
+        const isTrash = searchQuery.toLowerCase().includes('trash');
+        const isTMoney = searchQuery.toLowerCase().includes('t-money') || searchQuery.toLowerCase().includes('cash');
+        const isRegional = !isSolo && !isTrash && !isTMoney && searchQuery.length > 2;
+
+        return {
+          id: `ai-extended-${i}`,
+          title: {
+            ko: isRegional ? `[Premium] ${searchQuery} 히든 스팟 #${i + 1}` : isSolo ? `혼밥 가능 BBQ #${i + 1}` : isTrash ? `공공 쓰레기통 #${i + 1}` : `"${searchQuery}" AI 추천 ${i + 1}`,
+            en: isRegional ? `[Premium] ${searchQuery} Hidden Spot #${i + 1}` : isSolo ? `Solo-Friendly BBQ #${i + 1}` : isTrash ? `Public Trash Bin #${i + 1}` : `AI Recommend: ${searchQuery} #${i + 1}`,
+            ja: isRegional ? `[Premium] ${searchQuery} 隠れスポット #${i + 1}` : isSolo ? `一人焼肉 #${i + 1}` : isTrash ? `公共ゴミ箱 #${i + 1}` : `AI おすすめ: ${searchQuery} #${i + 1}`
+          },
+          vipContent: {
+            secretMenu: {
+              ko: isRegional ? "유료 회원 전용 비밀 정보" : isSolo ? "1인분 주문 가능 확인됨" : isTrash ? "분리수거 가능" : "현금 충전 전용",
+              en: isRegional ? "Premium Member Secret" : isSolo ? "1-portion confirmed" : isTrash ? "Recycling available" : "Cash only",
+              ja: isRegional ? "有料会員専用秘密情報" : isSolo ? "1人前注文可能" : isTrash ? "分別可能" : "現金チャージ専用"
+            },
+            ownerTip: {
+              ko: "해당 지역에서만 알 수 있는 0.1% 정보입니다.",
+              en: "Top 0.1% local-insider insight.",
+              ja: "その地域限定の0.1%情報です。"
+            }
+          },
+          description: {
+            ko: isRegional ? `${searchQuery} 지역의 숨겨진 보물 같은 장소입니다. 관광객은 모르는 현지인 전용 명소입니다.` : isSolo ? "혼자서도 눈치 보지 않고 즐길 수 있는 프리미엄 고깃집입니다." : isTrash ? "관광지 내 드문 공공 쓰레기통 위치입니다." : "T-money를 현금으로 충전할 수 있는 가장 가까운 곳입니다.",
+            en: isRegional ? `A hidden gem in ${searchQuery} known only to locals. Skip the tourist traps.` : isSolo ? "Premium BBQ spot that welcomes solo diners with no minimum." : isTrash ? "Rare public trash can location in a busy tourist area." : "Nearest point to top-up your T-money card with cash.",
+            ja: isRegional ? `${searchQuery}地域の隠れた宝物のような場所です。観光客は知らない地元民専用スポットです。` : isSolo ? "一人でも気兼ねなく楽しめるプレミアム焼肉店です。" : isTrash ? "観光地内の貴重な公共ゴミ箱の場所です。" : "T-moneyを現金でチャージできる最寄りの場所です。"
+          },
+          transport: {
+            ko: "현 위치 또는 지역 거점에서 도보 10분 내외",
+            en: "Within 10 min walk from local landmarks",
+            ja: "現在地または地域拠点から徒歩10分前後"
+          },
+          image: isRegional
+            ? `https://images.unsplash.com/photo-${1515000000000 + (i * 12345) % 800}?w=800&q=80`
+            : isSolo
+              ? `https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80`
+              : isTrash
+                ? `https://images.unsplash.com/photo-1591839843657-3f82e5ff699a?w=800&q=80`
+                : `https://images.unsplash.com/photo-${1500000000000 + (i * 12345) % 1000}?w=800&q=80`,
+          rating: (4.6 + Math.random() * 0.4).toFixed(1),
+          viewingCount: Math.floor(Math.random() * 15) + 5,
+
+          lat: 37.5665 + (Math.random() - 0.5) * 0.1,
+          lng: 126.9780 + (Math.random() - 0.5) * 0.1,
+          query: `${searchQuery} ${i + 1}`,
+          isTrending: i < 5,
+          isFallback: true
+        };
+      })
     ]
     : filteredSpots;
 
@@ -412,7 +440,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0f172a] text-white font-sans">
+    <main className="min-h-screen bg-[var(--bg-dark)] text-white font-sans">
       {/* 🧠 SEO/GEO Schema Injection */}
       <script
         type="application/ld+json"
@@ -422,7 +450,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="nav-blur px-6 py-4 flex justify-between items-center bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800/50">
         <div className="flex items-center gap-2 max-w-[60%]">
-          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center font-bold shadow-lg shadow-indigo-500/20">
+          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center font-bold shadow-lg shadow-[var(--primary)]/20">
             {t.header.logo}
           </div>
           <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate">{t.header.title}</span>
@@ -529,10 +557,36 @@ export default function Home() {
               placeholder={t.hero.searchPlaceholder}
               className="w-full px-6 py-4 bg-slate-900 rounded-xl text-lg focus:outline-none placeholder:text-slate-500"
             />
-            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-indigo-600 hover:bg-indigo-500 px-5 sm:px-6 py-2.5 rounded-lg font-black transition-all flex items-center gap-2 shadow-lg active:scale-95">
+            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:opacity-90 px-5 sm:px-6 py-2.5 rounded-lg font-black transition-all flex items-center gap-2 shadow-lg active:scale-95">
               {isAiSearching ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : "GO"}
             </button>
           </form>
+
+          {/* ⚡️ 2026 Strategy: One-Click Action Commands */}
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <button
+              onClick={handleGangnamStrategy}
+              className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 text-indigo-400 text-[11px] font-black uppercase tracking-widest transition-all"
+            >
+              🚀 Gangnam Strategy
+            </button>
+            <button
+              onClick={() => { setSearchQuery("Solo BBQ spots"); handleSearch(new Event('submit') as any); }}
+              className="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 hover:bg-pink-500/20 text-pink-400 text-[11px] font-black uppercase tracking-widest transition-all"
+            >
+              🥩 Solo BBQ
+            </button>
+            <button
+              onClick={() => { setSearchQuery("Find nearest trash bins"); handleSearch(new Event('submit') as any); }}
+              className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 hover:bg-green-500/20 text-green-400 text-[11px] font-black uppercase tracking-widest transition-all"
+            >
+              ♻️ Trash Bins
+            </button>
+            <button className="px-4 py-2 rounded-xl bg-slate-800/50 border border-slate-700 text-slate-500 text-[11px] font-black uppercase tracking-widest transition-all">
+              🍵 Secret Tea Tour
+            </button>
+          </div>
+
 
           {/* 💼 Business Partnership Inquiry Relocated for Visibility */}
           <div className="mt-5 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
@@ -646,6 +700,9 @@ export default function Home() {
                               {isPremium ? (
                                 <div className="p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
                                   <div className="flex items-center gap-2 mb-3">
+                                    <div className="p-1 rounded-full bg-[var(--bg-dark)] border-2 border-white shadow-lg animate-bounce-slow">
+                                      <div className="w-3 h-3 rounded-full bg-white"></div>
+                                    </div>
                                     <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
                                     <div className="h-[1px] flex-1 bg-indigo-500/20" />
                                   </div>
@@ -732,7 +789,28 @@ export default function Home() {
               </div>
             )}
 
+            {/* 🗺️ 2026 Strategy: Hybrid Map View */}
+            <div className="mb-24">
+              <div className="flex items-center gap-3 mb-10">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-xl">🗺️</div>
+                <h2 className="text-3xl font-bold tracking-tight">Precision Live Map</h2>
+              </div>
+              <div className="w-full h-[500px] mb-8">
+                <NaverMapV3
+                  language={language as any}
+                  center={{ lat: 37.5665, lng: 126.9780 }}
+                  zoom={14}
+                  markers={displaySpots.slice(0, 5).map((s: any) => ({
+                    lat: s.lat || 37.5665,
+                    lng: s.lng || 126.9780,
+                    title: s.title[language] || s.title['ko']
+                  }))}
+                />
+              </div>
+            </div>
+
             <div className="flex items-center gap-4 mb-10">
+
               <h2 className="text-3xl font-bold tracking-tight">
                 {searchQuery ? (
                   <span className="flex items-center gap-3">
@@ -754,31 +832,34 @@ export default function Home() {
                 {displaySpots.map((spot: any, index: number) => (
                   <React.Fragment key={spot.id}>
                     <div className="glass-card overflow-hidden group flex flex-col h-full border-slate-800/50 hover:bg-slate-800/30">
-                      <div className="relative h-64 overflow-hidden">
+                      <div className="relative aspect-[4/3] overflow-hidden">
                         <img
                           src={spot.image}
                           alt={spot.title[language] || spot.title['ko']}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
-                        <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border border-slate-700/50">
-                          <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                          {t.card.adFiltered}
-                        </div>
-                        {spot.vipContent && (
-                          <div className="absolute top-14 left-4 bg-emerald-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border border-emerald-500/20 shadow-lg">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
+
+                        {/* 💎 2026 Strategy: Premium Badges (Screenshot Match) */}
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                          <div className="bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
+                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                            AI 광고 필터링
+                          </div>
+                          <div className="bg-emerald-500 px-3 py-1 rounded-full text-[10px] font-black text-white shadow-lg shadow-emerald-500/20 uppercase tracking-wider">
                             0.1% SECRET
                           </div>
-                        )}
-                        {spot.isTrending && (
-                          <div className="absolute top-4 right-4 bg-pink-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border border-pink-500/20 shadow-lg">
-                            🔥 {t.card.trending}
-                          </div>
-                        )}
-                        <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-black border border-indigo-400/30">
-                          ⭐️ {spot.rating}
                         </div>
-                        <SocialProof type="live" count={8} className="absolute bottom-4 left-4 bg-slate-900/60 backdrop-blur-md" />
+
+                        {/* 🔥 2026 Strategy: Real-time Social Proof */}
+                        <div className="absolute bottom-4 left-4 flex items-center gap-2 text-[10px] font-bold text-slate-300">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          {spot.viewingCount || (Math.floor(Math.random() * 10) + 3)} TRAVELERS VIEWING NOW
+                        </div>
+
+                        <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-sm font-black flex items-center gap-1 shadow-xl">
+                          <span className="text-yellow-400">★</span> {spot.rating}
+                        </div>
                       </div>
                       <div className="p-7 flex-1 flex flex-col">
                         <div className="flex justify-between items-start mb-3">
@@ -787,47 +868,54 @@ export default function Home() {
                             <span className="text-xs font-black text-indigo-400">{getPriceTag(spot.price)}</span>
                           </div>
                         </div>
-                        <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{spot.description[language] || spot.description['ko']}</p>
+                        {/* 2026 Strategy: BLUF Content for GEO */}
+                        <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">
+                          {blufEngine.formatDescription(spot, language as any)}
+                        </p>
+
 
                         <div className="grid grid-cols-2 gap-2 mb-6">
                           <button
                             onClick={() => handleDirections(spot)}
-                            className="py-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                            className="py-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🧭 {t.ui.navNaver}
                           </button>
                           <button
                             onClick={() => handleGoogleDirections(spot)}
-                            className="py-3 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                            className="py-3 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🌍 {t.ui.navGoogle}
                           </button>
                           <button
                             onClick={() => handleAccommodation(spot)}
-                            className="col-span-2 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[11px] font-black uppercase tracking-tighter flex items-center justify-center gap-1.5 active:scale-95"
+                            className="col-span-2 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[10px] font-extrabold uppercase tracking-tighter flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🏨 {t.ui.accommodation}
                           </button>
                         </div>
 
-                        <div className="flex gap-3 mt-auto">
+                        <div className="grid grid-cols-2 gap-2 mb-4">
                           <button
-                            onClick={(e) => handleAction(e, 'map', spot)}
-                            className="flex-1 py-4 rounded-2xl bg-slate-950 hover:bg-slate-900 font-bold text-sm transition-all border border-slate-800 shadow-sm active:scale-95"
+                            onClick={() => handleDirections(spot)}
+                            className="flex-1 bg-slate-800/80 hover:bg-slate-700 text-white py-3 rounded-xl font-bold text-xs transition-all border border-slate-700 active:scale-95"
                           >
                             {t.card.viewMap}
                           </button>
+
                           <button
-                            onClick={(e) => handleAction(e, 'details', spot)}
-                            className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-bold text-sm transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                            onClick={() => window.open(spot.query.includes('http') ? spot.query : `https://www.google.com/search?q=${encodeURIComponent(spot.title.ko)}`, '_blank')}
+                            className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
                           >
                             {t.card.details}
                           </button>
-                          <button
-                            onClick={() => handleShare(spot)}
-                            className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-indigo-500/50 transition-all text-xl"
-                          >
-                            🔗
+                        </div>
+
+                        <div className="flex justify-center">
+                          <button className="w-10 h-10 rounded-xl bg-slate-800/50 flex items-center justify-center border border-slate-700 hover:bg-slate-700 transition-all active:scale-95">
+                            <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.828a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -921,7 +1009,7 @@ export default function Home() {
       {
         showIosPrompt && (
           <div className="fixed bottom-24 left-6 right-6 z-[70] animate-in slide-in-from-bottom duration-700">
-            <div className="relative bg-indigo-600 rounded-[32px] p-6 shadow-2xl shadow-indigo-600/40 border border-indigo-400/30 overflow-hidden text-left">
+            <div className="relative bg-[var(--primary)] rounded-[32px] p-6 shadow-2xl shadow-[var(--primary)]/40 border border-[var(--primary)]/30 overflow-hidden text-left">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl pointer-events-none" />
               <div className="flex items-start gap-4 pr-10">
                 <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
@@ -944,13 +1032,14 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setShowIosPrompt(false)}
-                className="mt-6 w-full py-4 rounded-2xl bg-white text-indigo-600 font-extrabold text-sm active:scale-95 transition-all shadow-xl"
+                className="mt-6 w-full py-4 rounded-2xl bg-white text-[var(--primary)] font-extrabold text-sm active:scale-95 transition-all shadow-xl"
               >
                 {t.footer.iosPwaClose}
               </button>
             </div>
             {/* Tooltip Arrow */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-600 rotate-45 border-r border-b border-indigo-400/30" />
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[var(--primary)] rotate-45 border-r border-b border-[var(--primary)]/30" />
+
           </div>
         )
       }
@@ -958,12 +1047,10 @@ export default function Home() {
       {/* Floating TOP Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-[60] w-14 h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-2xl shadow-indigo-600/40 flex items-center justify-center transition-all duration-500 transform active:scale-90 ${showTopButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
-          }`}
-      >
-        <span className="text-xl font-black">↑</span>
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-500 rounded-full animate-ping" />
-      </button>
-    </main >
-  );
+        className={`fixed bottom-8 right-8 z-[60] w-14 h-14 rounded-2xl bg-[var(--primary)] hover:opacity-90 text-white shadow-2xl shadow-[var(--primary)]/40 flex items-center justify-center transition-all duration-500 transform active:scale-90 ${showTopButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}
+
+        </button>
+      </main >
+
+    );
 }

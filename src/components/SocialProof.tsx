@@ -53,7 +53,7 @@ export const SocialProof: React.FC<SocialProofProps> = ({ type, count, className
 
     if (type === 'verify') {
         return (
-            <div className={`flex items-center gap-1.5 text-indigo-400 ${className}`}>
+            <div className={`flex items-center gap-1.5 text-[var(--primary)] ${className}`}>
                 <span className="text-xs">🛡️</span>
                 <span className="text-[10px] font-black uppercase tracking-widest">AI & Local Verified</span>
             </div>

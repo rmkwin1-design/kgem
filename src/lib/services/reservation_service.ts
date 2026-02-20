@@ -1,0 +1,40 @@
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp, query, orderBy, limit, getDocs, where } from "firebase/firestore";
+
+/**
+ * KGEM Reservation Proxy Service
+ * Handles user requests for CatchTable/Tabling reservations.
+ */
+export const reservationService = {
+    /**
+     * Submits a reservation request from a user.
+     */
+    async requestProxy(userId: string, spot: any, details: { date: string; time: string; partySize: number }) {
+        const reservationsRef = collection(db, "reservation_requests");
+
+        await addDoc(reservationsRef, {
+            userId,
+            spotId: spot.id,
+            spotTitle: spot.title.ko || spot.title['ko'],
+            requestType: 'catchtable_proxy',
+            details,
+            status: 'pending',
+            createdAt: serverTimestamp(),
+            fee: 9.99, // Standard proxy fee
+            currency: 'USD'
+        });
+
+        return { status: 'success', message: 'Reservation request submitted.' };
+    },
+
+    /**
+     * Fetches all pending reservations for the Admin (Oppa).
+     */
+    async getPendingReservations() {
+        const reservationsRef = collection(db, "reservation_requests");
+        const q = query(reservationsRef, where("status", "==", "pending"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+};

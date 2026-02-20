@@ -1,3 +1,9 @@
+declare global {
+    interface Window {
+        naver: any;
+    }
+}
+
 export interface LocalizedString {
     ko: string;
     en: string;
@@ -9,6 +15,11 @@ export interface VipContent {
     secretMenu: LocalizedString;
     ownerTip: LocalizedString;
     status?: LocalizedString;
+}
+
+export interface GeoSchema {
+    bluf: LocalizedString; // Bottom Line Up Front for AI Agents
+    faq?: { question: LocalizedString; answer: LocalizedString }[];
 }
 
 export interface TravelSpot {
@@ -30,4 +41,6 @@ export interface TravelSpot {
     price?: number;
     lat?: number;
     lng?: number;
+    geoSchema?: GeoSchema; // GEO (Generative Engine Optimization) layer
 }
+
