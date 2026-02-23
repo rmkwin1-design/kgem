@@ -302,16 +302,7 @@ export default function Home() {
     // Hyper-Aggressive Forcing: path + language ID + setlang + currency + site_id + headerlang + setlanguage + ck_en + redirect bypass
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&redirect=false`;
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = /android/i.test(userAgent);
-
-    if (isAndroid && language !== 'ko') {
-      // 🔥 NotebookLM Solution: Force Chrome browser
-      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
-      window.location.href = chromeIntent;
-    } else {
-      window.open(url, '_blank');
-    }
+    window.open(url, '_blank');
   };
 
 
@@ -339,8 +330,8 @@ export default function Home() {
       } else {
         const googleTlds: any = { en: 'com', ja: 'co.jp' };
         const tld = googleTlds[language] || 'com';
-        // Mirror successful Search parameters for Map Search
-        url = `https://www.google.${tld}/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}&set_language=${langParam}&lr=${lrParam}`;
+        // 🔥 Logic Sync: Use the same /maps/dir/ structure that works for Directions
+        url = `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodedQuery}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
       }
     } else {
       // For details search
@@ -357,8 +348,9 @@ export default function Home() {
     const userAgent = navigator.userAgent.toLowerCase();
     const isAndroid = /android/i.test(userAgent);
 
-    if (isAndroid && language !== 'ko') {
-      // 🔥 NotebookLM Solution: Force Chrome browser
+    if (isAndroid && language !== 'ko' && type === 'map') {
+      // 🔥 Only force Chrome for Map view to bypass App native hijacking. 
+      // Search (details) works fine with window.open and doesn't need "Open with" popup.
       const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
       window.location.href = chromeIntent;
     } else {
