@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { usePreference } from '@/context/PreferenceContext';
 import { useTranslation } from '@/context/LanguageContext';
-import { getMapScheme, getStoreUrl, getWebFallbackUrl } from '@/utils/mapUrlGenerator';
+import { getMapScheme, getStoreUrl, getWebFallbackUrl, MapMode } from '@/utils/mapUrlGenerator';
 
 /**
  * KGEM 2026: Platform-Aware Navigation Hook
@@ -13,7 +13,7 @@ export const useMapNavigation = () => {
     const { preferredMap } = usePreference();
     const { language } = useTranslation();
 
-    const openMap = useCallback((spot: any) => {
+    const openMap = useCallback((spot: any, mode: MapMode = 'search') => {
         const userAgent = navigator.userAgent.toLowerCase();
         const isAndroid = /android/i.test(userAgent);
         const isIOS = /iphone|ipad|ipod/i.test(userAgent);
@@ -32,12 +32,12 @@ export const useMapNavigation = () => {
 
         // Google Maps: Universal handled by browser/OS
         if (mapToUse === 'google') {
-            window.open(getMapScheme(dest, 'google', isAndroid, language), '_blank');
+            window.open(getMapScheme(dest, 'google', isAndroid, language, mode), '_blank');
             return;
         }
 
-        const scheme = getMapScheme(dest, mapToUse, isAndroid, language);
-        const webUrl = getWebFallbackUrl(dest, mapToUse, language);
+        const scheme = getMapScheme(dest, mapToUse, isAndroid, language, mode);
+        const webUrl = getWebFallbackUrl(dest, mapToUse, language, mode);
         const storeUrl = getStoreUrl(mapToUse, isIOS);
 
         if (isAndroid) {

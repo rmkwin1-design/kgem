@@ -265,13 +265,13 @@ export default function Home() {
   };
 
   const handleDirections = (spot: any) => {
-    openMap(spot);
+    openMap(spot, 'directions');
   };
 
 
   const handleGoogleDirections = (spot: any) => {
     // 2026 Strategy: User Preference over hardcoded Google
-    openMap({ ...spot, forceMap: 'google' });
+    openMap({ ...spot, forceMap: 'google' }, 'directions');
   };
 
 
@@ -295,11 +295,13 @@ export default function Home() {
     const filter = !isRural ? '&rating=8' : '';
 
     // 🏨 2026 CRO Advisor Strategy: Pure Localization for International Users
-    // Remove the Korean name suffix for International users to avoid Agoda's Korean-bias.
+    // CRITICAL: Remove Korean name suffix for International users to avoid Agoda's Korean-bias.
     const searchText = encodeURIComponent(nameTarget);
 
     // Hyper-Aggressive Forcing: Added &locale param and multiple redundant language IDs
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&locale=${agodaPath}&redirect=false`;
+    // 🔥 Strategy: Use the localized domain directly for Agoda
+    const agodaDomain = language === 'ja' ? 'www.agoda.com/ja-jp' : language === 'ko' ? 'www.agoda.com/ko-kr' : 'www.agoda.com/en-us';
+    const url = `https://${agodaDomain}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&locale=${agodaPath}&redirect=false`;
 
     const userAgent = navigator.userAgent.toLowerCase();
     const isAndroid = /android/i.test(userAgent);
@@ -320,7 +322,7 @@ export default function Home() {
 
     // Unified Map Navigation: Use the same successful hook logic as "Directions"
     if (type === 'map') {
-      openMap(spot);
+      openMap(spot, 'search');
       return;
     }
 

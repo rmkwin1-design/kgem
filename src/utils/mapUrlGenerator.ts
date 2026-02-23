@@ -12,7 +12,9 @@ interface Destination {
     enName?: string;
 }
 
-export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolean, language: string): string => {
+export type MapMode = 'search' | 'directions';
+
+export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolean, language: string, mode: MapMode = 'search'): string => {
     const { lat, lng, name, enName } = dest;
 
     // Naver Map requires hybrid for accuracy, but Google/Kakao should use localized only for international users
@@ -40,13 +42,19 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
         case 'google':
         default:
-            const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
+            const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr' };
             const tld = googleTlds[language] || 'com';
             const googleQuery = language === 'ko' ? name : (enName || name);
             const langParam = language === 'ja' ? 'ja' : 'en';
             const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
 
-            const webUrl = `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+            let webUrl = "";
+            if (mode === 'directions') {
+                webUrl = `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+            } else {
+                // Search mode (Pin view)
+                webUrl = `https://www.google.${tld}/maps/search/?api=1&query=${encodeURIComponent(googleQuery)}&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+            }
 
             if (isAndroid && language !== 'ko') {
                 // 🔥 NotebookLM Solution: Force Chrome browser to bypass Native App's Korean locale hijacking
@@ -57,7 +65,7 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
     }
 };
 
-export const getWebFallbackUrl = (dest: Destination, type: MapType, language: string): string => {
+export const getWebFallbackUrl = (dest: Destination, type: MapType, language: string, mode: MapMode = 'search'): string => {
     const { lat, lng, name, enName } = dest;
 
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
