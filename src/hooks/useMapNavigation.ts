@@ -21,19 +21,22 @@ export const useMapNavigation = () => {
         const dest = {
             lat: spot.lat,
             lng: spot.lng,
-            name: spot.title.ko || spot.title['ko'],
-            enName: spot.title.en || spot.title['en']
+            name: spot.title.ko,
+            enName: language === 'ja' ? spot.title.ja : spot.title.en
         };
 
         // Google Maps: Universal handled by browser/OS
-        if (preferredMap === 'google') {
+        const mapToUse = spot.forceMap || preferredMap;
+
+        // Google Maps: Universal handled by browser/OS
+        if (mapToUse === 'google') {
             window.open(getMapScheme(dest, 'google', isAndroid, language), '_blank');
             return;
         }
 
-        const scheme = getMapScheme(dest, preferredMap, isAndroid, language);
-        const webUrl = getWebFallbackUrl(dest, preferredMap, language);
-        const storeUrl = getStoreUrl(preferredMap, isIOS);
+        const scheme = getMapScheme(dest, mapToUse, isAndroid, language);
+        const webUrl = getWebFallbackUrl(dest, mapToUse, language);
+        const storeUrl = getStoreUrl(mapToUse, isIOS);
 
         if (isAndroid) {
             // Intent handles app/market automatically

@@ -277,7 +277,7 @@ export default function Home() {
 
   const handleAccommodation = (spot: any) => {
     const nameKo = spot.title.ko;
-    const nameEn = spot.title.en;
+    const nameTarget = spot.title[language] || spot.title.en;
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -287,12 +287,11 @@ export default function Home() {
     const agodaPath = agodaLangs[language] || 'en-us';
 
     // 🏨 2026 CRO Advisor Strategy: Dynamic Landing
-    // Island/Rural (Jeju, Ulleung, etc) -> Map View. City (Seoul, Busan) -> List View + 8.0 Filter
-    const isRural = /jeju|ulleung|island|mountain/i.test(spot.query || '');
+    const isRural = /jeju|ulleung|island|mountain/i.test((spot.query.en || '').toLowerCase());
     const landingType = isRural ? 'map' : 'list';
     const filter = !isRural ? '&rating=8' : '';
 
-    const searchText = encodeURIComponent(`${nameKo}(${nameEn})`);
+    const searchText = encodeURIComponent(`${nameTarget}(${nameKo})`);
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}`;
 
     window.open(url, '_blank');
@@ -302,23 +301,31 @@ export default function Home() {
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
     e.stopPropagation();
     let url = "";
-    const query = spot.query || spot.title[language] || spot.title['ko'];
+
+    // Use target language query first, fallback to Korean
+    const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
+    const koQuery = spot.query['ko'] || spot.title['ko'];
+
+    // For maps, hybrid query works best: "English Title (Korean Title)"
+    const hybridQuery = language === 'ko' ? koQuery : `${targetQuery}(${koQuery})`;
+    const encodedQuery = encodeURIComponent(hybridQuery);
 
     if (type === 'map') {
       if (language === 'ko') {
-        url = `https://map.naver.com/v5/search/${encodeURIComponent(query)}`;
+        url = `https://map.naver.com/v5/search/${encodedQuery}`;
       } else if (language === 'ja') {
-        url = `https://www.google.co.jp/maps/search/${encodeURIComponent(query)}?hl=ja`;
+        url = `https://www.google.co.jp/maps/search/${encodedQuery}?hl=ja`;
       } else {
-        url = `https://www.google.com/maps/search/${encodeURIComponent(query)}?hl=en`;
+        url = `https://www.google.com/maps/search/${encodedQuery}?hl=en`;
       }
     } else {
+      // For details search
       if (language === 'ko') {
-        url = `https://search.naver.com/search.naver?query=${encodeURIComponent(query)}`;
+        url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
       } else if (language === 'ja') {
-        url = `https://www.google.co.jp/search?q=${encodeURIComponent(query)}&hl=ja`;
+        url = `https://www.google.co.jp/search?q=${encodedQuery}&hl=ja`;
       } else {
-        url = `https://www.google.com/search?q=${encodeURIComponent(query)}&hl=en`;
+        url = `https://www.google.com/search?q=${encodedQuery}&hl=en`;
       }
     }
     window.open(url, '_blank');
@@ -941,7 +948,15 @@ export default function Home() {
                           </button>
 
                           <button
-                            onClick={() => window.open(spot.query.includes('http') ? spot.query : `https://www.google.com/search?q=${encodeURIComponent(spot.title.ko)}`, '_blank')}
+                            onClick={() => {
+                              const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
+                              const koQuery = spot.query['ko'] || spot.title['ko'];
+                              const hybridQuery = language === 'ko' ? koQuery : `${targetQuery}(${koQuery})`;
+                              const url = language === 'ko'
+                                ? `https://search.naver.com/search.naver?query=${encodeURIComponent(hybridQuery)}`
+                                : `https://www.google.com/search?q=${encodeURIComponent(hybridQuery)}&hl=${language}`;
+                              window.open(url, '_blank');
+                            }}
                             className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
                           >
                             {t.card.details}
