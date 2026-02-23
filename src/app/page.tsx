@@ -306,16 +306,7 @@ export default function Home() {
 
     const url = `https://${agodaDomain}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${langId}&headerlang=${agodaPath}&setlanguage=1&${ckStr}&locale=${agodaPath}&redirect=false`;
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = /android|samsungbrowser|chrome.*mobile/i.test(userAgent);
-
-    if (isAndroid && language !== 'ko') {
-      // 🔥 Force Chrome for Agoda to bypass App native hijacking.
-      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
-      window.location.href = chromeIntent;
-    } else {
-      window.open(url, '_blank');
-    }
+    window.open(url, '_blank');
   };
 
 

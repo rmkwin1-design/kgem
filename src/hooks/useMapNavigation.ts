@@ -29,18 +29,12 @@ export const useMapNavigation = () => {
         };
 
         // Google Maps: Universal handled by browser/OS
-        // 🔥 Strategic Override: Force Google for International users on Android to ensure localization
-        const mapToUse = (isAndroid && language !== 'ko') ? 'google' : (spot.forceMap || preferredMap);
+        const mapToUse = spot.forceMap || preferredMap;
 
         // Google Maps: Universal handled by browser/OS
         if (mapToUse === 'google') {
             const scheme = getMapScheme(dest, 'google', isAndroid, language, mode);
-            if (isAndroid && language !== 'ko') {
-                // Use location.href for reliable intent launching on Android
-                window.location.href = scheme;
-            } else {
-                window.open(scheme, '_blank');
-            }
+            window.open(scheme, '_blank');
             return;
         }
 

@@ -34,15 +34,10 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
             const finalNaverWeb = mode === 'search' ? naverSearchWeb : naverRouteWeb;
 
             if (isAndroid) {
-                if (language !== 'ko') {
-                    // 🔥 Force Chrome for Naver Web to maintain localization
-                    return `intent://${finalNaverWeb.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(finalNaverWeb)};end`;
-                }
-                // Standard Native App Intent
-                if (mode === 'search') {
-                    return `intent://search?query=${encodedNaverName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(naverSearchWeb)};end`;
-                }
-                return `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(naverRouteWeb)};end`;
+                // Return standard native URI for Android. Avoid intent:// for Naver to prevent "Open with" popups.
+                return mode === 'search'
+                    ? `nmap://search?query=${encodedNaverName}&appname=com.kgem.app`
+                    : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app`;
             }
             return mode === 'search'
                 ? `nmap://search?query=${encodedNaverName}&appname=com.kgem.app&lang=${naverLang}`
@@ -54,15 +49,9 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
             const finalKakaoWeb = mode === 'search' ? kakaoSearchWeb : kakaoRouteWeb;
 
             if (isAndroid) {
-                if (language !== 'ko') {
-                    // 🔥 Force Chrome for Kakao Web to maintain localization
-                    return `intent://${finalKakaoWeb.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(finalKakaoWeb)};end`;
-                }
-                // Standard Native App Intent
-                if (mode === 'search') {
-                    return `intent://look?p=${lat},${lng}#Intent;scheme=kakaomap;package=net.daum.android.map;end`;
-                }
-                return `intent://route?ep=${lat},${lng}&by=PUBLICTRANSIT#Intent;scheme=kakaomap;package=net.daum.android.map;end`;
+                return mode === 'search'
+                    ? `kakaomap://look?p=${lat},${lng}`
+                    : `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT`;
             }
             return mode === 'search'
                 ? `kakaomap://look?p=${lat},${lng}`
@@ -86,7 +75,8 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
             if (isAndroid && language !== 'ko') {
                 // 🔥 NotebookLM Solution: Force Chrome browser to bypass Native App's Korean locale hijacking
-                return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
+                // This is specifically for Google Maps as it's the hardest to localize in-app.
+                return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
             }
             return webUrl;
     }
