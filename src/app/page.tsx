@@ -291,7 +291,8 @@ export default function Home() {
     const landingType = isRural ? 'map' : 'list';
     const filter = !isRural ? '&rating=8' : '';
 
-    const searchText = encodeURIComponent(`${nameTarget}(${nameKo})`);
+    // For Agoda: Use "TargetName (KoreanName)" to ensure success
+    const searchText = encodeURIComponent(`${nameTarget} (${nameKo})`);
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}`;
 
     window.open(url, '_blank');
@@ -306,8 +307,8 @@ export default function Home() {
     const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
     const koQuery = spot.query['ko'] || spot.title['ko'];
 
-    // For maps, hybrid query works best: "English Title (Korean Title)"
-    const hybridQuery = language === 'ko' ? koQuery : `${targetQuery}(${koQuery})`;
+    // 🔥 Strategy: For Details/Search, use "TargetQuery KoreanQuery" for best results on Google/Naver
+    const hybridQuery = language === 'ko' ? koQuery : `${targetQuery} ${koQuery}`;
     const encodedQuery = encodeURIComponent(hybridQuery);
 
     if (type === 'map') {
@@ -941,7 +942,7 @@ export default function Home() {
 
                         <div className="grid grid-cols-2 gap-2 mb-4">
                           <button
-                            onClick={() => handleDirections(spot)}
+                            onClick={(e) => handleAction(e, 'map', spot)}
                             className="flex-1 bg-slate-800/80 hover:bg-slate-700 text-white py-3 rounded-xl font-bold text-xs transition-all border border-slate-700 active:scale-95"
                           >
                             {t.card.viewMap}

@@ -15,23 +15,22 @@ interface Destination {
 export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolean, language: string): string => {
     const { lat, lng, name, enName } = dest;
 
+    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
+
     // Premium Strategy: Hybrid Formatting based on current language
-    // English: English Name (Korean Name)
-    // Japanese: Japanese Name (Korean Name)
-    // Korean: Korean Name
     let hybridName = name;
-    if (language === 'en' && enName) hybridName = `${enName}(${name})`;
-    else if (language === 'ja' && enName) hybridName = `${enName}(${name})`;
+    if (language !== 'ko' && enName) {
+        hybridName = `${enName} (${name})`;
+    }
 
     const encodedName = encodeURIComponent(hybridName);
-    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
     switch (type) {
         case 'naver':
             if (isAndroid) {
-                return `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;end`;
+                return `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=https://map.naver.com/v5/search/${encodedName}/?lang=${naverLang};end`;
             }
-            return `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
+            return `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app&lang=${naverLang}`;
 
         case 'kakao':
             if (isAndroid) {
@@ -49,8 +48,9 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const { lat, lng, name, enName } = dest;
 
     let hybridName = name;
-    if (language === 'en' && enName) hybridName = `${enName}(${name})`;
-    else if (language === 'ja' && enName) hybridName = `${enName}(${name})`;
+    if (language !== 'ko' && enName) {
+        hybridName = `${enName} (${name})`;
+    }
 
     const encodedName = encodeURIComponent(hybridName);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
