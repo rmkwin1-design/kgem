@@ -82,7 +82,6 @@ export const ja = {
         copy: "© 2026 K-Gem. 広告型無料プレミアムコンテンツ。",
         business: "ビジネス: パートナー提携のお問い合わせ →",
         iosPwaTitle: "K-Gem モバイルアプリ体験",
-        iosPwaTitle: "K-Gem 모바일 앱 경험",
         iosPwaDesc: "[共有]ボタンをタップして「ホーム画面に追加」を選択すると、アプリとして便利に利用できます。",
         iosPwaClose: "了解しました"
     },
