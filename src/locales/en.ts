@@ -81,6 +81,8 @@ export const en = {
         updated: "Updated Bi-weekly",
         copy: "© 2026 K-Gem. Ad-Supported Premium Content.",
         business: "Business: Partner with us →",
+        info: "Company: Jiin | Rep: Kibum Kim | Business ID: 620-50-00323",
+        extraInfo: "Mail Order License: No. 2019-IncheonBupyeong-0436 | Address: B115-11, A-dong, 283 Bupyeong-daero, Bupyeong-gu, Incheon, Korea | Email: rmkwin@naver.com",
         iosPwaTitle: "K-Gem Mobile Experience",
         iosPwaDesc: "Tap [Share] then 'Add to Home Screen' to use K-Gem as an app.",
         iosPwaClose: "Got it"

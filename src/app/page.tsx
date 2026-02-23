@@ -986,11 +986,14 @@ export default function Home() {
             <Link href="/refund" className="hover:text-[var(--primary)] transition-colors">{t.legal.refund.title}</Link>
           </div>
 
-          <p className="text-[var(--text-muted)] text-[10px] tracking-wide leading-relaxed opacity-60">
-            {t.footer.powered} • {t.footer.updated}<br />
-            {t.footer.copy}<br />
-            <span className="mt-2 block">Business License: [123-45-67890] • Rep: [K.B Kim] • Seoul, Korea</span>
-          </p>
+          <div className="text-[var(--text-muted)] text-[10px] tracking-wide leading-relaxed opacity-60">
+            <p>{t.footer.powered} • {t.footer.updated}</p>
+            <p className="mt-1">{t.footer.copy}</p>
+            <div className="mt-3 pt-3 border-t border-[var(--glass)]/30">
+              <p>{t.footer.info}</p>
+              <p className="mt-1">{t.footer.extraInfo}</p>
+            </div>
+          </div>
 
           {isInstallable && (
             <button
