@@ -298,17 +298,19 @@ export default function Home() {
     // CRITICAL: Remove Korean name suffix for International users to avoid Agoda's Korean-bias.
     const searchText = encodeURIComponent(nameTarget);
 
-    // Hyper-Aggressive Forcing: Added &locale param and multiple redundant language IDs
+    // Hyper-Aggressive Forcing: Added multiple redundant language IDs and ck_en
     // 🔥 Strategy: Use the localized domain directly for Agoda
     const agodaDomain = language === 'ja' ? 'www.agoda.com/ja-jp' : language === 'ko' ? 'www.agoda.com/ko-kr' : 'www.agoda.com/en-us';
-    const url = `https://${agodaDomain}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&locale=${agodaPath}&redirect=false`;
+    const langId = language === 'ja' ? 2 : language === 'ko' ? 10 : 1;
+    const ckStr = language === 'ja' ? 'ck_ja=1' : language === 'ko' ? 'ck_ko=1' : 'ck_en=1';
+
+    const url = `https://${agodaDomain}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${langId}&headerlang=${agodaPath}&setlanguage=1&${ckStr}&locale=${agodaPath}&redirect=false`;
 
     const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = /android/i.test(userAgent);
+    const isAndroid = /android|samsungbrowser|chrome.*mobile/i.test(userAgent);
 
     if (isAndroid && language !== 'ko') {
       // 🔥 Force Chrome for Agoda to bypass App native hijacking.
-      // Added action and category for stricter browser forcing.
       const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
       window.location.href = chromeIntent;
     } else {

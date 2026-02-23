@@ -15,7 +15,8 @@ export const useMapNavigation = () => {
 
     const openMap = useCallback((spot: any, mode: MapMode = 'search') => {
         const userAgent = navigator.userAgent.toLowerCase();
-        const isAndroid = /android/i.test(userAgent);
+        // 🔥 Robust Platform Detection: Include common mobile/browser markers to prevent fallback to PC logic
+        const isAndroid = /android|samsungbrowser|chrome.*mobile/i.test(userAgent);
         const isIOS = /iphone|ipad|ipod/i.test(userAgent);
 
         const dest = {
@@ -33,7 +34,13 @@ export const useMapNavigation = () => {
 
         // Google Maps: Universal handled by browser/OS
         if (mapToUse === 'google') {
-            window.open(getMapScheme(dest, 'google', isAndroid, language, mode), '_blank');
+            const scheme = getMapScheme(dest, 'google', isAndroid, language, mode);
+            if (isAndroid && language !== 'ko') {
+                // Use location.href for reliable intent launching on Android
+                window.location.href = scheme;
+            } else {
+                window.open(scheme, '_blank');
+            }
             return;
         }
 
