@@ -40,7 +40,9 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
         case 'google':
         default:
-            return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
+            // Premium Strategy: Use name instead of coordinates for Google to force language anchoring
+            const googleQuery = language === 'ko' ? name : hybridName;
+            return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
     }
 };
 
@@ -64,7 +66,8 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
         return `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
     }
 
-    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=transit&hl=${language}`;
+    const googleQuery = language === 'ko' ? name : hybridName;
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
 };
 
 export const getStoreUrl = (type: MapType, isIOS: boolean): string => {

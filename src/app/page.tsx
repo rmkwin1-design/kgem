@@ -295,7 +295,7 @@ export default function Home() {
     const searchText = language === 'ko'
       ? encodeURIComponent(`${nameTarget}(${nameKo})`)
       : encodeURIComponent(nameTarget);
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}`;
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaPath}&set_language=${agodaPath}&locale=${agodaPath}`;
 
     window.open(url, '_blank');
   };
@@ -330,7 +330,8 @@ export default function Home() {
       if (language === 'ko') {
         url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
       } else {
-        url = `https://www.google.com/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}`;
+        // 🔥 Extreme Strategy: Multiple locale overrides for Google
+        url = `https://www.google.com/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
       }
     }
     window.open(url, '_blank');

@@ -322,7 +322,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "전주역에서 119번 버스, 한옥마을 하차", en: "Bus 119 from Jeonju Station to Hanok Village", ja: "全州駅から119番バス、韓屋村下車" },
         description: { ko: "청춘의 싱그러움이 녹아있는 만화방과 터널길.", en: "The comic book store and tunnel path filled with the freshness of youth.", ja: "青春の瑞々しさが溶け込んでいる漫画喫茶とトンネルの道。" },
-        query: { ko: "전주 한벽굴", en: "Twenty-Five Twenty-One", ja: "全州韓屋村二十五、二十一撮影地" },
+        query: { ko: "전주 한벽굴", en: "Hanbyeokgul Tunnel Jeonju", ja: "全州韓屋村二十五、二十一撮影地" },
         lat: 35.8117,
         lng: 127.1583,
         vipContent: {
@@ -340,7 +340,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "포항역에서 9000번 버스 이용, 구룡포 하차", en: "Bus 9000 from Pohang Station to Guryongpo", ja: "浦項駅から9000番バス利用、九龍浦下車" },
         description: { ko: "까불이의 흔적은 없고 낭만만 가득한 바닷가 계단 마을.", en: "A seaside village with romance and no trace of the villain.", ja: "悪党の痕跡はなく、ロマンだけが溢れる海辺の階段の村。" },
-        query: { ko: "구룡포 일본인 가옥거리", en: "When the Camellia Blooms", ja: "浦項九龍浦椿の花咲く頃撮影地" },
+        query: { ko: "구룡포 일본인 가옥거리", en: "Guryongpo Japanese House Street", ja: "九龍浦日本人家屋通り" },
         lat: 35.9904,
         lng: 129.5606,
         vipContent: {
@@ -392,7 +392,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "6호선 녹사평역 3번 출구 도보 5분", en: "5 min walk from Noksapyeong Station Exit 3", ja: "6号線 緑莎坪駅 3番出口 徒歩5分" },
         description: { ko: "박새로이의 열정이 살아있는 이태원 클라쓰의 중심지.", en: "The heart of Itaewon Class where Park Saeroyi's passion lives.", ja: "パク・セロイの情熱が生きている梨泰院クラスの中心地。" },
-        query: { ko: "이태원 단밤 촬영지", en: "Danbam", ja: "梨泰院クラスタンバム1号店" },
+        query: { ko: "이태원 단밤 촬영지", en: "Itaewon Danbam", ja: "梨泰院タンバム" },
         lat: 37.5346,
         lng: 126.9880,
         vipContent: {
@@ -408,7 +408,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "6호선 녹사평역 1번 출구 도보 2분", en: "2 min walk from Noksapyeong Station Exit 1", ja: "6号線 緑莎坪駅 1番出口 徒歩2分" },
         description: { ko: "박새로이가 고민에 잠기던 드라마 속 명장면의 배경.", en: "The background of the famous scene where Park Saeroyi was lost in thought.", ja: "パク・セロイが悩み事をした劇中の名場面の背景。" },
-        query: { ko: "녹사평역 육교", en: "Namsan Pedestrian Bridge", ja: "梨泰院クラス南山歩橋" },
+        query: { ko: "녹사평역 육교", en: "Noksapyeong Station Bridge", ja: "緑莎坪駅歩道橋" },
         lat: 37.5358,
         lng: 126.9868,
         vipContent: {
@@ -424,7 +424,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "수원역에서 60번 버스 이용, 행궁동 하차", en: "Bus 60 from Suwon Station to Haenggung-dong", ja: "水原駅から60番バス利用、行宮洞下車" },
         description: { ko: "드라마 속 우영우 김밥집으로 유명한 행궁동의 아기자기한 식당.", en: "A cute restaurant in Haenggung-dong famous as Woo Young-woo's Gimbap shop.", ja: "劇中のウ・ヨンウのキンパ店として有名な行宮洞のこじんまりとした食堂。" },
-        query: { ko: "수원 카즈미", en: "Kajigurumi", ja: "ウ・ヨンウ弁護士は天才肌カジグルミ" },
+        query: { ko: "수원 카즈미", en: "Kajigurumi Suwon", ja: "水原カジグルミ" },
         lat: 37.2844,
         lng: 127.0135,
         vipContent: {
@@ -440,7 +440,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "수원역에서 택시 10분 또는 13번 버스", en: "10 min taxi or Bus 13 from Suwon Station", ja: "水原駅からタクシー10分または13番バス" },
         description: { ko: "임솔과 선재의 풋풋한 기억이 머물러 있는 청춘의 거리.", en: "The street of youth where Im Sol and Sun-jae's fresh memories stay.", ja: "イム・ソルとソンジェの初々しい記憶が残る青春の街。" },
-        query: { ko: "수원 행궁동 선업튀 촬영지", en: "Haenggung-dong Area", ja: "ソンジェ背負って走れ行宮洞一帯" },
+        query: { ko: "수원 행궁동 선업튀 촬영지", en: "Haenggung-dong Suwon", ja: "水原行宮洞" },
         lat: 37.2831,
         lng: 127.0124,
         vipContent: {
@@ -456,7 +456,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.7,
         transport: { ko: "3호선 정발산역 2번 출구 도보 5분", en: "5 min walk from Jeongbalsan Station Exit 2", ja: "3号線 鼎鉢山駅 2番出口 徒歩5分" },
         description: { ko: "빈센조가 마피아의 카리스마를 보여주던 유럽풍 야외 쇼핑몰.", en: "European-style outdoor mall where Vincenzo showed his mafia charisma.", ja: "ヴィンチェンツォがマフィアのカリスマを見せた欧州風の屋外モール。" },
-        query: { ko: "일산 라페스타 빈센조", en: "La Festa", ja: "ヴィンチェンツォラ・フェスタ坡州" },
+        query: { ko: "일산 라페스타 빈센조", en: "Ilsan La Festa", ja: "一山ラフェスタ" },
         lat: 37.6620,
         lng: 126.7725,
         vipContent: {
@@ -472,7 +472,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "청주 시외버스터미널에서 831번 버스 이용", en: "Bus 831 from Cheongju Intercity Bus Terminal", ja: "清州市外バスターミナルから831番バス利用" },
         description: { ko: "문동은과 하도영이 침묵 속에 바둑을 두던 운명적인 장소.", en: "The fateful place where Moon Dong-eun and Ha Do-young played Go in silence.", ja: "ムン・ドンウンとハ・ドヨンが沈黙の中で囲碁を打った運命的な場所。" },
-        query: { ko: "청주 중앙공원 바둑판", en: "Go Park", ja: "ザ・グローリー囲碁公園" },
+        query: { ko: "청주 중앙공원 바둑판", en: "Cheongju Central Park", ja: "清州中央公園" },
         lat: 36.6322,
         lng: 127.4891,
         vipContent: {
@@ -488,7 +488,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "3호선 경복궁역 3번 출구 버스 이용 (자하문 고개 하차)", en: "Bus from Gyeongbokgung Station Exit 3 to Jahamun Hill", ja: "3号線 景福宮駅 3番出口よりバス利用(紫霞門峠下車)" },
         description: { ko: "기택 가족이 빗속을 뚫고 도망치던 영화 속 계단과 터널.", en: "The stairs and tunnel where Ki-taek's family fled through the rain.", ja: "ギテク一家が雨の中を逃げた劇中の階段とトンネル。" },
-        query: { ko: "자하문터널 기생충", en: "Jahamun Tunnel", ja: "パラサイト紫霞門トンネル" },
+        query: { ko: "자하문터널 기생충", en: "Jahamun Tunnel", ja: "紫霞門トンネル" },
         lat: 37.5915,
         lng: 126.9635,
         vipContent: {
@@ -504,7 +504,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.7,
         transport: { ko: "4호선 쌍문역 2번 출구 도보 5분", en: "5 min walk from Ssangmun Station Exit 2", ja: "4号線 双門駅 2番出口 徒歩5分" },
         description: { ko: "성기훈의 일상이 묻어나던 생활 밀착형 시장 풍경.", en: "The daily market life of Seong Gi-hun in Squid Game.", ja: "ソン・ギフンの日常がにじみ出ていた生活密着型の市場の風景。" },
-        query: { ko: "백운시장 오징어게임", en: "Ssangmun-dong Market", ja: "イカゲーム双門洞市場" },
+        query: { ko: "백운시장 오징어게임", en: "Baegun Market Seoul", ja: "白雲市場双門洞" },
         lat: 37.6491,
         lng: 127.0345,
         vipContent: {
@@ -520,7 +520,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "4호선 명동역 3번 출구 남산 케이블카 방향 도보 10분", en: "10 min walk from Myeongdong Station towards Namsan Cable Car", ja: "4号線 明洞駅 3番出口より南山ケーブルカー方面へ徒歩10分" },
         description: { ko: "드라마 '무빙'에서 초능력자들이 비밀스럽게 만나던 추억의 맛.", en: "The nostalgic taste where superpowered humans met secretly in 'Moving'.", ja: "ドラマ「ムービング」で超能力者たちが密かに会っていた思い出の味。" },
-        query: { ko: "남산 돈까스 무빙", en: "Namsan Tonkatsu", ja: "ムービング南山とんかつ" },
+        query: { ko: "남산 돈까스 무빙", en: "Namsan Tonkatsu", ja: "南山とんかつ" },
         lat: 37.5562,
         lng: 126.9850,
         vipContent: {
@@ -536,7 +536,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "충주역에서 택시 20분 또는 시내버스 이용", en: "20 min taxi from Chungju Station", ja: "忠州駅からタクシー20分または市内バス利用" },
         description: { ko: "윤세리와 부대원들이 피크닉을 즐기던 평화로운 억새 평원.", en: "Peaceful silver grass field where Yoon Se-ri and soldiers had a picnic.", ja: "ユン・セリと部隊員たちがピクニックを楽しんだ平和なススキ原野。" },
-        query: { ko: "충주 비내섬", en: "Binae Island", ja: "愛の不時着ピネ島" },
+        query: { ko: "충주 비내섬", en: "Binae Island Chungju", ja: "忠州ピネ島" },
         lat: 37.1054,
         lng: 127.7681,
         vipContent: {
@@ -552,7 +552,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 5.0,
         transport: { ko: "2호선 남천역 1번 출구 도보 15분", en: "15 min walk from Namcheon Station Exit 1", ja: "2号線 南川駅 1出口 徒歩15分" },
         description: { ko: "순양 그룹 진양철 회장의 위엄이 느껴지는 웅장한 대저택.", en: "Grand mansion where Sunyang Group Chairman Jin Yang-cheol's majesty is felt.", ja: "スニャングループのチン・ヤンチョル会長の威厳が感じられる壮大な邸宅。" },
-        query: { ko: "부산 열린행사장", en: "Jeongsimjae", ja: "財閥家の末息子ジョンシムジェ" },
+        query: { ko: "부산 열린행사장", en: "Busan Open City Hall", ja: "釜山開かれたイベント会場" },
         lat: 35.1504,
         lng: 129.1124,
         vipContent: {
@@ -568,7 +568,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "1호선 동인천역 4번 출구 도보 10분", en: "10 min walk from Dong-Incheon Station Exit 4", ja: "1号線 東仁川駅 4番出口 徒歩10分" },
         description: { ko: "노란 외벽이 인상적인 도깨비 공유의 단골 서점.", en: "Yellow-walled bookstore frequented by Goblin (Gong Yoo).", ja: "黄色い外壁が印象的なトッケビ(コン・ユ)の行きつけの本屋。" },
-        query: { ko: "배다리 한미서점", en: "Hanmi Bookstore", ja: "トッケビハンミ書店" },
+        query: { ko: "배다리 한미서점", en: "Baedari Hanmi Bookstore", ja: "船橋ハンミ書店" },
         lat: 37.4772,
         lng: 126.6348,
         vipContent: {
@@ -584,7 +584,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.7,
         transport: { ko: "용인 버스터미널에서 시내버스 이용", en: "Local bus from Yongin Bus Terminal", ja: "龍仁バスターミナルから市内バス利用" },
         description: { ko: "수많은 장독대가 장관을 이루는 드라마 속 신비로운 장소.", en: "A mysterious place with thousands of traditional jars.", ja: "数え切れないほどの甕(かめ)が壮観をなす劇中の神秘的な場所。" },
-        query: { ko: "안성 서일농원", en: "Seoil Farm", ja: "ホテルデルーナ龍仁ソイル農園" },
+        query: { ko: "안성 서일농원", en: "Seoil Farm Anseong", ja: "安城ソイル農園" },
         lat: 37.1044,
         lng: 127.3564,
         vipContent: {
