@@ -41,8 +41,8 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
                     : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
             }
             return mode === 'search'
-                ? `nmap://search?query=${encodedNaverWebName}&appname=com.kgem.app&lang=${naverLang}`
-                : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverWebName}&appname=com.kgem.app&lang=${naverLang}`;
+                ? `https://map.naver.com/v5/search/${encodedNaverAppQuery}/?lang=${naverLang}`
+                : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverAppQuery},,-/transit?lang=${naverLang}`;
 
         case 'kakao':
             if (isAndroid) {
@@ -93,8 +93,8 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
 
     if (type === 'naver') {
         return mode === 'search'
-            ? `https://map.naver.com/v5/search/${encodedNaverName}/?lang=${naverLang}`
-            : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
+            ? `https://map.naver.com/v5/search/${encodedNaverAppQuery}/?lang=${naverLang}`
+            : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverAppQuery},,-/transit?lang=${naverLang}`;
     }
 
     if (type === 'kakao') {
