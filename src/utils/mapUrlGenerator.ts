@@ -35,10 +35,10 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
             const naverRouteWeb = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverWebName},,-/transit?lang=${naverLang}`;
 
             if (isAndroid) {
-                // Use the pure Korean name for App queries to avoid "No Results" (Image 3 fix)
+                // Pin View (Search): Use 'place' scheme for explicit marker with localized name (EN/JA/KO)
                 return mode === 'search'
-                    ? `nmap://search?query=${encodedNaverAppQuery}&appname=com.kgem.app`
-                    : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverAppQuery}&appname=com.kgem.app`;
+                    ? `nmap://place?lat=${lat}&lng=${lng}&name=${encodedName}&appname=com.kgem.app`
+                    : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
             }
             return mode === 'search'
                 ? `nmap://search?query=${encodedNaverWebName}&appname=com.kgem.app&lang=${naverLang}`
