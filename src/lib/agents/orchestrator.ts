@@ -1,6 +1,16 @@
-import { Crew, Agent, Task, Process, LLM } from 'crewai';
+// import { Crew, Agent, Task, Process, LLM } from 'crewai';
 // Note: In a real Next.js environment, we would use a more light-weight agentic framework 
-// or call a Python microservice. For this implementation, we define the structure.
+// or call a Python microservice. For this implementation, we define the structure locally to avoid build errors.
+
+class Agent {
+    constructor(config: any) {
+        console.log("Mock Agent initialized with:", config);
+    }
+}
+class Task { }
+class Process { }
+class Crew { }
+class LLM { }
 
 export interface AgentResponse {
     plan: string;

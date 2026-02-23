@@ -17,6 +17,7 @@ import { usePayment } from "@/context/PaymentContext";
 import { blufEngine } from "@/lib/data/bluf_engine";
 import { reservationService } from "@/lib/services/reservation_service";
 import { NaverMapV3 } from "@/components/Map/NaverMapV3";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
 
 
@@ -85,12 +86,34 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
         {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
       </button>
 
-      <button
-        onClick={() => alert('PayPal integration in progress...')}
-        className="w-full py-3 rounded-xl bg-[#ffc439] hover:bg-[#f2ba36] text-[#2c2e2f] font-black text-xs transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
-      >
-        <span className="italic font-extrabold text-[#003087]">Pay</span><span className="italic font-extrabold text-[#009cde]">Pal</span>
-      </button>
+      <PayPalButtons
+        style={{ layout: "vertical", shape: "pill", label: "pay" }}
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            intent: "CAPTURE",
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: "USD",
+                  value: "4.99",
+                },
+                description: "K-Gem Premium 24h Pass",
+              },
+            ],
+          });
+        }}
+        onApprove={async (data, actions) => {
+          if (actions.order) {
+            const details = await actions.order.capture();
+            console.log("PayPal Payment Success:", details);
+            onUnlock();
+          }
+        }}
+        onError={(err) => {
+          console.error("PayPal Error:", err);
+          alert("PayPal payment failed. Please try again.");
+        }}
+      />
 
       <p className="mt-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-tight">
         {t.ui.noSubscription || "No Subscription • One-time Payment"}
@@ -1044,13 +1067,12 @@ export default function Home() {
         )
       }
 
-      {/* Floating TOP Button */}
       <button
         onClick={scrollToTop}
         className={`fixed bottom-8 right-8 z-[60] w-14 h-14 rounded-2xl bg-[var(--primary)] hover:opacity-90 text-white shadow-2xl shadow-[var(--primary)]/40 flex items-center justify-center transition-all duration-500 transform active:scale-90 ${showTopButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}
-
-        </button>
-      </main >
-
-    );
+      >
+        <span>↑</span>
+      </button>
+    </main>
+  );
 }

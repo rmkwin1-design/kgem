@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { kgemPayment } from '@/utils/payment';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 interface PaymentContextType {
     isProcessing: boolean;
@@ -26,15 +27,8 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         tossScript.async = true;
         document.body.appendChild(tossScript);
 
-        // PayPal (SDK)
-        const paypalScript = document.createElement('script');
-        paypalScript.src = 'https://www.paypal.com/sdk/js?client-id=test&currency=USD'; // Use 'test' for now
-        paypalScript.async = true;
-        document.body.appendChild(paypalScript);
-
         return () => {
             document.body.removeChild(tossScript);
-            document.body.removeChild(paypalScript);
         };
     }, []);
 
@@ -70,10 +64,18 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    const initialOptions = {
+        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test",
+        currency: "USD",
+        intent: "capture",
+    };
+
     return (
-        <PaymentContext.Provider value={{ isProcessing, hasBillingKey, registerCard, processPayment }}>
-            {children}
-        </PaymentContext.Provider>
+        <PayPalScriptProvider options={initialOptions}>
+            <PaymentContext.Provider value={{ isProcessing, hasBillingKey, registerCard, processPayment }}>
+                {children}
+            </PaymentContext.Provider>
+        </PayPalScriptProvider>
     );
 };
 
