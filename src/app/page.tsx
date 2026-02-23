@@ -302,7 +302,16 @@ export default function Home() {
     // Hyper-Aggressive Forcing: path + language ID + setlang + currency + site_id + headerlang + setlanguage + ck_en + redirect bypass
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&redirect=false`;
 
-    window.open(url, '_blank');
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isAndroid = /android/i.test(userAgent);
+
+    if (isAndroid && language !== 'ko') {
+      // 🔥 NotebookLM Solution: Force Chrome browser
+      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+      window.location.href = chromeIntent;
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
 
@@ -344,7 +353,17 @@ export default function Home() {
         url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
       }
     }
-    window.open(url, '_blank');
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isAndroid = /android/i.test(userAgent);
+
+    if (isAndroid && language !== 'ko') {
+      // 🔥 NotebookLM Solution: Force Chrome browser
+      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+      window.location.href = chromeIntent;
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   if (loading) {

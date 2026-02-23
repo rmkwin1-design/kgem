@@ -45,8 +45,14 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
             const googleQuery = language === 'ko' ? name : (enName || name);
             const langParam = language === 'ja' ? 'ja' : 'en';
             const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
-            // Final Consistency Strategy: Use same params that work for Google Search
-            return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+
+            const webUrl = `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+
+            if (isAndroid && language !== 'ko') {
+                // 🔥 NotebookLM Solution: Force Chrome browser to bypass Native App's Korean locale hijacking
+                return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
+            }
+            return webUrl;
     }
 };
 
