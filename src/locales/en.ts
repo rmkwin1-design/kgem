@@ -84,5 +84,40 @@ export const en = {
         iosPwaTitle: "K-Gem Mobile Experience",
         iosPwaDesc: "Tap [Share] then 'Add to Home Screen' to use K-Gem as an app.",
         iosPwaClose: "Got it"
+    },
+    legal: {
+        back: "← Back to K-Gem",
+        lastUpdated: "Last updated: February 2026",
+        terms: {
+            title: "Terms of Service",
+            s1Title: "1. Service Description",
+            s1Desc: "K-Gem (Korea Travel Curator) provides premium travel curation and AI concierge services. By using our service, you agree to these terms.",
+            s2Title: "2. Premium Pass",
+            s2Desc: "The '24h Premium Pass' provides temporary access to restricted '0.1% Secret' content and VIP concierge features for exactly 24 hours from the moment of activation.",
+            s3Title: "3. Usage Restrictions",
+            s3Desc: "Content provided by K-Gem is for personal use only. Unauthorized reproduction or commercial distribution of our 'Secret' tips is strictly prohibited.",
+            s4Title: "4. Liability",
+            s4Desc: "K-Gem provides information based on AI synthesis and local research. While we strive for accuracy, travel safety is the responsibility of the user."
+        },
+        privacy: {
+            title: "Privacy Policy",
+            s1Title: "1. Data Collection",
+            s1Desc: "We collect minimal data necessary for service operation:",
+            s1Item1: "Email and profile info from Google/Firebase (for authentication).",
+            s1Item2: "PayPal transaction reference (to verify premium status).",
+            s2Title: "2. Payment Security",
+            s2Desc: "K-Gem does NOT store or process your credit card numbers. All financial transactions are handled securely by PayPal.",
+            s3Title: "3. Data Storage",
+            s3Desc: "Your data is stored securely using Firebase's encrypted cloud storage. We do not sell your personal information."
+        },
+        refund: {
+            title: "Refund Policy",
+            s1Title: "1. Digital Content Nature",
+            s1Desc: "Due to the digital nature of the '24h Premium Pass', refunds are generally not provided once the pass is activated.",
+            s2Title: "2. Technical Errors",
+            s2Desc: "In case of technical failures (duplicate charges, etc.), a full refund will be processed upon verification.",
+            s3Title: "3. Support",
+            s3Desc: "For technical refund inquiries, please contact our support team with your PayPal transaction ID."
+        }
     }
 };

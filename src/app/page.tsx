@@ -980,9 +980,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">
-            <a href="/terms" className="hover:text-[var(--primary)] transition-colors">Terms of Service</a>
-            <a href="/privacy" className="hover:text-[var(--primary)] transition-colors">Privacy Policy</a>
-            <a href="/refund" className="hover:text-[var(--primary)] transition-colors">Refund Policy</a>
+            <a href="/terms" className="hover:text-[var(--primary)] transition-colors">{t.legal.terms.title}</a>
+            <a href="/privacy" className="hover:text-[var(--primary)] transition-colors">{t.legal.privacy.title}</a>
+            <a href="/refund" className="hover:text-[var(--primary)] transition-colors">{t.legal.refund.title}</a>
           </div>
 
           <p className="text-[var(--text-muted)] text-[10px] tracking-wide leading-relaxed opacity-60">
