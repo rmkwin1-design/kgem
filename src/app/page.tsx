@@ -973,20 +973,28 @@ export default function Home() {
       }
 
       {/* Footer Branding */}
-      <footer className="py-24 text-center border-t border-slate-800/50 mt-24 bg-slate-950/20">
+      <footer className="py-24 text-center border-t border-[var(--glass)] mt-24 bg-[var(--bg-dark)]">
         <div className="flex flex-col items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-2xl shadow-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center font-bold text-2xl shadow-2xl">
             {t.header.logo}
           </div>
-          <p className="text-slate-500 text-sm tracking-wide">
+
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">
+            <a href="/terms" className="hover:text-[var(--primary)] transition-colors">Terms of Service</a>
+            <a href="/privacy" className="hover:text-[var(--primary)] transition-colors">Privacy Policy</a>
+            <a href="/refund" className="hover:text-[var(--primary)] transition-colors">Refund Policy</a>
+          </div>
+
+          <p className="text-[var(--text-muted)] text-[10px] tracking-wide leading-relaxed opacity-60">
             {t.footer.powered} • {t.footer.updated}<br />
-            {t.footer.copy}
+            {t.footer.copy}<br />
+            <span className="mt-2 block">Business License: [123-45-67890] • Rep: [K.B Kim] • Seoul, Korea</span>
           </p>
 
           {isInstallable && (
             <button
               onClick={handleInstallApp}
-              className="mt-6 px-8 py-3 rounded-2xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-400 font-bold text-xs transition-all border border-indigo-500/10 flex items-center gap-2"
+              className="mt-6 px-8 py-3 rounded-2xl bg-[var(--primary)]/10 hover:bg-[var(--primary)]/20 text-[var(--primary)] font-bold text-xs transition-all border border-[var(--primary)]/10 flex items-center gap-2"
             >
               <span>📱</span> {t.ui.installApp} (Free)
             </button>
