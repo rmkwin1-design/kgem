@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTranslation } from "@/context/LanguageContext";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -980,9 +981,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">
-            <a href="/terms" className="hover:text-[var(--primary)] transition-colors">{t.legal.terms.title}</a>
-            <a href="/privacy" className="hover:text-[var(--primary)] transition-colors">{t.legal.privacy.title}</a>
-            <a href="/refund" className="hover:text-[var(--primary)] transition-colors">{t.legal.refund.title}</a>
+            <Link href="/terms" className="hover:text-[var(--primary)] transition-colors">{t.legal.terms.title}</Link>
+            <Link href="/privacy" className="hover:text-[var(--primary)] transition-colors">{t.legal.privacy.title}</Link>
+            <Link href="/refund" className="hover:text-[var(--primary)] transition-colors">{t.legal.refund.title}</Link>
           </div>
 
           <p className="text-[var(--text-muted)] text-[10px] tracking-wide leading-relaxed opacity-60">

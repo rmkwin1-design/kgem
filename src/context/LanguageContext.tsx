@@ -21,10 +21,22 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [language, setLanguage] = useState<Language>('ko');
 
+    useEffect(() => {
+        const savedLang = localStorage.getItem('kgem_lang') as Language;
+        if (savedLang && translations[savedLang]) {
+            setLanguage(savedLang);
+        }
+    }, []);
+
+    const handleSetLanguage = (lang: Language) => {
+        setLanguage(lang);
+        localStorage.setItem('kgem_lang', lang);
+    };
+
     const t = translations[language];
 
     return (
-        <LanguageContext.Provider value={{ language, setLanguage, t }}>
+        <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
             {children}
         </LanguageContext.Provider>
     );
