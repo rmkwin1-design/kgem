@@ -43,7 +43,7 @@ export const useMapNavigation = () => {
         const storeUrl = getStoreUrl(mapToUse, isIOS);
 
         if (isAndroid) {
-            // Intent handles app/market automatically
+            // Intent handles app/market automatically. Use location.href for reliability.
             window.location.href = scheme;
         } else if (isIOS) {
             // iOS: Timer-based fallback (Visibility Check)
