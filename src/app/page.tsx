@@ -27,24 +27,24 @@ import { securityManager } from "@/lib/security/security_manager";
 
 
 
-// --- Ad Component for Premium Aesthetic ---
+// --- Native Ad Card 2026 ---
 const NativeAdCard = ({ t }: { t: any }) => (
-  <div className="glass-card overflow-hidden group relative flex flex-col border-[var(--primary)]/20 bg-[var(--primary)]/5">
-    <div className="h-56 overflow-hidden relative">
+  <div className="glass-card overflow-hidden group relative flex flex-col border-[var(--primary)]/20 bg-[var(--primary)]/5 p-1">
+    <div className="h-56 overflow-hidden relative rounded-[20px]">
       <img
         src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
         alt="Sponsored"
-        className="w-full h-full object-cover opacity-80"
+        className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
       />
-      <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+      <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white">
         {t.ad.sponsored}
       </div>
     </div>
     <div className="p-6 flex-1 flex flex-col justify-center text-center">
-      <span className="text-[var(--primary)] text-[10px] font-bold uppercase tracking-widest mb-2">{t.ad.partner}</span>
-      <h3 className="text-xl font-bold mb-4">{t.ad.title}</h3>
-      <p className="text-slate-400 text-sm mb-6 leading-relaxed">{t.ad.desc}</p>
-      <button className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold transition-all border border-slate-700/50">
+      <span className="text-[var(--secondary)] text-[10px] font-bold uppercase tracking-widest mb-2">{t.ad.partner}</span>
+      <h3 className="text-xl font-bold mb-4 premium-gradient">{t.ad.title}</h3>
+      <p className="text-[var(--text-muted)] text-sm mb-6 leading-relaxed">{t.ad.desc}</p>
+      <button className="w-full py-3 rounded-xl bg-[var(--bg-dark)]/50 hover:bg-[var(--primary)] text-white text-xs font-bold transition-all border border-[var(--glass)] hover:border-[var(--primary)]">
         {t.ad.learnMore}
       </button>
     </div>
@@ -53,15 +53,15 @@ const NativeAdCard = ({ t }: { t: any }) => (
 
 // --- Skeleton Card for Premium Loading Experience ---
 const SkeletonCard = () => (
-  <div className="glass-card overflow-hidden animate-pulse">
-    <div className="h-64 bg-slate-800" />
+  <div className="glass-card overflow-hidden animate-pulse p-4">
+    <div className="h-64 bg-[var(--glass)] rounded-[20px]" />
     <div className="p-7 space-y-4">
-      <div className="h-6 bg-slate-800 rounded w-3/4" />
-      <div className="h-4 bg-slate-800 rounded w-full" />
-      <div className="h-4 bg-slate-800 rounded w-5/6" />
+      <div className="h-6 bg-[var(--glass)] rounded w-3/4" />
+      <div className="h-4 bg-[var(--glass)] rounded w-full" />
+      <div className="h-4 bg-[var(--glass)] rounded w-5/6" />
       <div className="flex gap-3 mt-4">
-        <div className="h-12 bg-slate-800 rounded-2xl flex-1" />
-        <div className="h-12 bg-slate-800 rounded-2xl flex-1" />
+        <div className="h-12 bg-[var(--glass)] rounded-2xl flex-1" />
+        <div className="h-12 bg-[var(--glass)] rounded-2xl flex-1" />
       </div>
     </div>
   </div>
@@ -72,52 +72,65 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
   const { registerCard, isProcessing } = usePayment();
 
   return (
-    <div className="p-6 rounded-3xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-center">
-      <div className="text-3xl mb-4">🔓</div>
-      <h4 className="text-sm font-bold text-white mb-2">{t.vipModal.restricted}</h4>
-      <p className="text-[11px] text-slate-400 mb-6 leading-relaxed">
-        {t.ui.premiumPassDesc || "Get 24h unlimited access to all 0.1% K-Secret Tips"}
-      </p>
-      <button
-        onClick={registerCard}
-        disabled={isProcessing}
-        className="w-full py-3 mb-2 rounded-xl bg-[var(--primary)] hover:opacity-90 text-white font-black text-xs transition-all shadow-lg active:scale-95 disabled:opacity-50"
-      >
-        {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
-      </button>
+    <div className="p-8 rounded-[var(--radius-premium)] bg-[var(--bg-dark)]/40 border border-[var(--primary)]/30 text-center backdrop-blur-xl relative overflow-hidden group">
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-transparent pointer-events-none" />
+      <div className="relative z-10">
+        <div className="w-16 h-16 rounded-2xl bg-[var(--primary)]/20 flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner animate-pulse">
+          🔓
+        </div>
+        <h4 className="text-lg font-black text-white mb-2 uppercase tracking-tight">{t.vipModal.restricted}</h4>
+        <p className="text-sm text-[var(--text-muted)] mb-8 leading-relaxed max-w-[240px] mx-auto">
+          {t.ui.premiumPassDesc || "Get 24h unlimited access to all 0.1% K-Secret Tips"}
+        </p>
 
-      <PayPalButtons
-        style={{ layout: "vertical", shape: "pill", label: "pay" }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            intent: "CAPTURE",
-            purchase_units: [
-              {
-                amount: {
-                  currency_code: "USD",
-                  value: "4.99",
-                },
-                description: "K-Gem Premium 24h Pass",
-              },
-            ],
-          });
-        }}
-        onApprove={async (data, actions) => {
-          if (actions.order) {
-            const details = await actions.order.capture();
-            console.log("PayPal Payment Success:", details);
-            onUnlock();
-          }
-        }}
-        onError={(err) => {
-          console.error("PayPal Error:", err);
-          alert("PayPal payment failed. Please try again.");
-        }}
-      />
+        <div className="space-y-3">
+          <button
+            onClick={registerCard}
+            disabled={isProcessing}
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-90 text-white font-black text-sm transition-all shadow-xl shadow-[var(--primary)]/20 active:scale-95 disabled:opacity-50"
+          >
+            {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
+          </button>
 
-      <p className="mt-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-tight">
-        {t.ui.noSubscription || "No Subscription • One-time Payment"}
-      </p>
+          <div className="relative py-2">
+            <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--glass)]" />
+            <span className="relative z-10 px-3 bg-[var(--bg-dark)] text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">or pay with</span>
+          </div>
+
+          <PayPalButtons
+            style={{ layout: "vertical", shape: "pill", label: "pay", color: "gold" }}
+            createOrder={(data, actions) => {
+              return actions.order.create({
+                intent: "CAPTURE",
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: "USD",
+                      value: "4.99",
+                    },
+                    description: "K-Gem Premium 24h Pass",
+                  },
+                ],
+              });
+            }}
+            onApprove={async (data, actions) => {
+              if (actions.order) {
+                const details = await actions.order.capture();
+                console.log("PayPal Payment Success:", details);
+                onUnlock();
+              }
+            }}
+            onError={(err) => {
+              console.error("PayPal Error:", err);
+              alert("PayPal payment failed. Please try again.");
+            }}
+          />
+        </div>
+
+        <p className="mt-6 text-[9px] text-[var(--text-muted)] font-bold uppercase tracking-widest leading-tight opacity-60">
+          {t.ui.noSubscription || "No Subscription • One-time Payment"}
+        </p>
+      </div>
     </div>
   );
 };
@@ -471,25 +484,25 @@ export default function Home() {
       />
 
       {/* Navigation */}
-      <nav className="nav-blur px-6 py-4 flex justify-between items-center bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800/50">
+      <nav className="nav-blur px-6 py-4 flex justify-between items-center bg-[var(--bg-dark)]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--glass)]">
         <div className="flex items-center gap-2 max-w-[60%]">
           <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center font-bold shadow-lg shadow-[var(--primary)]/20">
             {t.header.logo}
           </div>
-          <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate">{t.header.title}</span>
+          <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate text-[var(--text-main)]">{t.header.title}</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="hidden lg:flex flex-col items-end text-[10px] text-slate-500 font-medium uppercase tracking-[0.2em]">
+          <div className="hidden lg:flex flex-col items-end text-[10px] text-[var(--text-muted)] font-medium uppercase tracking-[0.2em]">
             <span>{t.header.refreshLabel}</span>
-            <span className="text-indigo-400 font-bold">{t.header.refreshCycle}</span>
+            <span className="text-[var(--secondary)] font-bold">{t.header.refreshCycle}</span>
           </div>
-          <div className="flex gap-2 bg-slate-800/50 p-1 rounded-full border border-slate-700">
+          <div className="flex gap-2 bg-[var(--bg-dark)]/50 p-1 rounded-full border border-[var(--glass)]">
             {(['ko', 'en', 'ja'] as const).map((lang) => (
               <button
                 key={lang}
                 onClick={() => setLanguage(lang)}
-                className={`px-3 py-1 rounded-full text-sm transition-all duration-300 ${language === lang ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+                className={`px-3 py-1 rounded-full text-sm transition-all duration-300 ${language === lang ? 'bg-[var(--primary)] text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
                   }`}
               >
                 {lang.toUpperCase()}
@@ -500,16 +513,16 @@ export default function Home() {
           {!user ? (
             <button
               onClick={() => login()}
-              className="px-5 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all"
+              className="px-5 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--primary)] text-[var(--text-main)] text-xs font-bold transition-all border border-[var(--glass)]"
             >
               {t.ui.login}
             </button>
           ) : (
             <div className="flex items-center gap-3">
-              <img src={user.photoURL || ""} alt="User" className="w-8 h-8 rounded-full border border-indigo-500" />
+              <img src={user.photoURL || ""} alt="User" className="w-8 h-8 rounded-full border border-[var(--primary)] shadow-[0_0_10px_var(--primary-glow)]" />
               <button
                 onClick={() => logout()}
-                className="text-xs text-slate-400 hover:text-white underline"
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] underline"
               >
                 Logout
               </button>
@@ -519,14 +532,14 @@ export default function Home() {
           {isInstallable && (
             <button
               onClick={handleInstallApp}
-              className="px-5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-[10px] font-black shadow-lg shadow-indigo-600/20 active:scale-95 transition-all animate-pulse"
+              className="px-5 py-1.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white text-[10px] font-black shadow-lg shadow-[var(--primary-glow)] active:scale-95 transition-all animate-pulse"
             >
               {t.ui.installApp}
             </button>
           )}
 
           <button
-            className="hidden sm:block px-5 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] font-black shadow-lg shadow-emerald-600/20 active:scale-95 transition-all"
+            className="hidden sm:block px-5 py-1.5 rounded-full bg-gradient-to-r from-[#10b981] to-[#059669] text-white text-[10px] font-black shadow-lg shadow-emerald-600/20 active:scale-95 transition-all"
           >
             {t.ui.freeAccess}
           </button>
@@ -534,36 +547,36 @@ export default function Home() {
       </nav>
 
       {/* 🚀 역발상 마케팅 배지 (GEO/SEO 전략 반영) */}
-      <div className="bg-indigo-600/20 border-y border-indigo-500/30 py-2 overflow-hidden whitespace-nowrap">
+      <div className="bg-[var(--primary)]/10 border-y border-[var(--primary)]/20 py-2 overflow-hidden whitespace-nowrap">
         <div className="flex animate-marquee gap-8 items-center">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
             ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
           </span>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
             🏯 Navigate Like a Local with K-Gem's Precision Guide.
           </span>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
             🚀 0.1% Premium Spots Verified by Real-time AI.
           </span>
           {/* Repeat for continuous effect */}
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
             ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
           </span>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-900/20 to-transparent pointer-events-none" />
+      <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden bg-[var(--bg-dark)]">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[var(--primary)]/20 to-transparent pointer-events-none" />
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/20 rounded-full">
+          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-[var(--secondary)] uppercase bg-[var(--primary)]/10 border border-[var(--primary)]/20 rounded-full">
             {t.header.subtitle}
           </span>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-6 sm:mb-8 tracking-tight whitespace-pre-line leading-[1.1] sm:leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-6 sm:mb-8 tracking-tight whitespace-pre-line leading-[1.1] sm:leading-tight premium-gradient">
             {t.hero.title}
           </h1>
-          <p className="text-base sm:text-xl text-slate-400 mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-xl text-[var(--text-muted)] mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
             {t.hero.description}
           </p>
 
@@ -571,16 +584,16 @@ export default function Home() {
 
           <form
             onSubmit={handleSearch}
-            className="max-w-2xl mx-auto relative p-1 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl group focus-within:ring-2 ring-indigo-500/50 transition-all font-sans"
+            className="max-w-2xl mx-auto relative p-1 rounded-[var(--radius-premium)] bg-gradient-to-r from-[var(--primary)] via-[var(--accent)] to-[var(--secondary)] shadow-2xl group focus-within:ring-2 ring-[var(--primary)]/50 transition-all font-sans"
           >
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.hero.searchPlaceholder}
-              className="w-full px-6 py-4 bg-slate-900 rounded-xl text-lg focus:outline-none placeholder:text-slate-500"
+              className="w-full px-6 py-4 bg-[var(--bg-dark)] rounded-[20px] text-lg focus:outline-none placeholder:text-[var(--text-muted)] text-[var(--text-main)]"
             />
-            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:opacity-90 px-5 sm:px-6 py-2.5 rounded-lg font-black transition-all flex items-center gap-2 shadow-lg active:scale-95">
+            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:opacity-90 px-5 sm:px-6 py-2.5 rounded-xl font-black transition-all flex items-center gap-2 shadow-lg active:scale-95 text-white">
               {isAiSearching ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : "GO"}
             </button>
           </form>
