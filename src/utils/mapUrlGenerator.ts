@@ -40,9 +40,11 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
         case 'google':
         default:
-            // Premium Strategy: Use name instead of coordinates for Google to force language anchoring
-            const googleQuery = language === 'ko' ? name : hybridName;
-            return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
+            const googleRegions: { [key: string]: string } = { en: 'US', ja: 'JP', ko: 'KR' };
+            const region = googleRegions[language] || 'US';
+            const googleQuery = language === 'ko' ? name : (enName || name);
+            // Hyper-Force Strategy: destination + hl (interface) + gl (geographical context)
+            return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}&gl=${region}`;
     }
 };
 
@@ -67,8 +69,10 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
         return `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
     }
 
-    const googleQuery = language === 'ko' ? name : hybridName;
-    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
+    const googleRegions: { [key: string]: string } = { en: 'US', ja: 'JP', ko: 'KR' };
+    const region = googleRegions[language] || 'US';
+    const googleQuery = language === 'ko' ? name : (enName || name);
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}&gl=${region}`;
 };
 
 export const getStoreUrl = (type: MapType, isIOS: boolean): string => {

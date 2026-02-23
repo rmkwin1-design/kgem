@@ -299,8 +299,8 @@ export default function Home() {
       ? encodeURIComponent(`${nameTarget}(${nameKo})`)
       : encodeURIComponent(nameTarget);
 
-    // Aggressive Language Forcing: path + language ID + setlang + currency
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaCode}&cur=${currency}`;
+    // Aggressive Language Forcing: path + language ID + setlang + currency + site_id + redirect bypass
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaCode}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&redirect=false`;
 
     window.open(url, '_blank');
   };
