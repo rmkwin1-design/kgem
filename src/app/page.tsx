@@ -345,17 +345,9 @@ export default function Home() {
       }
     }
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = /android/i.test(userAgent);
-
-    if (isAndroid && language !== 'ko' && type === 'map') {
-      // 🔥 Only force Chrome for Map view to bypass App native hijacking. 
-      // Search (details) works fine with window.open and doesn't need "Open with" popup.
-      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
-      window.location.href = chromeIntent;
-    } else {
-      window.open(url, '_blank');
-    }
+    // Use window.open for all handleAction types (Map and Search) to remove 
+    // the annoying "Open with" popup as requested by the user.
+    window.open(url, '_blank');
   };
 
   if (loading) {
