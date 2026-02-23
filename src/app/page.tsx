@@ -295,9 +295,8 @@ export default function Home() {
     const filter = !isRural ? '&rating=8' : '';
 
     // 🏨 2026 CRO Advisor Strategy: Pure Localization for International Users
-    const searchText = language === 'ko'
-      ? encodeURIComponent(`${nameTarget}(${nameKo})`)
-      : encodeURIComponent(nameTarget);
+    // Remove the Korean name suffix for International users to avoid Agoda's Korean-bias.
+    const searchText = encodeURIComponent(nameTarget);
 
     // Hyper-Aggressive Forcing: Added &locale param and multiple redundant language IDs
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&locale=${agodaPath}&redirect=false`;
@@ -306,9 +305,9 @@ export default function Home() {
     const isAndroid = /android/i.test(userAgent);
 
     if (isAndroid && language !== 'ko') {
-      // 🔥 Force Chrome for Agoda to bypass App native hijacking and maintain localization.
-      // This is necessary because the Agoda App often overrides URL params with the system locale.
-      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+      // 🔥 Force Chrome for Agoda to bypass App native hijacking.
+      // Added action and category for stricter browser forcing.
+      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
       window.location.href = chromeIntent;
     } else {
       window.open(url, '_blank');
@@ -318,14 +317,18 @@ export default function Home() {
 
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
     e.stopPropagation();
-    let url = "";
 
+    // Unified Map Navigation: Use the same successful hook logic as "Directions"
+    if (type === 'map') {
+      openMap(spot);
+      return;
+    }
+
+    let url = "";
     // Use target language query first, fallback to Korean
     const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
     const koQuery = spot.query['ko'] || spot.title['ko'];
 
-    // 🔥 Strategy: For Details/Search, Pure Localization works best on Google/Agoda
-    // If we include Korean, Google often serves Korean results.
     const searchQuery = language === 'ko' ? koQuery : targetQuery;
     const encodedQuery = encodeURIComponent(searchQuery);
 
@@ -334,39 +337,18 @@ export default function Home() {
     const langParam = language === 'ja' ? 'ja' : 'en';
     const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
 
-    if (type === 'map') {
-      if (language === 'ko') {
-        url = `https://map.naver.com/v5/search/${encodedQuery}`;
-      } else {
-        const googleTlds: any = { en: 'com', ja: 'co.jp' };
-        const tld = googleTlds[language] || 'com';
-        // 🔥 Logic Sync: Use the same /maps/dir/ structure that works for Directions
-        url = `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodedQuery}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
-      }
+    // For details search
+    if (language === 'ko') {
+      url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
     } else {
-      // For details search
-      if (language === 'ko') {
-        url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
-      } else {
-        const googleTlds: any = { en: 'com', ja: 'co.jp' };
-        const tld = googleTlds[language] || 'com';
-        // 🔥 Ultra Strategy: Specific TLD domain forcing for search
-        url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
-      }
+      const googleTlds: any = { en: 'com', ja: 'co.jp' };
+      const tld = googleTlds[language] || 'com';
+      // 🔥 Ultra Strategy: Specific TLD domain forcing for search
+      url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
     }
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = /android/i.test(userAgent);
-
-    if (isAndroid && language !== 'ko' && type === 'map') {
-      // 🔥 Restore Chrome-force ONLY for Map view as requested ("지도 보기는 아까처럼 영어,일본어 로 나오게")
-      // This bypasses the native Google Maps app which forces Korean.
-      const chromeIntent = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
-      window.location.href = chromeIntent;
-    } else {
-      // Search (details) works fine with window.open and doesn't need "Open with" popup.
-      window.open(url, '_blank');
-    }
+    // Search (details) works fine with window.open and doesn't need "Open with" popup.
+    window.open(url, '_blank');
   };
 
   if (loading) {

@@ -50,7 +50,8 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
             if (isAndroid && language !== 'ko') {
                 // 🔥 NotebookLM Solution: Force Chrome browser to bypass Native App's Korean locale hijacking
-                return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
+                // Added action and category to be more explicit and minimize "Open with" popups.
+                return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
             }
             return webUrl;
     }
