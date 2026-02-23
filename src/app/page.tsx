@@ -291,8 +291,10 @@ export default function Home() {
     const landingType = isRural ? 'map' : 'list';
     const filter = !isRural ? '&rating=8' : '';
 
-    // For Agoda: Use "TargetName (KoreanName)" to ensure success
-    const searchText = encodeURIComponent(`${nameTarget} (${nameKo})`);
+    // 🏨 2026 CRO Advisor Strategy: Pure Localization for International Users
+    const searchText = language === 'ko'
+      ? encodeURIComponent(`${nameTarget}(${nameKo})`)
+      : encodeURIComponent(nameTarget);
     const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}`;
 
     window.open(url, '_blank');
@@ -307,26 +309,28 @@ export default function Home() {
     const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
     const koQuery = spot.query['ko'] || spot.title['ko'];
 
-    // 🔥 Strategy: For Details/Search, use "TargetQuery KoreanQuery" for best results on Google/Naver
-    const hybridQuery = language === 'ko' ? koQuery : `${targetQuery} ${koQuery}`;
-    const encodedQuery = encodeURIComponent(hybridQuery);
+    // 🔥 Strategy: For Details/Search, Pure Localization works best on Google/Agoda
+    // If we include Korean, Google often serves Korean results.
+    const searchQuery = language === 'ko' ? koQuery : targetQuery;
+    const encodedQuery = encodeURIComponent(searchQuery);
+
+    const googleRegions: any = { en: 'us', ja: 'jp', ko: 'kr' };
+    const region = googleRegions[language] || 'us';
+    const langParam = language === 'ja' ? 'ja' : 'en';
+    const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
 
     if (type === 'map') {
       if (language === 'ko') {
         url = `https://map.naver.com/v5/search/${encodedQuery}`;
-      } else if (language === 'ja') {
-        url = `https://www.google.co.jp/maps/search/${encodedQuery}?hl=ja`;
       } else {
-        url = `https://www.google.com/maps/search/${encodedQuery}?hl=en`;
+        url = `https://www.google.com/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}`;
       }
     } else {
       // For details search
       if (language === 'ko') {
         url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
-      } else if (language === 'ja') {
-        url = `https://www.google.co.jp/search?q=${encodedQuery}&hl=ja`;
       } else {
-        url = `https://www.google.com/search?q=${encodedQuery}&hl=en`;
+        url = `https://www.google.com/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}`;
       }
     }
     window.open(url, '_blank');
@@ -949,15 +953,7 @@ export default function Home() {
                           </button>
 
                           <button
-                            onClick={() => {
-                              const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
-                              const koQuery = spot.query['ko'] || spot.title['ko'];
-                              const hybridQuery = language === 'ko' ? koQuery : `${targetQuery}(${koQuery})`;
-                              const url = language === 'ko'
-                                ? `https://search.naver.com/search.naver?query=${encodeURIComponent(hybridQuery)}`
-                                : `https://www.google.com/search?q=${encodeURIComponent(hybridQuery)}&hl=${language}`;
-                              window.open(url, '_blank');
-                            }}
+                            onClick={(e) => handleAction(e, 'details', spot)}
                             className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
                           >
                             {t.card.details}
