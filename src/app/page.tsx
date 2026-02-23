@@ -299,8 +299,8 @@ export default function Home() {
       ? encodeURIComponent(`${nameTarget}(${nameKo})`)
       : encodeURIComponent(nameTarget);
 
-    // Aggressive Language Forcing: path + language ID + setlang + currency + site_id + redirect bypass
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaCode}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&redirect=false`;
+    // Hyper-Aggressive Forcing: path + language ID + setlang + currency + site_id + headerlang + redirect bypass
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&redirect=false`;
 
     window.open(url, '_blank');
   };
@@ -328,15 +328,19 @@ export default function Home() {
       if (language === 'ko') {
         url = `https://map.naver.com/v5/search/${encodedQuery}`;
       } else {
-        url = `https://www.google.com/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}`;
+        const googleTlds: any = { en: 'com', ja: 'co.jp' };
+        const tld = googleTlds[language] || 'com';
+        url = `https://www.google.${tld}/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}`;
       }
     } else {
       // For details search
       if (language === 'ko') {
         url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
       } else {
-        // 🔥 Extreme Strategy: Multiple locale overrides for Google
-        url = `https://www.google.com/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
+        const googleTlds: any = { en: 'com', ja: 'co.jp' };
+        const tld = googleTlds[language] || 'com';
+        // 🔥 Ultra Strategy: Specific TLD domain forcing for search
+        url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
       }
     }
     window.open(url, '_blank');

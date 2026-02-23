@@ -40,11 +40,11 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
         case 'google':
         default:
-            const googleRegions: { [key: string]: string } = { en: 'US', ja: 'JP', ko: 'KR' };
-            const region = googleRegions[language] || 'US';
+            const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
+            const tld = googleTlds[language] || 'com';
             const googleQuery = language === 'ko' ? name : (enName || name);
-            // Hyper-Force Strategy: destination + hl (interface) + gl (geographical context)
-            return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}&gl=${region}`;
+            // Ultra-Force Strategy: TLD-based domain forcing works where hl parameters fail in Android Intents
+            return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
     }
 };
 
@@ -69,10 +69,10 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
         return `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
     }
 
-    const googleRegions: { [key: string]: string } = { en: 'US', ja: 'JP', ko: 'KR' };
-    const region = googleRegions[language] || 'US';
+    const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
+    const tld = googleTlds[language] || 'com';
     const googleQuery = language === 'ko' ? name : (enName || name);
-    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}&gl=${region}`;
+    return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
 };
 
 export const getStoreUrl = (type: MapType, isIOS: boolean): string => {
