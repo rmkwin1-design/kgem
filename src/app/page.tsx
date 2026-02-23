@@ -299,8 +299,8 @@ export default function Home() {
       ? encodeURIComponent(`${nameTarget}(${nameKo})`)
       : encodeURIComponent(nameTarget);
 
-    // Hyper-Aggressive Forcing: path + language ID + setlang + currency + site_id + headerlang + redirect bypass
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&redirect=false`;
+    // Hyper-Aggressive Forcing: path + language ID + setlang + currency + site_id + headerlang + setlanguage + ck_en + redirect bypass
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${agodaCode === 10 ? 10 : (agodaCode === 2 ? 2 : 1)}&headerlang=${agodaPath}&setlanguage=1&ck_en=1&redirect=false`;
 
     window.open(url, '_blank');
   };
@@ -330,7 +330,8 @@ export default function Home() {
       } else {
         const googleTlds: any = { en: 'com', ja: 'co.jp' };
         const tld = googleTlds[language] || 'com';
-        url = `https://www.google.${tld}/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}`;
+        // Mirror successful Search parameters for Map Search
+        url = `https://www.google.${tld}/maps/search/${encodedQuery}?hl=${langParam}&gl=${region}&set_language=${langParam}&lr=${lrParam}`;
       }
     } else {
       // For details search

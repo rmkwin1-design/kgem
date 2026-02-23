@@ -43,8 +43,10 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
             const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
             const tld = googleTlds[language] || 'com';
             const googleQuery = language === 'ko' ? name : (enName || name);
-            // Ultra-Force Strategy: TLD-based domain forcing works where hl parameters fail in Android Intents
-            return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
+            const langParam = language === 'ja' ? 'ja' : 'en';
+            const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
+            // Final Consistency Strategy: Use same params that work for Google Search
+            return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
     }
 };
 
@@ -72,7 +74,9 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
     const tld = googleTlds[language] || 'com';
     const googleQuery = language === 'ko' ? name : (enName || name);
-    return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${language}`;
+    const langParam = language === 'ja' ? 'ja' : 'en';
+    const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
+    return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
 };
 
 export const getStoreUrl = (type: MapType, isIOS: boolean): string => {
