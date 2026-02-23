@@ -28,7 +28,8 @@ export const useMapNavigation = () => {
         };
 
         // Google Maps: Universal handled by browser/OS
-        const mapToUse = spot.forceMap || preferredMap;
+        // 🔥 Strategic Override: Force Google for International users on Android to ensure localization
+        const mapToUse = (isAndroid && language !== 'ko') ? 'google' : (spot.forceMap || preferredMap);
 
         // Google Maps: Universal handled by browser/OS
         if (mapToUse === 'google') {

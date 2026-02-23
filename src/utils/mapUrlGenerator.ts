@@ -29,16 +29,44 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
     switch (type) {
         case 'naver':
+            const naverSearchWeb = `https://map.naver.com/v5/search/${encodedNaverName}/?lang=${naverLang}`;
+            const naverRouteWeb = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
+            const finalNaverWeb = mode === 'search' ? naverSearchWeb : naverRouteWeb;
+
             if (isAndroid) {
-                return `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=https://map.naver.com/v5/search/${encodedNaverName}/?lang=${naverLang};end`;
+                if (language !== 'ko') {
+                    // 🔥 Force Chrome for Naver Web to maintain localization
+                    return `intent://${finalNaverWeb.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(finalNaverWeb)};end`;
+                }
+                // Standard Native App Intent
+                if (mode === 'search') {
+                    return `intent://search?query=${encodedNaverName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(naverSearchWeb)};end`;
+                }
+                return `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(naverRouteWeb)};end`;
             }
-            return `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app&lang=${naverLang}`;
+            return mode === 'search'
+                ? `nmap://search?query=${encodedNaverName}&appname=com.kgem.app&lang=${naverLang}`
+                : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedNaverName}&appname=com.kgem.app&lang=${naverLang}`;
 
         case 'kakao':
+            const kakaoSearchWeb = `https://map.kakao.com/link/search/${encodedName}`;
+            const kakaoRouteWeb = `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
+            const finalKakaoWeb = mode === 'search' ? kakaoSearchWeb : kakaoRouteWeb;
+
             if (isAndroid) {
+                if (language !== 'ko') {
+                    // 🔥 Force Chrome for Kakao Web to maintain localization
+                    return `intent://${finalKakaoWeb.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(finalKakaoWeb)};end`;
+                }
+                // Standard Native App Intent
+                if (mode === 'search') {
+                    return `intent://look?p=${lat},${lng}#Intent;scheme=kakaomap;package=net.daum.android.map;end`;
+                }
                 return `intent://route?ep=${lat},${lng}&by=PUBLICTRANSIT#Intent;scheme=kakaomap;package=net.daum.android.map;end`;
             }
-            return `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT`;
+            return mode === 'search'
+                ? `kakaomap://look?p=${lat},${lng}`
+                : `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT`;
 
         case 'google':
         default:
@@ -58,7 +86,6 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
             if (isAndroid && language !== 'ko') {
                 // 🔥 NotebookLM Solution: Force Chrome browser to bypass Native App's Korean locale hijacking
-                // Added action and category to be more explicit and minimize "Open with" popups.
                 return `intent://${webUrl.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
             }
             return webUrl;
@@ -78,20 +105,27 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const encodedNaverName = encodeURIComponent(naverName);
 
     if (type === 'naver') {
-        const naverWebUrl = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
-        return naverWebUrl;
+        return mode === 'search'
+            ? `https://map.naver.com/v5/search/${encodedNaverName}/?lang=${naverLang}`
+            : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
     }
 
     if (type === 'kakao') {
-        return `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
+        return mode === 'search'
+            ? `https://map.kakao.com/search?q=${encodedName}`
+            : `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
     }
 
-    const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'co.kr' };
+    const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr' };
     const tld = googleTlds[language] || 'com';
     const googleQuery = language === 'ko' ? name : (enName || name);
     const langParam = language === 'ja' ? 'ja' : 'en';
     const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
-    return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+
+    if (mode === 'directions') {
+        return `https://maps.google.${tld}/maps/dir/?api=1&destination=${encodeURIComponent(googleQuery)}&travelmode=transit&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
+    }
+    return `https://www.google.${tld}/maps/search/?api=1&query=${encodeURIComponent(googleQuery)}&hl=${langParam}&lr=${lrParam}&set_language=${langParam}`;
 };
 
 export const getStoreUrl = (type: MapType, isIOS: boolean): string => {
