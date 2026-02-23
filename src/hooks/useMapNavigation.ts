@@ -22,7 +22,9 @@ export const useMapNavigation = () => {
             lat: spot.lat,
             lng: spot.lng,
             name: spot.title.ko,
-            enName: language === 'ja' ? spot.title.ja : spot.title.en
+            enName: language === 'ja'
+                ? (spot.query.ja || spot.title.ja)
+                : (spot.query.en || spot.title.en)
         };
 
         // Google Maps: Universal handled by browser/OS

@@ -284,7 +284,10 @@ export default function Home() {
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
     const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
+    const agodaCodes: any = { ko: 10, en: 1, ja: 2 };
     const agodaPath = agodaLangs[language] || 'en-us';
+    const agodaCode = agodaCodes[language] || 1;
+    const currency = language === 'ko' ? 'KRW' : 'USD';
 
     // 🏨 2026 CRO Advisor Strategy: Dynamic Landing
     const isRural = /jeju|ulleung|island|mountain/i.test((spot.query.en || '').toLowerCase());
@@ -295,7 +298,9 @@ export default function Home() {
     const searchText = language === 'ko'
       ? encodeURIComponent(`${nameTarget}(${nameKo})`)
       : encodeURIComponent(nameTarget);
-    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaPath}&set_language=${agodaPath}&locale=${agodaPath}`;
+
+    // Aggressive Language Forcing: path + language ID + setlang + currency
+    const url = `https://www.agoda.com/${agodaPath}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaCode}&cur=${currency}`;
 
     window.open(url, '_blank');
   };

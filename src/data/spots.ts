@@ -616,7 +616,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "경춘선 가평역에서 가평 관광지 순환버스 이용", en: "Gapyeong Tour Bus from Gapyeong Station", ja: "京春線 加平駅から加平観光地循環バス利用" },
         description: { ko: "도민준과 천송이의 마법 같은 키스 장면이 촬영된 프랑스 마을.", en: "French village where Do Min-jun and Cheon Song-yi's magical kiss was filmed.", ja: "ト・ミンジュンとチョン・ソンイの魔法のようなキスシーンが撮影されたフランス村。" },
-        query: { ko: "쁘띠프랑스", en: "Petite France", ja: "星から来たあなたプチ・フランス" },
+        query: { ko: "쁘띠프랑스", en: "Petite France Gapyeong", ja: "加平プチ・フランス" },
         lat: 37.7148,
         lng: 127.4912,
         vipContent: {
@@ -664,7 +664,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "문경터미널에서 시내버스 이용", en: "Local bus from Mungyeong Terminal", ja: "聞慶ターミナルから市内バス利用" },
         description: { ko: "중전 화령의 카리스마가 넘치던 웅장한 궁궐 세트.", en: "Grand palace set where Queen Im Hwa-ryeong's charisma overflowed.", ja: "中殿ファリョンのカリスマが溢れていた壮大な王宮セット。" },
-        query: { ko: "문경새재 오픈세트장", en: "s Umbrella", ja: "シュルプ聞慶セジェオープンセット場" },
+        query: { ko: "문경새재 오픈세트장", en: "Mungyeong Saejae Open Set", ja: "聞慶セジェオープンセット場" },
         lat: 36.7621,
         lng: 128.0845,
         vipContent: {
@@ -712,7 +712,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "강릉역에서 택시 20분 또는 300번 버스", en: "20 min taxi or Bus 300 from Gangneung Station", ja: "江陵駅からタクシー20分または300番バス" },
         description: { ko: "김신이 지은탁에게 메밀꽃을 건네던 바로 그 방파제.", en: "The seawall where Kim Shin handed buckwheat flowers to Ji Eun-tak.", ja: "キム・シンがチ・ウンタクにそばの花を渡したまさにその防波堤。" },
-        query: { ko: "영진해변 도깨비", en: "Yeongjin Beach", ja: "トッケビ江陵ヨンジン海岸" },
+        query: { ko: "영진해변 도깨비", en: "Yeongjin Beach Gangneung", ja: "江陵ヨンジン海岸" },
         lat: 37.8643,
         lng: 128.8524,
         vipContent: {
@@ -728,7 +728,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "나주역에서 택시 20분", en: "20 min taxi from Naju Station", ja: "羅州駅からタクシー20分" },
         description: { ko: "고려 시대의 화려함을 그대로 간직한 황실 세트장.", en: "Imperial palace set preserving the splendor of the Goryeo era.", ja: "高麗時代の華やかさをそのまま残した皇室セット場。" },
-        query: { ko: "나주 영상테마파크", en: "Naju", ja: "麗〈レイ〉〜花萌ゆる8人の皇子たち〜羅州映像テーマパーク" },
+        query: { ko: "나주 영상테마파크", en: "Naju Image Theme Park", ja: "羅州映像テーマパーク" },
         lat: 34.9821,
         lng: 126.6543,
         vipContent: {
@@ -840,7 +840,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "천안역에서 11번 버스 이용", en: "Bus 11 from Cheonan Station", ja: "天安駅から11番バス利用" },
         description: { ko: "선재와 솔의 대학 캠퍼스 로맨스가 그려진 아름다운 호수 캠퍼스.", en: "The beautiful lake campus where Sun-jae and Sol's university romance began.", ja: "ソンジェとソルの大学キャンパスでのロマンスが描かれた美しい湖のキャンパス。" },
-        query: { ko: "단국대 천안캠퍼스 선재", en: "Dankook Univ. Cheonan", ja: "ソンジェ背負って走れ檀国大学 天安キャンパス" },
+        query: { ko: "단국대 천안캠퍼스 선재", en: "Dankook University Cheonan", ja: "檀国大学 天安キャンパス" },
         lat: 36.8324,
         lng: 127.1743,
         vipContent: {
@@ -888,7 +888,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "부산역에서 택시 10분 또는 1호선 남포역", en: "10 min taxi or Nampo Station (Line 1)", ja: "釜山駅からタクシー10分または1号線 南浦駅" },
         description: { ko: "화려한 액션과 어두운 누아르 감성이 공존하는 부산의 랜드마크.", en: "Busan landmark where flashy action and dark noir vibes coexist.", ja: "華やかなアクションとダークなノワールの感性が共存する釜山のランドマーク。" },
-        query: { ko: "영도대교", en: "Haeundae Beach Busan", ja: "海雲台 釜山" },
+        query: { ko: "영도대교", en: "Yeongdodaegyo Bridge Busan", ja: "釜山影島大橋" },
         lat: 35.0934,
         lng: 129.0365,
         vipContent: {
@@ -904,7 +904,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.9,
         transport: { ko: "가평역에서 셔틀버스 이용", en: "Shuttle bus from Gapyeong Station", ja: "加平駅からシャトルバス利用" },
         description: { ko: "환상적인 꽃들이 가득한 정원에서 펼쳐진 로맨틱한 고백 장면.", en: "Romantic confession scene in a garden full of fantastic flowers.", ja: "幻想的な花々が咲き誇る庭園で繰り広げられたロマンチックな告白シーン。" },
-        query: { ko: "아침고요수목원", en: "The Garden of Morning Calm", ja: "キング・ザ・加平アチムゴヨ樹木園" },
+        query: { ko: "아침고요수목원", en: "The Garden of Morning Calm", ja: "ア치무고요樹木園" },
         lat: 37.7431,
         lng: 127.3524,
         vipContent: {
@@ -920,7 +920,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.8,
         transport: { ko: "파주 출판단지 내, 합정역에서 2200번 버스", en: "In Paju Book City, Bus 2200 from Hapjeong", ja: "坡州出版団地内。合井駅から2200番バス" },
         description: { ko: "고문영 작가의 기묘한 저택을 연상시키는 신비로운 건축물.", en: "Mysterious architecture reminiscent of Ko Moon-young's mansion.", ja: "コ・ムニョン作家の奇な邸宅を連想させる神秘的な建築物。" },
-        query: { ko: "파주 소설원", en: "s Okay to Not Be Okay", ja: "サイコだけど大丈夫坡州ソソルウォン" },
+        query: { ko: "파주 소설원", en: "Soseolwon Paju", ja: "坡州ソソルウォン" },
         lat: 37.7123,
         lng: 126.6843,
         vipContent: {
@@ -936,7 +936,7 @@ export const sampleSpots: TravelSpot[] = [
         rating: 4.7,
         transport: { ko: "1호선 망월사역 도보 15분", en: "15 min walk from Mangwolsa Station", ja: "1号線 望月寺駅 徒歩15分" },
         description: { ko: "웅이와 연수의 학창 시절 인터뷰 배경이 된 고풍스러운 캠퍼스.", en: "Classic campus where Woong and Yeon-su had their interviews.", ja: "ウンとヨンスの学生時代のインタビューの背景になった古風なキャンパス。" },
-        query: { ko: "신한대학교 의정부캠퍼스 (구 가톨릭대)", en: "Uijeongbu Catholic Univ.", ja: "その年、私たちは議政府カトリック大学" },
+        query: { ko: "신한대학교 의정부캠퍼스 (구 가톨릭대)", en: "Shinhan University Uijeongbu", ja: "議政府カトリック大学" },
         lat: 37.7012,
         lng: 127.0543,
         vipContent: {

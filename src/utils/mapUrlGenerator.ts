@@ -59,7 +59,8 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const encodedNaverName = encodeURIComponent(naverName);
 
     if (type === 'naver') {
-        return `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
+        const naverWebUrl = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverName},,-/transit?lang=${naverLang}`;
+        return naverWebUrl;
     }
 
     if (type === 'kakao') {
