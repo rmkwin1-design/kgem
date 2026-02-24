@@ -121,5 +121,11 @@ export const ko = {
             s3Title: "3. 고객 지원",
             s3Desc: "기술적 문제로 인한 환불 문의는 PayPal 거래 ID와 함께 고객 지원팀으로 연락해 주시기 바랍니다."
         }
+    },
+    commands: {
+        gangnam: "🚀 강남 필승 전략",
+        bbq: "🥩 1인분 삼겹살",
+        trash: "♻️ 근처 쓰레기통",
+        tea: "🍵 시크릿 티 투어"
     }
 };

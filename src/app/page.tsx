@@ -313,8 +313,8 @@ export default function Home() {
     const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
     const koQuery = spot.query['ko'] || spot.title['ko'];
 
-    const searchQuery = language === 'ko' ? koQuery : targetQuery;
-    const encodedQuery = encodeURIComponent(searchQuery);
+    const finalSearchQuery = language === 'ko' ? koQuery : targetQuery;
+    const encodedQuery = encodeURIComponent(finalSearchQuery);
 
     const googleRegions: any = { en: 'us', ja: 'jp', ko: 'kr' };
     const region = googleRegions[language] || 'us';
@@ -616,25 +616,25 @@ export default function Home() {
               onClick={() => { setSearchQuery("Gangnam style trip plan"); triggerSearch("Gangnam style trip plan"); }}
               className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 text-indigo-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              🚀 Gangnam Strategy
+              {(t as any).commands.gangnam}
             </button>
             <button
               onClick={() => { setSearchQuery("Solo BBQ spots"); triggerSearch("Solo BBQ spots"); }}
               className="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 hover:bg-pink-500/20 text-pink-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              🥩 Solo BBQ
+              {(t as any).commands.bbq}
             </button>
             <button
               onClick={() => { setSearchQuery("Find nearest trash bins"); triggerSearch("Find nearest trash bins"); }}
               className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 hover:bg-green-500/20 text-green-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              ♻️ Trash Bins
+              {(t as any).commands.trash}
             </button>
             <button
               onClick={() => { setSearchQuery("Secret Tea Tour"); triggerSearch("Secret Tea Tour"); }}
               className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              🍵 Secret Tea Tour
+              {(t as any).commands.tea}
             </button>
           </div>
 

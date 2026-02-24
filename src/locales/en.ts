@@ -121,5 +121,11 @@ export const en = {
             s3Title: "3. Support",
             s3Desc: "For technical refund inquiries, please contact our support team with your PayPal transaction ID."
         }
+    },
+    commands: {
+        gangnam: "🚀 Gangnam Strategy",
+        bbq: "🥩 Solo BBQ",
+        trash: "♻️ Trash Bins",
+        tea: "🍵 Secret Tea Tour"
     }
 };
