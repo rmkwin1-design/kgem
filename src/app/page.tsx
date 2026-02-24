@@ -625,12 +625,6 @@ export default function Home() {
               {t.commands.bbq}
             </button>
             <button
-              onClick={() => { setSearchQuery("Find nearest trash bins"); triggerSearch("Find nearest trash bins"); }}
-              className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 hover:bg-green-500/20 text-green-400 text-[11px] font-black uppercase tracking-widest transition-all"
-            >
-              {t.commands.trash}
-            </button>
-            <button
               onClick={() => { setSearchQuery("Secret Tea Tour"); triggerSearch("Secret Tea Tour"); }}
               className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
