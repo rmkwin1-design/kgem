@@ -1,626 +1,154 @@
 import { TravelSpot } from "../../types/spot";
 
 export const seoulSpots: TravelSpot[] = [
-    {
-        id: "seoul-1",
-        title: { ko: "?�수???��? LP�?'?�디??", en: "Hidden LP Bar 'Edit' in Seongsu", ja: "?�水洞の?�れ家LP?�ー?�エ?�ィ?�ト?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?w=800&q=80",
-        rating: 4.9,
-        isTrending: true,
-        transport: { ko: "2?�선 ?�수??3�?출구 ?�보 5�?, en: "5 min walk from Seongsu Station Exit 3 (Line 2)", ja: "2?�線 ?�水�?3?�出??徒�?5�? },
-        description: { ko: "?�날로그 감성??가?�한 ?�수?�의 비�??�러??공간?�니??", en: "A secret space in Seongsu full of analog vibes.", ja: "?�ナ??��?�性あ?�れ?�聖水洞??��密の空間?�す?? },
-        query: { ko: "?�수??LP�?, en: "Edit LP Bar Seongsu", ja: "?�水�??�디??LP�? },
-        price: 25000,
-        lat: 37.5447,
-        lng: 127.0567,
-        vipContent: {
-            secretMenu: { ko: "?�든 칵테??'블루 ?�수'", en: "Hidden Cocktail 'Blue Sangsu'", ja: "裏カ?�텔?�ブ?�ー ?? },
-            ownerTip: { ko: "?�너가 직접 추천?�는 ?�수 ?�예 명당 ?�리가 ?�습?�다.", en: "There is a secret elite seat recommended by the owner.", ja: "?�ー?�ー?�直?�お?�す?�す?�少?�精??��?�等�?��?�り?�す?? },
-            status: { ko: "?�시�??�잡??40% (쾌적)", en: "40% Busy (Spacious)", ja: "?�ア?�タ?�ム混雑�?0% (快適)" }
-        }
-    },
-    {
-        id: "seoul-2",
-        title: { ko: "경복�??�빛 ?�책", en: "Gyeongbokgung Moonlight Walk", ja: "??���?��?�か?�の?? },
-        category: "travel",
-        image: "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "3?�선 경복궁역 5�?출구 ?�결", en: "Directly connected to Gyeongbokgung Station Exit 5 (Line 3)", ja: "3?�線 ??���?�� 5?�出???�結" },
-        description: { ko: "조선 ?�조???�엄�?밤의 고요?�이 만나???�름?�운 궁궐 ?�책�?", en: "A beautiful palace walk where Joseon majesty meets night tranquility.", ja: "?��??�朝??��?�と夜の?�寂???�合?�る美し?�王�?��?��??��? },
-        query: { ko: "경복�?별빛?�행", en: "Gyeongbokgung Palace", ja: "??���? },
-        vipContent: {
-            secretMenu: { ko: "?�간 관???�용 '비�? ?�자' ?�치", en: "Location of 'Secret Pavilion' for Night View", ja: "夜間観覧専用?�秘密の?�屋?�の?��?" },
-            ownerTip: { ko: "?�복 착용 ???�구 근처???�겨�??�토존을 ?�용?�세??", en: "Use the hidden photo spot near the entrance when wearing Hanbok.", ja: "?�服?�?�の?�、入?�近?�の?�れ?�フ?�ト?�ポ?�ト?�利?�し?�く?�さ?��? }
-        },
-        price: 3000,
-        lat: 37.5796,
-        lng: 126.9770
-    },
-    {
-        id: "seoul-3",
-        title: { ko: "북촌 ?�옥마을 '?�깨�? 촬영지", en: "Bukchon Village 'Goblin' House", ja: "?�村?�屋?�「ト?�ケ?�」の" },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1528154291023-a6525fabe5b4?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "3?�선 ?�국??2�?출구 ?�보 10�?, en: "10 min walk from Anguk Station Exit 2 (Line 3)", ja: "3?�線 安国�?2?�出??徒�?10?? },
-        description: { ko: "?�라�?'?�깨�????�비로운 ?�원???�는 ?�양??주택.", en: "Western-style house with a mysterious garden from 'Goblin'.", ja: "?�ラ?�「ト?�ケ?�」の神秘?�な�?��?�あ?�洋風住宅�? },
-        query: { ko: "중앙고등?�교", en: "Bukchon Hanok Village", ja: "?�村?�屋?? },
-        lat: 37.5826,
-        lng: 126.9836,
-        vipContent: {
-            secretMenu: { ko: "촬영 ?�품 미니?�처 ?�트", en: "Drama Prop Miniature Kit", ja: "??��小道?�の?�ニ?�ュ?�キ?�ト" },
-            ownerTip: { ko: "중앙고등?�교 ?��? 관?��? 주말?�만 가?�합?�다.", en: "Internal visit is only available on weekends.", ja: "�?��高校??��?�観覧は?�末?�の?�可?�で?��? }
-        }
-    },
-    {
-        id: "seoul-4",
-        title: { ko: "�?��???�라?�빗 ?�파 'L'", en: "Cheongdam Private Spa 'L'", ja: "清潭洞プ?�イ?�ー?�ス?�「L?? },
-        category: "beauty",
-        image: "https://images.unsplash.com/photo-1544145945-f904253db0ad?w=800&q=80",
-        rating: 5.0,
-        transport: { ko: "7?�선 �?��??9�?출구 ?�보 3�?, en: "3 min walk from Cheongdam Station Exit 9 (Line 7)", ja: "7?�線 清潭�?9?�出??徒�?3" },
-        description: { ko: "�?�� 최정?�급 ?�티?�트?�이 ?�용?�는 0.1% ?�라?�빗 ?�라??공간.", en: "0.1% private therapy space used by top artists in Korea.", ja: "?�内?�高峰??��?�テ?�ス?�が?�用?�는 0.1%?�ラ?�ベ?�ト?�ラ?�ー空間?? },
-        query: { ko: "�?��???�파", en: "L Spa Cheongdam", ja: "清潭洞ス?�L" },
-        lat: 37.5255,
-        lng: 127.0423,
-        vipContent: {
-            secretMenu: { ko: "VIP ?�용 로열 ???�비??, en: "VIP-only Royal Tea Service", ja: "VIP専用??��?�ル?�ィ?�サ?�ビ?? },
-            ownerTip: { ko: "?�너 ?�라?�스??지�???추�? ?�드 ?�파 ?�비?��? ?�공?�니??", en: "Complimentary head spa when booking the owner therapist.", ja: "?�ー?�ー?�ラ?�ス?�指?�時?�追?�の?�ッ?�ス?�サ?�ビ?�が?�供?�れ?�す?? }
-        },
-        price: 150000
-    },
-    {
-        id: "seoul-5",
-        title: { ko: "?�남??'?��?' ?�로??카페", en: "Supul Drawing Cafe in Yeonnam", ja: "延南洞「ス?�ル?�ド??��?�ン?�カ?�ェ" },
-        category: "activity",
-        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?��??�구??3�?출구 ?�보 7�?, en: "7 min walk from Hongik Univ. Station Exit 3", ja: "弘大?�口�?3?�出??徒�?7�? },
-        description: { ko: "?�남???�길 ?? 캔버???�에 ?�만???�울??그리???�링 ?�??", en: "Healing time drawing your own Seoul on canvas next to Yeonnam forest way.", ja: "延南洞の�?��?�沿?�、キ?�ン?�ス?�自?�だ?�の?�ウ?�を?�く?�ー?�ン?�タ?�ム?? },
-        query: { ko: "?�남???�로?�카??, en: "Supul Drawing Cafe", ja: "延南洞ス?�ル?�ロ?�イ?�グ?�フ?? },
-        lat: 37.5615,
-        lng: 126.9248,
-        vipContent: {
-            secretMenu: { ko: "?�리미엄 ?�입 물감 ?�그?�이??, en: "Premium Imported Paint Upgrade", ja: "高級輸入絵具?�ッ?�グ?�ー?? },
-            ownerTip: { ko: "?�후 4???�후??창�? ?�리???�벽??채광???�랑?�니??", en: "Window seats after 4 PM have perfect natural lighting.", ja: "?�後4?�以?�の窓際??��??��?�な?�光?�誇?�ま?��? }
-        },
-        price: 20000
-    },
-    {
-        id: "seoul-6",
-        title: { ko: "?�태???�라??'?�밤' 1?�점", en: "Itaewon Class 'Danbam' 1st", ja: "梨泰?�ク?�ス?�タ?�バ?��??�店" },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "6?�선 ?�사?�역 3�?출구 ?�보 5�?, en: "5 min walk from Noksapyeong Station Exit 3", ja: "6?�線 緑莎?�駅 3?�出??徒�?5�? },
-        description: { ko: "박새로이???�정???�아?�는 ?�태???�라?�의 중심지.", en: "The heart of Itaewon Class where Park Saeroyi's passion lives.", ja: "?�ク?�セ??��??��?�が?�き?�い?�梨泰院??��?�の�?��?��? },
-        query: { ko: "?�태???�밤 촬영지", en: "Itaewon Danbam", ja: "梨泰?�タ?�バ?? },
-        lat: 37.5346,
-        lng: 126.9880,
-        vipContent: {
-            secretMenu: { ko: "?�라�???'?�두부찌개' ?�현 메뉴", en: "Recreated Soft Tofu Stew from Drama", ja: "?�中??��ス?�ド?�ブ?�ゲ?�再?�メ?�ュ?? },
-            ownerTip: { ko: "루프?�에??바라보는 ?�산뷰�? ?�라�?공식 ?�토존입?�다.", en: "Namsan view from the rooftop is the official photo spot.", ja: "屋上?�ら?�め?�南山ビ?�ー?�ド?�マ??��式フ?�ト?�ポ?�ト?�す?? }
-        }
-    },
-    {
-        id: "seoul-7",
-        title: { ko: "?�태???�라??'?�산?�교'", en: "Itaewon Class 'Namsan Pedestrian Bridge'", ja: "梨泰?�ク?�ス?�南山�?橋�? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1540919315541-698f12ea926b?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "6?�선 ?�사?�역 1�?출구 ?�보 2�?, en: "2 min walk from Noksapyeong Station Exit 1", ja: "6?�線 緑莎?�駅 1?�出??徒�?2�? },
-        description: { ko: "박새로이가 고�????�기???�라�???명장면의 배경.", en: "The background of the famous scene where Park Saeroyi was lost in thought.", ja: "?�ク?�セ??��?�悩?�事?�し?�劇�?��?�場?�の?�景?? },
-        query: { ko: "?�사?�역 ?�교", en: "Noksapyeong Station Bridge", ja: "緑莎?�駅歩道�? },
-        lat: 37.5358,
-        lng: 126.9868,
-        vipContent: {
-            secretMenu: { ko: "?�간 출사 ?�용 ?�각?� ?�??, en: "Night Photography Tripod Rental", ja: "夜間??��?�三?�の貸出" },
-            ownerTip: { ko: "??�????�산?�?�에 불이 켜�????�간??가???�름?�습?�다.", en: "Sunset is best when Namsan Tower lights turn on.", ja: "?�没?�、南山タ??��?�明?�り?�灯?�瞬?�が?�?�美?�い?�す?? }
-        }
-    },
-    {
-        id: "seoul-8",
-        title: { ko: "기생�?'?�하�??�널'", en: "Parasite 'Jahamun Tunnel'", ja: "?�ラ?�イ?�「紫?��??�ン?�ル?? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "3?�선 경복궁역 3�?출구 버스 ?�용 (?�하�?고개 ?�차)", en: "Bus from Gyeongbokgung Station Exit 3 to Jahamun Hill", ja: "3?�線 ??���?�� 3?�出?�よ?�バ?�利??紫霞?�峠下�?" },
-        description: { ko: "기택 가족이 빗속???�고 ?�망치던 ?�화 ??계단�??�널.", en: "The stairs and tunnel where Ki-taek's family fled through the rain.", ja: "??��???家が?�の�?��?�げ?�劇�?��?��??�ト?�ネ?��? },
-        query: { ko: "?�하문터??기생�?, en: "Jahamun Tunnel", ja: "紫霞?�?�ン?�ル" },
-        lat: 37.5915,
-        lng: 126.9635,
-        vipContent: {
-            secretMenu: { ko: "?�화 ?�스??컨셉 ?�진 ?�화", en: "Movie Poster Concept Photo Printing", ja: "?�画?�ス?�ー?�ン?�プ?�の?�真?�像" },
-            ownerTip: { ko: "?�널 ?�구?�서 계단??바라보는 각도가 최고??'계급차이' ?��??�니??", en: "The angle looking up the stairs is the best 'class gap' shot.", ja: "?�ン?�ル??��?�口?�ら?��??�見上げ?�角度が?�高の?�階級差?�ア?�グ?�で?��? }
-        }
-    },
-    {
-        id: "seoul-9",
-        title: { ko: "?�징??게임 '?�문???�장'", en: "Squid Game 'Ssangmun-dong Market'", ja: "?�카게임?�双?�洞市?��? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1547928576-965be7f5f6a6?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "4?�선 ?�문??2�?출구 ?�보 5�?, en: "5 min walk from Ssangmun Station Exit 2", ja: "4?�線 ?��?�?2?�出??徒�?5�? },
-        description: { ko: "?�기?�의 ?�상??묻어?�던 ?�활 밀착형 ?�장 ?�경.", en: "The daily market life of Seong Gi-hun in Squid Game.", ja: "?�ン?�ギ?�ン??��常が?�じ?�出?�い?�生活密?�?�の市場??��??�? },
-        query: { ko: "백운?�장 ?�징?�게??, en: "Baegun Market Seoul", ja: "?�雲市場?��?�? },
-        lat: 37.6491,
-        lng: 127.0345,
-        vipContent: {
-            secretMenu: { ko: "추억???�고??뽑기 체험", en: "Nostalgic Dalgona Challenge", ja: "?�の?�、あ??��????�ゴ?�型?�き体験" },
-            ownerTip: { ko: "기훈???�주 가???�선 가게는 ?�제�??�장 ?�구???�습?�다.", en: "The fish shop Gi-hun frequented is actually at the market entrance.", ja: "??��?�が?�く行っ?�い?�魚屋は実際?�市?�の?�り?�に?�り?�す?? }
-        }
-    },
-    {
-        id: "seoul-10",
-        title: { ko: "무빙 '?�산 ?�까??", en: "Moving 'Namsan Tonkatsu'", ja: "?�ー?�ン?�「南山と?�か?��? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "4?�선 명동??3�?출구 ?�산 케?�블�?방향 ?�보 10�?, en: "10 min walk from Myeongdong Station towards Namsan Cable Car", ja: "4?�線 ?�洞�?3?�出?�よ?�南山ケ?�ブ?�カ?�方?�へ徒�?10�? },
-        description: { ko: "?�라�?'무빙'?�서 초능?�자?�이 비�??�럽�?만나??추억??�?", en: "The nostalgic taste where superpowered humans met secretly in 'Moving'.", ja: "?�ラ?�「ム?�ビ?�グ?�で超能?�者た?�が密か?�会?�て?�た?�い?�の?��? },
-        query: { ko: "?�산 ?�까??무빙", en: "Namsan Tonkatsu", ja: "?�山?�ん?�つ" },
-        lat: 37.5562,
-        lng: 126.9850,
-        vipContent: {
-            secretMenu: { ko: "?�라�???'?�효�??�트'", en: "Drama-themed 'Han Hyo-joo Set'", ja: "?�中??��ハ?�・?�ョ?�ュ ?�ッ?��? },
-            ownerTip: { ko: "?�프?� ?�배�??�러?�는 무한 리필??�?��?�니??", en: "Infinite refill for soup and cabbage salad is the local rule.", ja: "?�ー?�と??��?�ツ??��?��???��?�に?�か?�り?�る??��?�元??��?�ル?�す?? }
-        }
-    },
-    {
-        id: "seoul-11",
-        title: { ko: "?��??�업 '?�들??", en: "Start-Up 'Nodeul Island'", ja: "?�タ?�ト?�ッ?�「ノ?�ゥ?�島?? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1549497538-30623643f81c?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "9?�선 ?�들??2�?출구 ?�강?��?방향 ?�보 10�?, en: "10 min walk from Nodeul Station Exit 2", ja: "9?�線 ?�ド?�ル�?2?�出?�よ?�漢江大橋方?�へ徒�?10�? },
-        description: { ko: "?�드박스(IT ?�리콘밸�???배경?????�강 ?�의 문화 복합 공간.", en: "Culture complex on Han River, the background of 'Sandbox'.", ja: "?�ン?�ボ?�ク??IT?�リ?�ン?�レ????��??��?�っ?�漢江上??��?�複?�空?��? },
-        query: { ko: "?�들???�드박스", en: "Nodeul Island", ja: "?�タ?�ト?�ッ?�ノ?�ゥ?�島" },
-        lat: 37.5175,
-        lng: 126.9581,
-        vipContent: {
-            secretMenu: { ko: "?�크??매트 �?바스�??�???�트", en: "Picnic Mat & Basket Rental Set", ja: "?�크?�ッ??��?�ト＆バ?�ケ?�ト?�ン?�ル?�ッ?? },
-            ownerTip: { ko: "??�?무렵 �?켜진 63빌딩??배경?�로 찍는 ?�진???�술?�니??", en: "Artistic shots with the 63 Building lights at sunset.", ja: "?�が??��?�頃?�明?�り??��?�た63?�ル?�背??��??��?�真?�芸術적?�す?? }
-        }
-    },
-    {
-        id: "seoul-12",
-        title: { ko: "?�랑??불시�?'?�프�??�테?�크?�우??", en: "Crash Landing on You 'Wolfgang Steakhouse'", ja: "?�の不時?�?�ウ?�フ??��?�グ?�ス?�ー??��?�ス?? },
-        category: "filming",
-        image: "https://images.unsplash.com/photo-1544145945-f904253db0ad?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�인분당???�구?�로?�오??4�?출구 ?�보 5�?, en: "5 min walk from Apgujeong Rodeo Station Exit 4", ja: "水仁?�唐�??�鴎�?��?�オ�?4?�出??徒�?5�? },
-        description: { ko: "?�세리�? ?�한?�서????��리한 ?�상??보내???�테?�크 ?�우??", en: "The steakhouse where Yoon Se-ri enjoyed her luxury life in the South.", ja: "?�ン?�セ?�が?�国?�の?�グ?�ュ?�リ?�な?�常?�過?�し?�い?�ス?�ー??��?�ス?? },
-        query: { ko: "?�프�??�테?�크?�우??�?��", en: "Wolfgang Steakhouse", ja: "?�の不時?�?�ル?�ギ?�ン?�・?�テ?�キ?�ウ?? },
-        lat: 37.5245,
-        lng: 127.0412,
-        vipContent: {
-            secretMenu: { ko: "?�라�???'?�리's ?�크' 최고�??�테?�크 ?�트", en: "Seri's Pick Premium Steak Set", ja: "?�中??��セ?�ズ?�ピ?�ク?��?高級?�テ?�キ?�ッ?? },
-            ownerTip: { ko: "창�? 좌석?� ?�약??매우 치열?��?�?1개월 ???�약??권장?�니??", en: "Window seats are highly competitive, book 1 month ahead.", ja: "窓側??��??��約が?�常?��??�い?�め???�月?�の予約?�お?�め?�ま?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-1",
-        title: { ko: "�?�� '?�식?? - 코리???�인 ?�이??, en: "Jungsik - Korean Fine Dining in Cheongdam", ja: "清潭?�ジ?�ン?�ク?�ン??- ?�リ?�ン?�ァ?�ン?�?�ニ?�グ" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
-        rating: 4.9,
-        isTrending: true,
-        transport: { ko: "?�구?�로?�오??4�?출구 ?�보 5�?, en: "5 min walk from Apgujeong Rodeo Station Exit 4", ja: "?�鴎�?��?�オ�?4?�出??徒�?5?? },
-        description: { ko: "강남 ?�승 ?�략???�점. ?�욕�??�울?�서 미쉐�?가?�드�??�로?��? 모던 ?�식.", en: "The peak of Gangnam strategy. Modern Korean cuisine that captured Michelin guides in NY and Seoul.", ja: "江南必勝??��??��?�。ニ?�ー?�ー??��?�ウ?�で?�シ?�ラ?�ガ?�ド?�虜?�し?�モ?�?�韓?�料?��? },
-        query: { ko: "�?�� ?�식??, en: "Jungsik Cheongdam", ja: "清潭 ?�ョ?�シ??��?? },
-        price: 250000,
-        lat: 37.5255,
-        lng: 127.0402,
-        vipContent: {
-            secretMenu: { ko: "메뉴?�에 ?�는 빈티지 ?�???�어�?, en: "Off-menu Vintage Wine Pairing", ja: "?�ニ?�ー?�な?�ヴ?�ン?�ー?�ワ?�ン?�ア?�ン?? },
-            ownerTip: { ko: "2개월 ???�약 ?�수, 창�??��? 멤버???�선 배정?�니??", en: "Book 2 months ahead. Window seats are priority for members.", ja: "2?�月?�の予約必須?�窓?�の�?��?�ン?�ー?�ッ?�優?�配?�で?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-2",
-        title: { ko: "?�사 '마일?�톤 커피' 로스?�즈", en: "Milestone Coffee Roasters Sinsa", ja: "?�沙?�マ?�ル?�ト?�ン?�ー?�ー?�ロ?�ス?�ー?? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�사??8�?출구 ?�보 10�?, en: "10 min walk from Sinsa Station Exit 8", ja: "?�沙�?8?�出??徒�?10?? },
-        description: { ko: "가로수길에??가???�한 ?�스?�레??�? 강남 ?�렌?�세?�들??집결지.", en: "The hippest espresso bar in Garosu-gil. A gathering spot for Gangnam trendsetters.", ja: "街路樹通り?��??�ヒ?�プ?�エ?�プ?�ッ?�バ?�。江?�の?�レ?�ド?�ッ?�ー?�ち??��결地?? },
-        query: { ko: "?�사??마일?�톤커피", en: "Milestone Coffee Sinsa", ja: "?�沙�??�イ?�ス?�ー?�コ?�ヒ?? },
-        vipContent: {
-            secretMenu: { ko: "?�골 ?�용 ?�크�?블렌???�두", en: "Regular-only Secret Blend Beans", ja: "常連専?�シ?�ク?�ッ?�ブ?�ン?�豆" },
-            ownerTip: { ko: "?�전 11???�전 방문 ??가???�적?�게 분위기�? 즐길 ???�습?�다.", en: "Visit before 11 AM for the quietest atmosphere.", ja: "?�前11?�前?�訪?�す?�と?��??�静?�に?�囲気を楽し?�ま?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-3",
-        title: { ko: "?�구??'?�버린즈' ?�래그십 ?�토??, en: "Tamburins Flagship Store Apgujeong", ja: "?�鴎�?��タ?�バ?�ン?�」フ?�ッ?�シ?�プ?�ト?? },
-        category: "beauty",
-        image: "https://images.unsplash.com/photo-1522335789183-b11407384352?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�구?�로?�오??5�?출구 ?�보 7�?, en: "7 min walk from Apgujeong Rodeo Station Exit 5", ja: "?�鴎�?��?�オ�?5번出??徒�?7�? },
-        description: { ko: "?�기�??�술�??�화?�킨 공간. ?�스?�그래머블???�테리어?� 감각?�인 ?�수.", en: "A space where scent is sublimated into art. Instagrammable interior and sensible perfumes.", ja: "香り?�芸術へ?�昇??��?�た空間?�イ?�ス?�映?�す?�イ?�テ?�ア?�感覚的?�香水�? },
-        query: { ko: "?�구???�버린즈", en: "Tamburins Apgujeong", ja: "?�鴎�??�ン?�リ?�ズ" },
-        vipContent: {
-            secretMenu: { ko: "?�시 컨셉 ?�정???�드?�림", en: "Exhibition Concept Limited Edition Hand Cream", ja: "展示?�ン?�プ?�限定版?�ン?�ク?�ー?? },
-            ownerTip: { ko: "지??1�??�시관?� ?�기?�으�??�마가 바뀌니 체크?�세??", en: "The B1 exhibition theme changes regularly, so check it out.", ja: "?�下1?�の展示館は定期?�に?�ー?�が変わ?�の?�チ?�ッ??��?�く?�さ?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-4",
-        title: { ko: "�?�� '?�리?? �?�� - ?�피?��? �?, en: "Alice Cheongdam - Speakeasy Bar", ja: "清潭?�ア?�ス?�清�?- ?�ピ?�ク?�ー?�ー?�ー" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�구?�로?�오??4�?출구 ?�보 3�?, en: "3 min walk from Apgujeong Rodeo Station Exit 4", ja: "?�鴎�?��?�オ�?4?�出??徒�?3?? },
-        description: { ko: "꽃집 ?�에 ?�겨�??�화 같�? �? 강남??비�??�러??밤을 책임집니??", en: "A fairytale-like bar hidden behind a flower shop. Responsbile for secret nights in Gangnam.", ja: "?�屋??��?�隠?�れ?�童話の?�う?�バ?�。江?�の秘密??��?�彩?�ま?��? },
-        query: { ko: "�?�� ?�리??�?, en: "Alice Cheongdam Bar", ja: "清潭 ?�リ???�ー" },
-        vipContent: {
-            secretMenu: { ko: "?�끼 �??�장�??�용 ?�그?�처 칵테??, en: "Rabbit Hole Entrance Exclusive Signature Cocktail", ja: "?�サ??��穴の?�場客専?�シ?�ネ?�ャ?�カ??��?? },
-            ownerTip: { ko: "?�구??진짜 꽃집처럼 보이지�?문을 밀�??�어가�??�니??", en: "The entrance looks like a real flower shop, just push the door.", ja: "?�り?�は?�物??��屋の?�う?�見?�ま?�が?�ド?�を?�し?�け??��?�て?�だ?�い?? }
-        }
-    },
-    {
-        id: "gangnam-strat-5",
-        title: { ko: "강남 '?�우??베이커리' ?�산본점", en: "Our Bakery Dosan Main Store", ja: "江南?�ア?�ア?�ー?�ー?�ー?�島山本�? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "?�구?�로?�오??5�?출구 ?�보 10�?, en: "10 min walk from Apgujeong Rodeo Station Exit 5", ja: "?�鴎�?��?�オ�?5?�出??徒�?10?? },
-        description: { ko: "????베어 물면 멈출 ???�는 '?�티초코'???��?.", en: "Grand central for 'Dirty Chocolate' that you can't stop eating once you bite.", ja: "一?�食?�た?��??�ら?�い?��??�テ?�ー?�ョ?�」の?�地?? },
-        query: { ko: "?�우?�베?�커�??�산", en: "Our Bakery Dosan", ja: "?�ウ?�ベ?�カ?�リ??島山" },
-        vipContent: {
-            secretMenu: { ko: "?�약 구매 ?�용 ?�리미엄 ?�톨??, en: "Pre-order Only Premium Stollen", ja: "予約購入専用?�レ?�ア?�シ?�ト?�レ?? },
-            ownerTip: { ko: "?�티초코???�해�??�간?�만 ?�오??출고 ?�간??미리 ?�인?�세??", en: "Dirty Chocolate only comes out at set times, check the schedule.", ja: "?�?�テ?�ー?�ョ?�は決ま?�た?�間?�し?�出?�い??��?�焼?�上?�り?�間?�事?�に確認?�て?�だ?�い?? }
-        }
-    },
-    {
-        id: "gangnam-strat-6",
-        title: { ko: "??�� '?�터?�드' 고메 ?�트리트", en: "Centerfield Gourmet Street Yeoksam", ja: "駅三?�セ?�タ?�フ?�ー?�ド?�グ?�メ?�ト?�ー?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "??��??8�?출구 ?�보 5�?, en: "5 min walk from Yeoksam Station Exit 8", ja: "駅三�?8?�出??徒�?5?? },
-        description: { ko: "비즈?�스 미팅�?미식???�시???�결?�는 ?�헤?�로의 ?�로???�장.", en: "The new heart of Teheran-ro for both business meetings and fine dining.", ja: "?�ジ?�ス?�ー?�ィ?�グ?�美食を?�時?�解決す?�テ?��?�?��?�し?�中心地?? },
-        query: { ko: "??�� ?�터?�드 맛집", en: "Centerfield Yeoksam", ja: "駅三 ?�ン?�ー?�ィ?�ル?? },
-        vipContent: {
-            secretMenu: { ko: "?�점 ?�스?�랑 ?�합 VIP 코스", en: "Integrated Restaurant Union VIP Course", ja: "?�店?�ス?�ラ?�連合VIP?�ー?? },
-            ownerTip: { ko: "조선 ?�리???�텔 ?�용객�? 별도??발렛 ?�비?��? ?�용?????�습?�다.", en: "Josun Palace Hotel guests can use separate valet service.", ja: "?��??�レ?�ホ?�ル?�用客は?�途の?�レ?�サ?�ビ?�を?�用?�き?�す?? }
-        }
-    },
-    {
-        id: "gangnam-strat-7",
-        title: { ko: "?�산 '조선?�리?? 1914 ?�운지", en: "Josun Palace 1914 Lounge", ja: "論山?�朝�?��?�ス??914?�ウ?�ジ" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1544145945-f904253db0ad?w=800&q=80",
-        rating: 5.0,
-        transport: { ko: "??��??8�?출구 ?�근", en: "Near Yeoksam Station Exit 8", ja: "駅三�?8?�出?�付�? },
-        description: { ko: "?�도?�인 ?�티뷰�? ?�께 즐기???�이?�드 칵테?�과 ?�프?�눈 ??", en: "High-end cocktails and afternoon tea with an overwhelming city view.", ja: "?�倒的?�シ?�ィ?�ュ?�と?�に楽し?�?�イ?�ン?�な?�ク?�ル?�ア?�タ?�ー?�テ?�ー?? },
-        query: { ko: "조선?�리???�운지", en: "Josun Palace 1914 Lounge", ja: "?��??�レ???�ウ?�ジ" },
-        vipContent: {
-            secretMenu: { ko: "최상�??�점 ?�경 ?�키지", en: "Top Floor Exclusive Night View Package", ja: "?�上階?�占夜景?�ッ?�ー?? },
-            ownerTip: { ko: "주말 창�??��? ?�주?????�약??마감?�는 경우가 많습?�다.", en: "Weekend window seats are often booked a week in advance.", ja: "?�末??��?�の�?��1?�間?�に予約?�埋?�る?�と?�多?�で?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-8",
-        title: { ko: "?�성 '별마???�서관'", en: "Starfield Library Samseong", ja: "三成?�ピ?�ル?��??�図?�館?? },
-        category: "travel",
-        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�성??6�?출구 코엑???�결", en: "Connected to COEX from Samseong Station Exit 6", ja: "三成�?6?�出??COEX?�結" },
-        description: { ko: "지?��? ?�치??강남 ?�략???�석. 거�???책장??주는 ?�도?�인 개방�?", en: "The standard of intellectual Gangnam strategy. Overwhelming openness from gigantic shelves.", ja: "?�性に?�ふ?�る江南??��??��?�。巨大な?�棚?�与?�る?�倒的?�開?�感?? },
-        query: { ko: "코엑??별마?�도?��?", en: "Starfield Library Seoul", ja: "?�ョ?�マ?�?�図?�館" },
-        vipContent: {
-            secretMenu: { ko: "?�서관 ?�레?�터 추천 ?�크�?�?리스??, en: "Library Curator Recommended Secret Book List", ja: "?�書館キ?�レ?�タ?�お?�す?�の?�ー??��?�ト?�ッ??��?�ト" },
-            ownerTip: { ko: "?�스컬레?�터�??��??�라가�?찍는 ?�면 ?�이 가???�명?�니??", en: "The front shot from the escalator is the most famous.", ja: "?�ス?�レ?�タ?�に乗り?�が?�撮?��??�シ?�ッ?�が?�?�有?�で?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-9",
-        title: { ko: "�?�� '본샵' - ?�예??메이?�업", en: "BON SHOP - Celebrity Makeup in Cheongdam", ja: "清潭?�BON SHOP??- ?�能人メ?�ク" },
-        category: "beauty",
-        image: "https://images.unsplash.com/photo-1522338221030-42b3194a00e5?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "�?��??9�?출구 ?�보 5�?, en: "5 min walk from Cheongdam Station Exit 9", ja: "清潭�?9?�出??徒�?5�? },
-        description: { ko: "K-?�라�?주인공처??보이�??�다�??�수 코스. 강남 ?��???변?�의 ?�심.", en: "Essential course for K-drama transformation. The core of Gangnam style makeover.", ja: "K?�ラ?�の主人?�の?�う?�な?�た?�な?�必?�コ?�ス?�江?�ス?�イ?�変身の?�心?? },
-        query: { ko: "�?��??본샵", en: "BON SHOP Makeup Seoul", ja: "清潭�?BON SHOP" },
-        vipContent: {
-            secretMenu: { ko: "?�스??컬러 진단 �?맞춤 ?�장??추천", en: "Personal Color Diagnosis & Custom Cosmetics", ja: "?�ー?�ナ?�カ?�ー診断?�個人?�け?�粧?�お?�す?? },
-            ownerTip: { ko: "?�명 ?�티?�트 지�???추�? ?�금???��?�?만족?�는 200%?�니??", en: "Top artists cost extra but satisfaction is 200%.", ja: "?�名?�ー?�ィ?�ト?�名?�に??��?�料?�が?�り?�す?�、�?足度??00%?�す?? }
-        }
-    },
-    {
-        id: "gangnam-strat-10",
-        title: { ko: "?�사 '?��?몬스?? ?�우???�산", en: "Gentle Monster HAUS DOSAN", ja: "?�沙?�ジ?�ン?�ル?�ン?�タ?�」ハ?�ス島山" },
-        category: "travel",
-        image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�구?�로?�오??5�?출구 ?�보 10�?, en: "10 min walk from Apgujeong Rodeo Station Exit 5", ja: "?�鴎�?��?�オ�?5?�出??徒�?10?? },
-        description: { ko: "?�경?�을 ?�어???�술 공간. 미래지?�적???�치 미술�??�이?�어�?만나??�?", en: "Art space beyond an optical shop. Where futuristic installation art meets eyewear.", ja: "?�鏡店を超え?�芸術空?�。未?�志?�的?�イ?�ス?�レ?�シ?�ン?�ー?�と?�イ?�ェ?�に?�会?�る?��??? },
-        query: { ko: "?��?몬스???�우?�도??, en: "HAUS DOSAN Gentle Monster", ja: "?�ェ?�ト?�モ?�ス?�ー ?�ウ?�島�? },
-        vipContent: {
-            secretMenu: { ko: "?�데?�크 ?�점 ?��????�예?�권", en: "NUDAKE Exclusive Dessert Pre-order Voucher", ja: "NUDAKE?�占?�ザ?�ト?�行予約�? },
-            ownerTip: { ko: "4�??�상 ?�원?� ???�려지지 ?��? ?�든 ?�토 ?�팟?�니??", en: "The 4th-floor rooftop garden is a hidden photo spot.", ja: "4?�の屋上�?��??��?�り?�ら?�て?�な?�隠?�た?�ォ?�ス?�ッ?�で?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-11",
-        title: { ko: "?�성 '?�크 ?�얏???�울' ???��??�우??, en: "The Timber House - Park Hyatt Seoul", ja: "三成?�パ?�ク?�イ?�ッ?�ソ?�ル?�ザ?�テ?�ン?�ー?�ウ?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�성??1�?출구 바로 ??, en: "Right in front of Samseong Station Exit 1", ja: "三成�?1번出?�の?�ぐ?? },
-        description: { ko: "?�날로그 바이???�악�??�께 즐기???�리미엄 ?�식 �?& ?�마카세.", en: "Premium Japanese bar & omakase with analog vinyl music.", ja: "?�ナ??��?�イ?�ル?��??�共?��??��??�レ?�ア?�和食バ?�＆?�ま?�せ?? },
-        query: { ko: "?�크?�얏???�버하?�스", en: "The Timber House Seoul", ja: "?�ー??��?�ア?�ト ?�ィ?�バ?�ハ?�ス" },
-        vipContent: {
-            secretMenu: { ko: "?��? ?�스??컬렉???�라?�빗 ?�음", en: "Private Rare Whisky Tasting", ja: "希少?�ィ?�キ?�コ?�ク?�ョ?�プ?�イ?�ー?�試�? },
-            ownerTip: { ko: "?�이�?공연???�는 ?�???�간??방문?�면 분위기�? 배�? ?�니??", en: "Visit during evening live performances for doubled atmosphere.", ja: "?�イ?�公演が?�る夕方??��?�に訪問?�る?�雰?�気?�倍増?�ま?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-12",
-        title: { ko: "�?�� '?�화?? ?�래그십 ?�토??, en: "Sulwhasoo Flagship Store Cheongdam", ja: "清潭?�雪?��??�フ?�ッ?�シ?�プ?�ト?? },
-        category: "beauty",
-        image: "https://images.unsplash.com/photo-1540555700478-4be289aef09a?w=800&q=80",
-        rating: 5.0,
-        transport: { ko: "?�구?�역 3�?출구 ?�보 15�?, en: "15 min walk from Apgujeong Station Exit 3", ja: "?�鴎�?�� 3번出??徒�?15�? },
-        description: { ko: "?�국 ?�통??지?��? ?��??�으�??�해?�한 ??���?뷰티 공간.", en: "Luxury beauty space reinterpreting traditional Korean wisdom modernly.", ja: "?�国伝統??��?�を?�代?�に?�確認し?�ラ?�ジ?�ア?�ー?�ュ?�テ?�空?��? },
-        query: { ko: "?�화???�산 ?�래그십", en: "Sulwhasoo Bukchon/Cheongdam", ja: "?�花秀 ?�ラ?�グ?�ッ?�ス?�ア" },
-        vipContent: {
-            secretMenu: { ko: "VIP ?�용 ?�방 ???�레모니", en: "VIP-only Oriental Tea Ceremony", ja: "VIP専用?�方?�ィ?�セ?�モ?�ー" },
-            ownerTip: { ko: "루프?�의 금색 구조물�? ?�진???�말 ???�오??명당?�니??", en: "The gold structure on the rooftop is a perfect photo spot.", ja: "屋上??��?�の構造物??��?�が?�当?�綺麗に??��?�特等席?�す?? }
-        }
-    },
-    {
-        id: "gangnam-strat-13",
-        title: { ko: "?�사 '?�링?�친' 브런�?, en: "Darling Kitchen Sinsa", ja: "?�沙?��??�リ?�キ?�チ?�」ブ?�ン?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "?�구?�역 3�?출구 ?�보 10�?, en: "10 min walk from Apgujeong Station Exit 3", ja: "?�鴎�?�� 3번出??徒�?10�? },
-        description: { ko: "?�현??주택가 ???�럽 감성 가?�한 브런�?카페.", en: "European vibe brunch cafe in the residential alleys of Nonhyeon.", ja: "論峴洞の住宅街に?�る?�ー??��?�の?�性豊?�な?�ラ?�チ?�フ?��? },
-        query: { ko: "?�현 ?�링?�친", en: "Darling Kitchen Seoul", ja: "論峴 ?�?�リ?�キ?�チ?? },
-        vipContent: {
-            secretMenu: { ko: "?�라??좌석 ?�용 ?�정??브런�?보드", en: "Terrace-only Limited Edition Brunch Board", ja: "?�ラ?�席専用?�定?�ブ?�ン?�ボ?�ド" },
-            ownerTip: { ko: "?�살??좋�? ??2�??�라??좌석??강력 추천?�니??", en: "Highly recommend the 2nd-floor terrace on sunny days.", ja: "?�差?�の??��?��??�の?�ラ?�席?�強?�お?�す?�し?�す?? }
-        }
-    },
-    {
-        id: "gangnam-strat-14",
-        title: { ko: "?�구??'?��??��?' �??�산", en: "Wiggle Wiggle Zip Dosan", ja: "?�鴎�?��ウ?�グ?�ウ?�グ?�」�? 島山" },
-        category: "travel",
-        image: "https://images.unsplash.com/photo-1510074377623-8cf13fb86c08?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�구?�로?�오??5�?출구 ?�보 5�?, en: "5 min walk from Apgujeong Rodeo Station Exit 5", ja: "?�鴎�?��?�オ�?5?�出??徒�?5�? },
-        description: { ko: "비비?�한 ?�감�??�치???�자?�으�?가?�한 ?�이?�스?�???�토??", en: "Lifestyle store full of vivid colors and kitschy designs.", ja: "?�ビ?�ド?�色使い?�キ?�チ?�な?�ザ?�ン?�あ?�れ?�ラ?�フ?�タ?�ル?�ト?��? },
-        query: { ko: "?��??��? ?�산", en: "Wiggle Wiggle Seoul", ja: "?�ィ?�ル?�ィ?�ル 島山" },
-        vipContent: {
-            secretMenu: { ko: "?�정??캐릭??굿즈 ?�키지", en: "Limited Character Goods Package", ja: "?�定?�キ?�ラ??��?�グ?�ズ?�ッ?�ー?? },
-            ownerTip: { ko: "모든 층이 ?�토존이??배터리�? 가??채워 방문?�세??", en: "Every floor is a photo spot, come with a full battery.", ja: "?�フ??��?�フ?�ト?�ポ?�ト?�の?�、バ?�テ?�ー?�フ?�充?�し??��?�し?�く?�さ?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-15",
-        title: { ko: "�?�� '?�튜?�오 21' - K-Pop ?�스 체험", en: "Studio 21 - K-Pop Dance Class in Cheongdam", ja: "清潭?�ス?�ジ??1??- K-POP?�?�ス体験" },
-        category: "activity",
-        image: "https://images.unsplash.com/photo-1547153760-18fc26394bb1?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "�?��??13�?출구 ?�보 10�?, en: "10 min walk from Cheongdam Station Exit 13", ja: "清潭�?13번出??徒�?10�? },
-        description: { ko: "?�직 ?�이??백댄?�들?�게 직접 배우??1???�스 ?�래??", en: "1-day dance class taught by active idol backup dancers.", ja: "?�役?�イ?�ル?�ッ????�サ?�か?�直?��????��??�ス??��?��? },
-        query: { ko: "�?�� K???�스", en: "Cheongdam K-Pop Dance Studio", ja: "清潭 K-POP?�?�ス" },
-        vipContent: {
-            secretMenu: { ko: "?�스 마스?�의 1:1 ?�인???�슨", en: "1:1 Point Lesson by Dance Master", ja: "?�?�ス?�ス?�ー?�よ??:1?�イ?�ト?�ッ?�ン" },
-            ownerTip: { ko: "?�업 ???�문가??조명 ?�래???�츠 촬영???��??�립?�다.", en: "Assistance for filming Shorts under pro lighting after class.", ja: "?�ッ?�ン??��?�プ??��??��?�の下で?�ョ?�ト?�画??��影を?�手伝い?�ま?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-16",
-        title: { ko: "??�� '루프 808' - ?�경 ?�운지", en: "Roof 808 - Night View Lounge in Yeoksam", ja: "駅三?�ル?�フ808??- 夜景?�ウ?�ジ" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
-        rating: 4.6,
-        transport: { ko: "?�논?�역 5�?출구 바로 ??, en: "Right in front of Sinnonhyeon Station Exit 5", ja: "?�論峴駅 5?�出?�の?�ぐ?? },
-        description: { ko: "강남?�로의 ?�려???�경???�눈???�으�?즐기??루프??�?", en: "Rooftop bar to enjoy the brilliant night view of Gangnam-daero.", ja: "江南大路??��?�か?�夜??��一?�し?�が?��??��?屋上?�ー?? },
-        query: { ko: "강남 루프 808", en: "Roof 808 Gangnam", ja: "江南 ?�ー??08" },
-        vipContent: {
-            secretMenu: { ko: "바텐???�페??커스?� 칵테??, en: "Bartender Special Custom Cocktail", ja: "?�ー?�ン?�?�ス?�シ?�ル?�ス?�ム?�ク?�ル" },
-            ownerTip: { ko: "?�간?�는 바람??많이 �????�으???��? 겉옷??챙기?�요.", en: "Bring a light jacket as it can be windy at night.", ja: "夜間??��?�強?�場?�が?�る??��?�薄?�の上�??�用?�し?�く?�さ?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-17",
-        title: { ko: "?�성 '?�스�??�터' ?�쿠?�리?� 로비", en: "POSCO Center Aquarium Lobby", ja: "三成?�POSCO?�ン?�ー?�ア??��?�ウ?�ロ?�ー" },
-        category: "travel",
-        image: "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "?�성??4�?출구 ?�보 10�?, en: "10 min walk from Samseong Station Exit 4", ja: "三成�?4번出??徒�?10�? },
-        description: { ko: "빌딩 ????거�????�통???�족관. ??���??�피??분위기�? 만끽?�세??", en: "Gigantic cylindrical aquarium in the building forest. Enjoy the luxury office vibe.", ja: "?�ル群の�?��?�る巨大?�円筒形水族館。ラ?�ジ?�ア?�ー?�オ?�ィ?�の?�囲気を満?�し?�く?�さ?��? },
-        query: { ko: "?�스코센???�족관", en: "POSCO Center Seoul", ja: "POSCO?�ン?�ー 水族�? },
-        vipContent: {
-            secretMenu: { ko: "?�터 ??카페 고릴???�운지 ?�용�?, en: "Center Cafe Gorilla Lounge Voucher", ja: "?�ン?�ー?�カ?�ェ?�ゴ?�ラ?�ウ?�ジ?�利?�券" },
-            ownerTip: { ko: "?�일 ?�심?�간 ?�후가 가???�산?�여 ?�진 찍기 좋습?�다.", ja: "平日?�ン?�タ?�ム以降?��??�空?�て?�て?�真??��?��??�で?��? }
-        }
-    },
-    {
-        id: "gangnam-strat-18",
-        title: { ko: "?�사 '?�뎅�??? - 감성 �?, en: "Oden Bar Den Sinsa", ja: "?�沙?�お?�ん?�ー DEN??- ?�性バ?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�사??8�?출구 ?�보 8�?, en: "8 min walk from Sinsa Station Exit 8", ja: "?�沙�?8번出??徒�?8�? },
-        description: { ko: "가로수길의 조용??골목 ???�리미엄 ?�뎅�? 강남???�박?��?�?고급?�러??�?", en: "Premium oden bar in a quiet alley of Garosu-gil. Simple yet classy Gangnam night.", ja: "街路樹通り??��?�な�?��裏に?�る?�レ?�ア?�お?�ん?�ー?�江?�の素朴?�が?�も高級?�あ?�れ?�夜?? },
-        query: { ko: "가로수�???, en: "Oden Bar Den Seoul", ja: "街路樹通り DEN" },
-        vipContent: {
-            secretMenu: { ko: "?�인??빚�? ?�제 ?�묵 ?�별 모듬", en: "Artisan Handmade Oden Special Platter", ja: "?�人?�作?�た?�作?�お?�ん?�別?�り?�わ?? },
-            ownerTip: { ko: "�?좌석?� 2???�님 ?�주?�며, ?�약 ?�이 방문 ???�기�? �????�습?�다.", en: "Bar seats for 2 mainly, long wait if visiting without booking.", ja: "?�ウ?�タ?�席???�様?�主?�、予約な?�の訪問?�と待ち?�間?�長?�な?�場?�が?�り?�す?? }
-        }
-    },
-    {
-        id: "gangnam-strat-19",
-        title: { ko: "?�구??'?�던 베이글 뮤�??? ?�산", en: "London Bagel Museum Dosan", ja: "?�鴎�?��ロ?�ド?�ベ?�グ?�ミ?�ー?�ア?�」島�? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1585478259715-876a6a81fc08?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�구?�로?�오??5�?출구 ?�보 10�?, en: "10 min walk from Apgujeong Rodeo Station Exit 5", ja: "?�鴎�?��?�オ�?5?�出??徒�?10?? },
-        description: { ko: "?�픈 ?��???�??�는 ?�국�?베이글 ?��?. 강남 ?�픈?�의 ?�징.", en: "The bagel holy ground with lines before opens. Symbol of Gangnam open-run.", ja: "?�店?�か?�列?�で?�る?�国?�の?�ー?�ル??��?�。江?�オ?�プ?�ラ?�の象徴?? },
-        query: { ko: "?�던베이글뮤�????�산", en: "London Bagel Museum Seoul", ja: "??��?�ン?�ー?�ル?�ュ?�ジ?�ム 島山" },
-        vipContent: {
-            secretMenu: { ko: "VIP ?�용 ?��??�는 ?�이?�아???�비??, en: "VIP-only No-wait Takeaway Service", ja: "VIP専用待ち?�間?�し??��?�ク?�ウ?�サ?�ビ?? },
-            ownerTip: { ko: "?�격 줄서�????�플리�??�션 '캐치?�이�???반드???�용?�세??", en: "Must use 'CatchTable' app for remote queuing.", ja: "?�隔行列?�プ?�「キ?�ッ?�テ?�ブ?�」を必ず活用?�て?�だ?�い?? }
-        }
-    },
-    {
-        id: "gangnam-strat-20",
-        title: { ko: "�?�� '?�튜?�오 고유' - ?�스???�복 촬영", en: "Studio Goyu - Personal Hanbok Photo in Cheongdam", ja: "清潭?�ス?�ジ?�固?��?- ?�ー?�ナ?�韓?�撮�? },
-        category: "activity",
-        image: "https://images.unsplash.com/photo-1528154291023-a6525fabe5b4?w=800&q=80",
-        rating: 5.0,
-        transport: { ko: "강남구청??4�?출구 ?�보 10�?, en: "10 min walk from Gangnam-gu Office Station Exit 4", ja: "江南?�庁�?4?�出??徒�?10�? },
-        description: { ko: "?�반 ?�진관과는 격이 ?�른 ?�이?�드 ?�물 ?�로???�튜?�오.", en: "High-end portrait profile studio with a different class from usual shops.", ja: "一?�的?�写?�館?�は一線を?�す?�イ?�ン?�な人物?�ロ?�ァ?�ル?�タ?�オ?? },
-        query: { ko: "�?��???�로?�사�?, en: "Studio Goyu Cheongdam", ja: "清潭�??�ロ?�ィ?�ル?�真" },
-        vipContent: {
-            secretMenu: { ko: "메인 ?��? 1:1 맞춤 보정 무제??, en: "Main Photographer 1:1 Custom Retouching Unlimited", ja: "?�イ?�作家に?�る1:1?�人?�け�???�制?? },
-            ownerTip: { ko: "강남 ?�승 ?�략??마�?막�? ?�생?�입?�다. 미리 컨셉???�고 ?�세??", en: "Final boss of Gangnam strategy is life-shot. Pick a concept first.", ja: "江南必勝??��??��?�く?�り??��人?�シ?�ッ?�」で?�。事?�に?�ン?�プ?�を決め??��?�く?�さ?��? }
-        },
-    {
-        id: "solo-bbq-seoul-1",
-        title: { ko: "강남 '?�전?�당' 4?�점 - 1?�분 가??, en: "Yookjeon Sikdang Gangnam - Solo Friendly", ja: "江南?�ユ??��?�ン?�ク?�ン??4?�店 - 1人前??��" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1632766329864-16d552655848?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "강남??1�?출구 ?�보 5�?, en: "5 min walk from Gangnam Station Exit 1", ja: "江南�?1?�出??徒�?5?? },
-        description: { ko: "?�생 목살??맛볼 ???�는 �? 직원??직접 구워주어 ?�자?�도 ?�벽??굽기�?즐길 ???�습?�다.", en: "Taste the best pork neck. Staff grills for you, perfect for solo diners.", ja: "人生?�高の豚肩??��?�を?�わ?�る?��??�店?�が?�接?�い?�く?�る??��?��?人で?�完?�な?�き?�減?��??�め?�す?? },
-        query: { ko: "강남 ?�전?�당", en: "Yookjeon Sikdang Gangnam", ja: "江南 ?�ク?�ョ?�シ??��?? },
-        price: 19000,
-        vipContent: {
-            secretMenu: { ko: "마무�?볶음�?VIP ?�핑", en: "Fried Rice VIP Toppings", ja: "締め??���?VIP?�ッ?�ン?? },
-            ownerTip: { ko: "?�심 ?�간 직후 방문?�면 ?�이???�이 ?�밥?�기 가??좋습?�다.", en: "Visit right after lunch peak for best solo dining without wait.", ja: "?�食?�直後に訪問?�る?�、待?�時?�な?�で一人飯?��??�め?�す?? }
-        }
-    },
-    {
-        id: "solo-bbq-seoul-2",
-        title: { ko: "?�남 '?�리??�? - ?�동 ?�겹???��?", en: "Nari's House Hannam - Frozen Pork Belly", ja: "漢南?�ナ?�ィ?�ッ??- ?�凍?�ム??��?�サ?�聖?? },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=800&q=80",
-        rating: 4.6,
-        transport: { ko: "?�강진역 1�?출구 ?�보 10�?, en: "10 min walk from Hangangjin Station Exit 1", ja: "漢江??�� 1번出??徒�?10�? },
-        description: { ko: "?�요미식?��? ?�정???�삼???�석. 1?�분 주문?� ?�렵지�??�자 2?�분?� 거뜬??맛입?�다.", en: "Standard of frozen pork belly recognized by food critics. Hard to order 1 portion, but easy to finish 2 alone.", ja: "水曜美食会が認め?�冷?�サ?�ギ?�プ?�ル??��?��?人前??��?�は?�し?�で?�が?��?人で2人前??��裕で食べ?�れ?�味?�す?? },
-        query: { ko: "?�태?�나리의�?, en: "Nari's House Seoul", ja: "梨泰???�リ?�チ?? },
-        vipContent: {
-            secretMenu: { ko: "?�곳만의 비법 ?�절??추�? ?�공", en: "Secret Seasoned Green Onion Refill", ja: "?�こ?�け??��伝ネ??��?�追?�提�? },
-            ownerTip: { ko: "�?��?�이 ?�말 맛있?�니 고기?� ?�께 �?주문?�세??", en: "Cheonggukjang (rich soybean paste stew) is a must-order with meat.", ja: "?�ョ?�グ?�チ?�ン?�本当に美味?�い??��?�肉?��?緒に必ず注文?�て?�だ?�い?? }
-        }
-    },
-    {
-        id: "tea-tour-seoul-1",
-        title: { ko: "종로 '�?마시???? - ?�옥 찻집", en: "Cha Masineun Tteul - Hanok Tea House", ja: "?�路?�チ?�マ?�ヌ?�ト?�ル??- ?�屋?�屋" },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1555529731-118a5bb67af7?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "?�국??2�?출구 ?�보 15�?(북촌)", en: "15 min walk from Anguk Station Exit 2", ja: "安国�?2번出??徒�?15�? },
-        description: { ko: "북촌???�경???�눈???�려?�보?�는 ?�자 모양???�름?�운 ?�옥 찻집.", en: "Beautiful U-shaped Hanok tea house overlooking Bukchon scenery.", ja: "?�村??��??��一?�で?�る?�コ??��?�の美し?�韓屋茶屋�? },
-        query: { ko: "?�청??차마?�는??, en: "Cha Masineun Tteul Bukchon", ja: "三清�??�ャ?�シ?�ン?�ゥ?? },
-        vipContent: {
-            secretMenu: { ko: "계절 ?�정 ?�제 꽃차", en: "Seasonal Handmade Flower Tea", ja: "季�??�定?�作?�花?? },
-            ownerTip: { ko: "중정(마당)??가????보이??중앙 ?�리가 명당?�니??", en: "The center seat with the best view of the courtyard is the best.", ja: "�?��?��??�よ?�見?�る�?��??��?�特等席?�す?? }
-        }
-    },
-    {
-        id: "tea-tour-seoul-2",
-        title: { ko: "?�촌 '?�이?? - ??콜렉?�브", en: "Eieom - Tea Collective Seochon", ja: "西村?�Eieom??- ?�ィ?�コ?�ク?�ィ?? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1544333323-537ea8d44336?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "경복궁역 2�?출구 ?�보 10�?, en: "10 min walk from Gyeongbokgung Station Exit 2", ja: "??���?�� 2번出??徒�?10�? },
-        description: { ko: "미니멀??감성�??�양??�?문화가 만나??조용???�식�?", en: "A quiet retreat where minimal vibes meet Oriental tea culture.", ja: "?�ニ?�ル?�感?�と?�洋??��?�文?�が?�合?�る?�か?�休????? },
-        query: { ko: "?�촌 ?�이??, en: "Eieom Seochon", ja: "西村 Eieom" },
-        vipContent: {
-            secretMenu: { ko: "?�라?�빗 ?�도 ?�션 ?�약�?, en: "Private Tea Ceremony Session Voucher", ja: "?�ラ?�ベ?�ト?�道?�ッ?�ョ?�予約権" },
-            ownerTip: { ko: "차�? ?�께 ?�공?�는 ?�과가 매우 ?�갈?�며 ?�스?�그램 ?�진?�으�?최고?�니??", en: "The refreshments served with tea are very neat and great for Instagram.", ja: "?�茶?��?緒に?�さ?�る?�菓子が?�常?�上?�で?�イ?�ス?�映?�間?�い?�し?�す?? }
-        }
-    },
-    {
-        id: "solo-bbq-seoul-3",
-        title: { ko: "망원 '?�강껍데�? - ?�골?�의 ?��?", en: "Hangang Kkeopdegi - Locals' Favorite", ja: "?�遠?�漢江コ?�テ??�?- 常連た?�の?�地" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1590577976322-3d2d6e2133de?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "망원??2�?출구 ?�보 12�?, en: "12 min walk from Mangwon Station Exit 2", ja: "?�遠�?2번出??徒�?12�? },
-        description: { ko: "?�예?�들??�??�서 먹는 망원???�??맛집. 죽여주는 칼국?��? 껍데기의 조화.", en: "Mangwon-dong's top spot where even celebrities queue. Great combo of Kalguksu and pork rind.", ja: "?�能人も並ん?�食?�る?�遠洞の代表?�な?�店?�絶?�の?�ル?�ク?�と豚皮??��?�モ?�ー?? },
-        query: { ko: "망원???�강껍데�?, en: "Hangang Kkeopdegi Mangwon", ja: "?�遠�?漢江?�プ?�ギ" },
-        vipContent: {
-            secretMenu: { ko: "VIP ?�용 묵�?지 추�? ?�비??, en: "VIP Special Aged Kimchi Refill", ja: "VIP専用?�成??��?�追?�サ?�ビ?? },
-            ownerTip: { ko: "?�일 ?�픈 직후??가�??�자?�도 ?�유�?�� 즐길 ???�습?�다.", en: "Go right at opening on weekdays for a relax solo meal.", ja: "平日??��店直後に行け?�、�?人で?�ゆ?�く?��??�め?�す?? }
-        }
-    },
-    {
-        id: "tea-tour-seoul-3",
-        title: { ko: "?�북??'?�연?�방' - ?�설가??고택", en: "Suyeon Sanbang - Novelist's Historic House", ja: "?�北洞「�?�?��?��?- 小説家の?�宅" },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&q=80",
-        rating: 4.9,
-        transport: { ko: "4?�선 ?�성?�?�구??버스 ?�용 ???�보", en: "Bus from Hansung Univ. Station then walk", ja: "4?�線 漢城大入?�駅?�ら?�ス?�用後、徒�? },
-        description: { ko: "?�설가 ?�태준??고택??개조??찻집. ?�호박죽�??�추차가 ?�품?�니??", en: "Tea house modified from novelist Lee Tae-jun's house. Sweet pumpkin porridge and jujube tea are top-tier.", ja: "小説家イ?�テ?�ュ?�の?�宅?�改装し?�茶屋。か?�ち?�粥?�な?�め?�が絶品?�す?? },
-        query: { ko: "?�북???�연?�방", en: "Suyeon Sanbang Seoul", ja: "?�北�?寿硯山房" },
-        vipContent: {
-            secretMenu: { ko: "?�통 ?�제 ?�과 ?�트 ?�물", en: "Traditional Handmade Yakgwa Set Gift", ja: "伝統?�作?�薬???�ッ??��)?�ッ?�の?�レ?�ン?? },
-            ownerTip: { ko: "가???�풍 ?�즌??방문?�면 고택 ?�원??진수�??�낄 ???�습?�다.", en: "Visit during autumn foliage to see the essence of the garden.", ja: "秋の紅葉?�ー?�ン?�訪?�す?�と?�古宅の�?��??��髄を?�じ?�こ?�が?�き?�す?? }
-        }
-    },
-    {
-        id: "solo-bbq-seoul-4",
-        title: { ko: "?�당 '백송' - 짝갈�??�문", en: "Baeksong - Rib Specialty in Sindang", ja: "?�堂?�ペ??��?��?- ?�あ?�ら?�専?�" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?�당??6�?출구 ?�보 3�?, en: "3 min walk from Sindang Station Exit 6", ja: "?�堂�?6번出??徒�?3�? },
-        description: { ko: "?�트�?감성 가?�한 분위기에??즐기??고퀄리???�고�? ?�찌?�이 ?�어 ?�밥?�기 좋습?�다.", en: "High-quality beef in a retro atmosphere. Counter seats make it great for solo dining.", ja: "?�ト??��?�緒?�ふ?�る?�囲気で楽し?�高品質な?�肉?�カ?�ン?�ー�?��?�り一人飯?��??�で?��? },
-        query: { ko: "?�당 백송", en: "Baeksong Sindang", ja: "?�堂 ?�ク?�ン" },
-        vipContent: {
-            secretMenu: { ko: "?�일 ?�축 ?�정???�사?��? ???�시", en: "Same-day Slaughter Limited Beef Sashimi", ja: "当日屠�??�定?�の?�ク?�シ???�刺??一?? },
-            ownerTip: { ko: "?��?갈비가 가???�명?�니 �?주문?�로 추천?�니??", en: "Seodae-galbi is the most famous, recommend for first order.", ja: "?�デ?�ル?�が一?�有?�な??��?��??�の注文?�お?�す?�で?��? }
-        }
-    },
-    {
-        id: "tea-tour-seoul-4",
-        title: { ko: "가로수�?'??콜렉?�브' - ?��?????, en: "Tea Collective Garosu-gil", ja: "街路樹通り?�テ?�ー?�レ??��?�ブ?? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1576091160550-2173bdd99611?w=800&q=80",
-        rating: 4.7,
-        transport: { ko: "?�구?�역 4�?출구 ?�보 10�?, en: "10 min walk from Apgujeong Station Exit 4", ja: "?�鴎�?�� 4번出??徒�?10�? },
-        description: { ko: "?�심 ???�장 컨셉???�기??로컬 ???�문?? ?�련??분위기에??즐기???�리 �?", en: "Organic local tea specialty shop with an urban farm concept. Our tea in a sophisticated vibe.", ja: "?�心??��?�ー?�コ?�セ?�ト??��?�ガ?�ッ??��?�カ?�テ?�ー専�?店。洗練さ?�た?�囲気で楽し?�?�国?��? },
-        query: { ko: "강남 ?�콜?�티�?, en: "Tea Collective Seoul", ja: "江南 ?�ィ?�コ?�ク?�ィ?? },
-        vipContent: {
-            secretMenu: { ko: "VIP 멤버???�용 ?�라?�빗 ??블렌??, en: "VIP Membership Private Tea Blending", ja: "VIP?�ン?�ー?�ッ?�専?�プ?�イ?�ー?�テ?�ー?�レ?�デ?�ン?? },
-            ownerTip: { ko: "?�유�?창을 ?�해 ?�어?�는 ?�후???�살??가???�름?�운 곳입?�다.", en: "Afternoon sunlight through the floor-to-ceiling windows is beautiful.", ja: "?�面?�ラ?�窓?�ら�?��込�??�後??���?��?��??�美?�い?��??�す?? }
-        }
-    },
-    {
-        id: "solo-bbq-seoul-5",
-        title: { ko: "?��?�?'?��??? - ?�성 ?�고�?, en: "Domino Euljiro - Aged Fresh Meat", ja: "乙支�?��ト?�ン?��?- ?�成?�肉" },
-        category: "food",
-        image: "https://images.unsplash.com/photo-1544621235-9856f70ca1bc?w=800&q=80",
-        rating: 4.6,
-        transport: { ko: "?��?�?가??11�?출구 ?�보 2�?, en: "2 min walk from Euljiro 3-ga Exit 11", ja: "乙支�?街駅 11번出??徒�?2�? },
-        description: { ko: "?��?�?감성?�로 즐기???�성 ?��?고기. �??�태??좌석???�어 ?�자?�도 굽기 좋습?�다.", en: "Aged pork with Hipjiro vibes. Bar-style seats perfect for solo grilling.", ja: "?�ッ?�な乙支�??�ッ?�ジ????��?�で楽し?�?�成豚肉?�カ?�ン?�ー�?��?�り一人で?�く??��?��??�で?��? },
-        query: { ko: "?��?�??��???, en: "Domino Euljiro", ja: "乙支�??�ミ?�ホ" },
-        vipContent: {
-            secretMenu: { ko: "메뉴?�에 ?�는 ?�든 ?�그?�처 찌개", en: "Off-menu Hidden Signature Stew", ja: "?�ニ?�ー?�な?�裏?�グ?�チ?�ー?�ゲ" },
-            ownerTip: { ko: "고기 주문 ???�께 ?�오???�??김치�? 구워 먹으�?별�??�니??", en: "Grilled green onion kimchi served with meat is a specialty.", ja: "?�の注文?�に一緒に?�さ?�る?�ネ??��?�チ?�焼?�て食べ?�と絶品?�す?? }
-        }
-    },
-    {
-        id: "tea-tour-seoul-5",
-        title: { ko: "?�교??'?��? 커피' - 차�? 커피", en: "Imi Coffee Seogyo - Tea & Coffee", ja: "西橋洞「이�?커피??- ?�茶?�コ?�ヒ?? },
-        category: "dessert",
-        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
-        rating: 4.8,
-        transport: { ko: "?��??�구??1�?출구 ?�보 7�?, en: "7 min walk from Hongik Univ. Station Exit 1", ja: "弘大?�口�?1번出??徒�?7�? },
-        description: { ko: "?��??��? 가?????�울리는 차�? 커피�??�레?�팅?�주??�?", en: "Curates the best tea and coffee to pair with desserts.", ja: "?�ザ?�ト?��??�合?�お?�と?�ー?�ー?�キ?�レ?�シ?�ン?�て?�れ?�場?�?? },
-        query: { ko: "?��? ?��?커피", en: "Imi Coffee Hongdae", ja: "弘大 ?��? 커피" },
-        vipContent: {
-            secretMenu: { ko: "VIP ?�용 ?�정??계절 ?��???보드", en: "VIP-only Limited Seasonal Dessert Board", ja: "VIP専用?�定?��?節??��?�ー?�ボ?�ド" },
-            ownerTip: { ko: "방문 ?�일 ?�레?�션??조합??믿고 주문?�보?�요. ?�패 ?�습?�다.", en: "Trust the day's curated pairing. You won't regret it.", ja: "訪問当日?�キ?�レ?�シ?�ン?�れ?�組?�合?�せ?�信?�て注文?�て?�て?�だ?�い?�失?�あ?�ま?�ん?? }
-        }
-    }
+    {"id": "seoul-bbq-1", "title": {"ko": "서울 1인분 삼겹살 1", "en": "Seoul Solo BBQ Spot 1", "ja": "ソウル 1人前サムギョプサル 1"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 1", "en": "Seoul Solo BBQ Spot 1", "ja": "ソウル 1人前サムギョプサル 1"}, "lat": 36.5807, "lng": 127.0772, "price": 75022, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 1", "en": "Secret Menu 1", "ja": "裏メニュー 1"}, "ownerTip": {"ko": "오너 추천 팁 1", "en": "Owner Tip 1", "ja": "オーナーのヒント 1"}}},
+    {"id": "seoul-bbq-10", "title": {"ko": "서울 1인분 삼겹살 10", "en": "Seoul Solo BBQ Spot 10", "ja": "ソウル 1人前サムギョプサル 10"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 10", "en": "Seoul Solo BBQ Spot 10", "ja": "ソウル 1人前サムギョプサル 10"}, "lat": 36.5162, "lng": 128.3097, "price": 12108, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 10", "en": "Secret Menu 10", "ja": "裏メニュー 10"}, "ownerTip": {"ko": "오너 추천 팁 10", "en": "Owner Tip 10", "ja": "オーナーのヒント 10"}}},
+    {"id": "seoul-bbq-11", "title": {"ko": "서울 1인분 삼겹살 11", "en": "Seoul Solo BBQ Spot 11", "ja": "ソウル 1人前サムギョプサル 11"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 11", "en": "Seoul Solo BBQ Spot 11", "ja": "ソウル 1人前サムギョプサル 11"}, "lat": 35.1924, "lng": 127.9728, "price": 19395, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 11", "en": "Secret Menu 11", "ja": "裏メニュー 11"}, "ownerTip": {"ko": "오너 추천 팁 11", "en": "Owner Tip 11", "ja": "オーナーのヒント 11"}}},
+    {"id": "seoul-bbq-12", "title": {"ko": "서울 1인분 삼겹살 12", "en": "Seoul Solo BBQ Spot 12", "ja": "ソウル 1人前サムギョプサル 12"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 12", "en": "Seoul Solo BBQ Spot 12", "ja": "ソウル 1人前サムギョプサル 12"}, "lat": 36.1426, "lng": 127.2581, "price": 29460, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 12", "en": "Secret Menu 12", "ja": "裏メニュー 12"}, "ownerTip": {"ko": "오너 추천 팁 12", "en": "Owner Tip 12", "ja": "オーナーのヒント 12"}}},
+    {"id": "seoul-bbq-13", "title": {"ko": "서울 1인분 삼겹살 13", "en": "Seoul Solo BBQ Spot 13", "ja": "ソウル 1人前サムギョプサル 13"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 13", "en": "Seoul Solo BBQ Spot 13", "ja": "ソウル 1人前サムギョプサル 13"}, "lat": 35.5456, "lng": 127.2478, "price": 84642, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 13", "en": "Secret Menu 13", "ja": "裏メニュー 13"}, "ownerTip": {"ko": "오너 추천 팁 13", "en": "Owner Tip 13", "ja": "オーナーのヒント 13"}}},
+    {"id": "seoul-bbq-14", "title": {"ko": "서울 1인분 삼겹살 14", "en": "Seoul Solo BBQ Spot 14", "ja": "ソウル 1人前サムギョプサル 14"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 14", "en": "Seoul Solo BBQ Spot 14", "ja": "ソウル 1人前サムギョプサル 14"}, "lat": 37.4623, "lng": 128.6758, "price": 37386, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 14", "en": "Secret Menu 14", "ja": "裏メニュー 14"}, "ownerTip": {"ko": "오너 추천 팁 14", "en": "Owner Tip 14", "ja": "オーナーのヒント 14"}}},
+    {"id": "seoul-bbq-15", "title": {"ko": "서울 1인분 삼겹살 15", "en": "Seoul Solo BBQ Spot 15", "ja": "ソウル 1人前サムギョプサル 15"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 15", "en": "Seoul Solo BBQ Spot 15", "ja": "ソウル 1人前サムギョプサル 15"}, "lat": 35.1775, "lng": 128.2223, "price": 25958, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 15", "en": "Secret Menu 15", "ja": "裏メニュー 15"}, "ownerTip": {"ko": "오너 추천 팁 15", "en": "Owner Tip 15", "ja": "オーナーのヒント 15"}}},
+    {"id": "seoul-bbq-16", "title": {"ko": "서울 1인분 삼겹살 16", "en": "Seoul Solo BBQ Spot 16", "ja": "ソウル 1人前サムギョプサル 16"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 16", "en": "Seoul Solo BBQ Spot 16", "ja": "ソウル 1人前サムギョプサル 16"}, "lat": 36.0192, "lng": 126.9772, "price": 69627, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 16", "en": "Secret Menu 16", "ja": "裏メニュー 16"}, "ownerTip": {"ko": "오너 추천 팁 16", "en": "Owner Tip 16", "ja": "オーナーのヒント 16"}}},
+    {"id": "seoul-bbq-17", "title": {"ko": "서울 1인분 삼겹살 17", "en": "Seoul Solo BBQ Spot 17", "ja": "ソウル 1人前サムギョプサル 17"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 17", "en": "Seoul Solo BBQ Spot 17", "ja": "ソウル 1人前サムギョプサル 17"}, "lat": 35.9136, "lng": 127.9687, "price": 98966, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 17", "en": "Secret Menu 17", "ja": "裏メニュー 17"}, "ownerTip": {"ko": "오너 추천 팁 17", "en": "Owner Tip 17", "ja": "オーナーのヒント 17"}}},
+    {"id": "seoul-bbq-18", "title": {"ko": "서울 1인분 삼겹살 18", "en": "Seoul Solo BBQ Spot 18", "ja": "ソウル 1人前サムギョプサル 18"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 18", "en": "Seoul Solo BBQ Spot 18", "ja": "ソウル 1人前サムギョプサル 18"}, "lat": 36.3276, "lng": 127.7351, "price": 37236, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 18", "en": "Secret Menu 18", "ja": "裏メニュー 18"}, "ownerTip": {"ko": "오너 추천 팁 18", "en": "Owner Tip 18", "ja": "オーナーのヒント 18"}}},
+    {"id": "seoul-bbq-19", "title": {"ko": "서울 1인분 삼겹살 19", "en": "Seoul Solo BBQ Spot 19", "ja": "ソウル 1人前サムギョプサル 19"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 19", "en": "Seoul Solo BBQ Spot 19", "ja": "ソウル 1人前サムギョプサル 19"}, "lat": 36.9023, "lng": 128.6717, "price": 80163, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 19", "en": "Secret Menu 19", "ja": "裏メニュー 19"}, "ownerTip": {"ko": "오너 추천 팁 19", "en": "Owner Tip 19", "ja": "オーナーのヒント 19"}}},
+    {"id": "seoul-bbq-2", "title": {"ko": "서울 1인분 삼겹살 2", "en": "Seoul Solo BBQ Spot 2", "ja": "ソウル 1人前サムギョプサル 2"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 2", "en": "Seoul Solo BBQ Spot 2", "ja": "ソウル 1人前サムギョプサル 2"}, "lat": 36.352, "lng": 126.97, "price": 21005, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 2", "en": "Secret Menu 2", "ja": "裏メニュー 2"}, "ownerTip": {"ko": "오너 추천 팁 2", "en": "Owner Tip 2", "ja": "オーナーのヒント 2"}}},
+    {"id": "seoul-bbq-20", "title": {"ko": "서울 1인분 삼겹살 20", "en": "Seoul Solo BBQ Spot 20", "ja": "ソウル 1人前サムギョプサル 20"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 20", "en": "Seoul Solo BBQ Spot 20", "ja": "ソウル 1人前サムギョプサル 20"}, "lat": 36.2067, "lng": 128.9914, "price": 84841, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 20", "en": "Secret Menu 20", "ja": "裏メニュー 20"}, "ownerTip": {"ko": "오너 추천 팁 20", "en": "Owner Tip 20", "ja": "オーナーのヒント 20"}}},
+    {"id": "seoul-bbq-21", "title": {"ko": "서울 1인분 삼겹살 21", "en": "Seoul Solo BBQ Spot 21", "ja": "ソウル 1人前サムギョプサル 21"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 21", "en": "Seoul Solo BBQ Spot 21", "ja": "ソウル 1人前サムギョプサル 21"}, "lat": 37.365, "lng": 127.712, "price": 18407, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 21", "en": "Secret Menu 21", "ja": "裏メニュー 21"}, "ownerTip": {"ko": "오너 추천 팁 21", "en": "Owner Tip 21", "ja": "オーナーのヒント 21"}}},
+    {"id": "seoul-bbq-22", "title": {"ko": "서울 1인분 삼겹살 22", "en": "Seoul Solo BBQ Spot 22", "ja": "ソウル 1人前サムギョプサル 22"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 22", "en": "Seoul Solo BBQ Spot 22", "ja": "ソウル 1人前サムギョプサル 22"}, "lat": 36.6872, "lng": 127.1331, "price": 48742, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 22", "en": "Secret Menu 22", "ja": "裏メニュー 22"}, "ownerTip": {"ko": "오너 추천 팁 22", "en": "Owner Tip 22", "ja": "オーナーのヒント 22"}}},
+    {"id": "seoul-bbq-23", "title": {"ko": "서울 1인분 삼겹살 23", "en": "Seoul Solo BBQ Spot 23", "ja": "ソウル 1人前サムギョプサル 23"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 23", "en": "Seoul Solo BBQ Spot 23", "ja": "ソウル 1人前サムギョプサル 23"}, "lat": 37.2969, "lng": 127.0703, "price": 56944, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 23", "en": "Secret Menu 23", "ja": "裏メニュー 23"}, "ownerTip": {"ko": "오너 추천 팁 23", "en": "Owner Tip 23", "ja": "オーナーのヒント 23"}}},
+    {"id": "seoul-bbq-24", "title": {"ko": "서울 1인분 삼겹살 24", "en": "Seoul Solo BBQ Spot 24", "ja": "ソウル 1人前サムギョプサル 24"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 24", "en": "Seoul Solo BBQ Spot 24", "ja": "ソウル 1人前サムギョプサル 24"}, "lat": 36.6876, "lng": 127.2466, "price": 84744, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 24", "en": "Secret Menu 24", "ja": "裏メニュー 24"}, "ownerTip": {"ko": "오너 추천 팁 24", "en": "Owner Tip 24", "ja": "オーナーのヒント 24"}}},
+    {"id": "seoul-bbq-25", "title": {"ko": "서울 1인분 삼겹살 25", "en": "Seoul Solo BBQ Spot 25", "ja": "ソウル 1人前サムギョプサル 25"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 25", "en": "Seoul Solo BBQ Spot 25", "ja": "ソウル 1人前サムギョプサル 25"}, "lat": 37.3497, "lng": 127.9233, "price": 65474, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 25", "en": "Secret Menu 25", "ja": "裏メニュー 25"}, "ownerTip": {"ko": "오너 추천 팁 25", "en": "Owner Tip 25", "ja": "オーナーのヒント 25"}}},
+    {"id": "seoul-bbq-26", "title": {"ko": "서울 1인분 삼겹살 26", "en": "Seoul Solo BBQ Spot 26", "ja": "ソウル 1人前サムギョプサル 26"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 26", "en": "Seoul Solo BBQ Spot 26", "ja": "ソウル 1人前サムギョプサル 26"}, "lat": 36.7382, "lng": 128.2522, "price": 86351, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 26", "en": "Secret Menu 26", "ja": "裏メニュー 26"}, "ownerTip": {"ko": "오너 추천 팁 26", "en": "Owner Tip 26", "ja": "オーナーのヒント 26"}}},
+    {"id": "seoul-bbq-27", "title": {"ko": "서울 1인분 삼겹살 27", "en": "Seoul Solo BBQ Spot 27", "ja": "ソウル 1人前サムギョプサル 27"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 27", "en": "Seoul Solo BBQ Spot 27", "ja": "ソウル 1人前サムギョプサル 27"}, "lat": 36.9794, "lng": 127.7422, "price": 40497, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 27", "en": "Secret Menu 27", "ja": "裏メニュー 27"}, "ownerTip": {"ko": "오너 추천 팁 27", "en": "Owner Tip 27", "ja": "オーナーのヒント 27"}}},
+    {"id": "seoul-bbq-28", "title": {"ko": "서울 1인분 삼겹살 28", "en": "Seoul Solo BBQ Spot 28", "ja": "ソウル 1人前サムギョプサル 28"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 28", "en": "Seoul Solo BBQ Spot 28", "ja": "ソウル 1人前サムギョプサル 28"}, "lat": 35.4815, "lng": 127.6005, "price": 81193, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 28", "en": "Secret Menu 28", "ja": "裏メニュー 28"}, "ownerTip": {"ko": "오너 추천 팁 28", "en": "Owner Tip 28", "ja": "オーナーのヒント 28"}}},
+    {"id": "seoul-bbq-29", "title": {"ko": "서울 1인분 삼겹살 29", "en": "Seoul Solo BBQ Spot 29", "ja": "ソウル 1人前サムギョプサル 29"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 29", "en": "Seoul Solo BBQ Spot 29", "ja": "ソウル 1人前サムギョプサル 29"}, "lat": 36.9581, "lng": 128.6565, "price": 60202, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 29", "en": "Secret Menu 29", "ja": "裏メニュー 29"}, "ownerTip": {"ko": "오너 추천 팁 29", "en": "Owner Tip 29", "ja": "オーナーのヒント 29"}}},
+    {"id": "seoul-bbq-3", "title": {"ko": "서울 1인분 삼겹살 3", "en": "Seoul Solo BBQ Spot 3", "ja": "ソウル 1人前サムギョプサル 3"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 3", "en": "Seoul Solo BBQ Spot 3", "ja": "ソウル 1人前サムギョプサル 3"}, "lat": 36.8015, "lng": 127.2731, "price": 59825, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 3", "en": "Secret Menu 3", "ja": "裏メニュー 3"}, "ownerTip": {"ko": "오너 추천 팁 3", "en": "Owner Tip 3", "ja": "オーナーのヒント 3"}}},
+    {"id": "seoul-bbq-30", "title": {"ko": "서울 1인분 삼겹살 30", "en": "Seoul Solo BBQ Spot 30", "ja": "ソウル 1人前サムギョプサル 30"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 30", "en": "Seoul Solo BBQ Spot 30", "ja": "ソウル 1人前サムギョプサル 30"}, "lat": 37.0908, "lng": 127.5193, "price": 43994, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 30", "en": "Secret Menu 30", "ja": "裏メニュー 30"}, "ownerTip": {"ko": "오너 추천 팁 30", "en": "Owner Tip 30", "ja": "オーナーのヒント 30"}}},
+    {"id": "seoul-bbq-31", "title": {"ko": "서울 1인분 삼겹살 31", "en": "Seoul Solo BBQ Spot 31", "ja": "ソウル 1人前サムギョプサル 31"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 31", "en": "Seoul Solo BBQ Spot 31", "ja": "ソウル 1人前サムギョプサル 31"}, "lat": 37.389, "lng": 128.4098, "price": 73497, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 31", "en": "Secret Menu 31", "ja": "裏メニュー 31"}, "ownerTip": {"ko": "오너 추천 팁 31", "en": "Owner Tip 31", "ja": "オーナーのヒント 31"}}},
+    {"id": "seoul-bbq-32", "title": {"ko": "서울 1인분 삼겹살 32", "en": "Seoul Solo BBQ Spot 32", "ja": "ソウル 1人前サムギョプサル 32"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 32", "en": "Seoul Solo BBQ Spot 32", "ja": "ソウル 1人前サムギョプサル 32"}, "lat": 36.4494, "lng": 127.1418, "price": 44769, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 32", "en": "Secret Menu 32", "ja": "裏メニュー 32"}, "ownerTip": {"ko": "오너 추천 팁 32", "en": "Owner Tip 32", "ja": "オーナーのヒント 32"}}},
+    {"id": "seoul-bbq-33", "title": {"ko": "서울 1인분 삼겹살 33", "en": "Seoul Solo BBQ Spot 33", "ja": "ソウル 1人前サムギョプサル 33"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 33", "en": "Seoul Solo BBQ Spot 33", "ja": "ソウル 1人前サムギョプサル 33"}, "lat": 36.5875, "lng": 127.8249, "price": 84180, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 33", "en": "Secret Menu 33", "ja": "裏メニュー 33"}, "ownerTip": {"ko": "오너 추천 팁 33", "en": "Owner Tip 33", "ja": "オーナーのヒント 33"}}},
+    {"id": "seoul-bbq-34", "title": {"ko": "서울 1인분 삼겹살 34", "en": "Seoul Solo BBQ Spot 34", "ja": "ソウル 1人前サムギョプサル 34"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 34", "en": "Seoul Solo BBQ Spot 34", "ja": "ソウル 1人前サムギョプサル 34"}, "lat": 36.5986, "lng": 126.9469, "price": 91431, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 34", "en": "Secret Menu 34", "ja": "裏メニュー 34"}, "ownerTip": {"ko": "오너 추천 팁 34", "en": "Owner Tip 34", "ja": "オーナーのヒント 34"}}},
+    {"id": "seoul-bbq-35", "title": {"ko": "서울 1인분 삼겹살 35", "en": "Seoul Solo BBQ Spot 35", "ja": "ソウル 1人前サムギョプサル 35"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 35", "en": "Seoul Solo BBQ Spot 35", "ja": "ソウル 1人前サムギョプサル 35"}, "lat": 35.644, "lng": 127.0346, "price": 75751, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 35", "en": "Secret Menu 35", "ja": "裏メニュー 35"}, "ownerTip": {"ko": "오너 추천 팁 35", "en": "Owner Tip 35", "ja": "オーナーのヒント 35"}}},
+    {"id": "seoul-bbq-36", "title": {"ko": "서울 1인분 삼겹살 36", "en": "Seoul Solo BBQ Spot 36", "ja": "ソウル 1人前サムギョプサル 36"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 36", "en": "Seoul Solo BBQ Spot 36", "ja": "ソウル 1人前サムギョプサル 36"}, "lat": 36.6758, "lng": 126.906, "price": 94541, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 36", "en": "Secret Menu 36", "ja": "裏メニュー 36"}, "ownerTip": {"ko": "오너 추천 팁 36", "en": "Owner Tip 36", "ja": "オーナーのヒント 36"}}},
+    {"id": "seoul-bbq-37", "title": {"ko": "서울 1인분 삼겹살 37", "en": "Seoul Solo BBQ Spot 37", "ja": "ソウル 1人前サムギョプサル 37"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 37", "en": "Seoul Solo BBQ Spot 37", "ja": "ソウル 1人前サムギョプサル 37"}, "lat": 35.6487, "lng": 128.3332, "price": 79623, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 37", "en": "Secret Menu 37", "ja": "裏メニュー 37"}, "ownerTip": {"ko": "오너 추천 팁 37", "en": "Owner Tip 37", "ja": "オーナーのヒント 37"}}},
+    {"id": "seoul-bbq-38", "title": {"ko": "서울 1인분 삼겹살 38", "en": "Seoul Solo BBQ Spot 38", "ja": "ソウル 1人前サムギョプサル 38"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 38", "en": "Seoul Solo BBQ Spot 38", "ja": "ソウル 1人前サムギョプサル 38"}, "lat": 36.5649, "lng": 126.9819, "price": 55850, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 38", "en": "Secret Menu 38", "ja": "裏メニュー 38"}, "ownerTip": {"ko": "오너 추천 팁 38", "en": "Owner Tip 38", "ja": "オーナーのヒント 38"}}},
+    {"id": "seoul-bbq-39", "title": {"ko": "서울 1인분 삼겹살 39", "en": "Seoul Solo BBQ Spot 39", "ja": "ソウル 1人前サムギョプサル 39"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 39", "en": "Seoul Solo BBQ Spot 39", "ja": "ソウル 1人前サムギョプサル 39"}, "lat": 36.1077, "lng": 127.1475, "price": 20358, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 39", "en": "Secret Menu 39", "ja": "裏メニュー 39"}, "ownerTip": {"ko": "오너 추천 팁 39", "en": "Owner Tip 39", "ja": "オーナーのヒント 39"}}},
+    {"id": "seoul-bbq-4", "title": {"ko": "서울 1인분 삼겹살 4", "en": "Seoul Solo BBQ Spot 4", "ja": "ソウル 1人前サムギョプサル 4"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 4", "en": "Seoul Solo BBQ Spot 4", "ja": "ソウル 1人前サムギョプサル 4"}, "lat": 35.1509, "lng": 127.2359, "price": 75240, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 4", "en": "Secret Menu 4", "ja": "裏メニュー 4"}, "ownerTip": {"ko": "오너 추천 팁 4", "en": "Owner Tip 4", "ja": "オーナーのヒント 4"}}},
+    {"id": "seoul-bbq-40", "title": {"ko": "서울 1인분 삼겹살 40", "en": "Seoul Solo BBQ Spot 40", "ja": "ソウル 1人前サムギョプサル 40"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 40", "en": "Seoul Solo BBQ Spot 40", "ja": "ソウル 1人前サムギョプサル 40"}, "lat": 37.2078, "lng": 127.8177, "price": 94149, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 40", "en": "Secret Menu 40", "ja": "裏メニュー 40"}, "ownerTip": {"ko": "오너 추천 팁 40", "en": "Owner Tip 40", "ja": "オーナーのヒント 40"}}},
+    {"id": "seoul-bbq-41", "title": {"ko": "서울 1인분 삼겹살 41", "en": "Seoul Solo BBQ Spot 41", "ja": "ソウル 1人前サムギョプサル 41"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 41", "en": "Seoul Solo BBQ Spot 41", "ja": "ソウル 1人前サムギョプサル 41"}, "lat": 36.6812, "lng": 128.6403, "price": 99560, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 41", "en": "Secret Menu 41", "ja": "裏メニュー 41"}, "ownerTip": {"ko": "오너 추천 팁 41", "en": "Owner Tip 41", "ja": "オーナーのヒント 41"}}},
+    {"id": "seoul-bbq-42", "title": {"ko": "서울 1인분 삼겹살 42", "en": "Seoul Solo BBQ Spot 42", "ja": "ソウル 1人前サムギョプサル 42"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 42", "en": "Seoul Solo BBQ Spot 42", "ja": "ソウル 1人前サムギョプサル 42"}, "lat": 35.1239, "lng": 127.0687, "price": 80106, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 42", "en": "Secret Menu 42", "ja": "裏メニュー 42"}, "ownerTip": {"ko": "오너 추천 팁 42", "en": "Owner Tip 42", "ja": "オーナーのヒント 42"}}},
+    {"id": "seoul-bbq-43", "title": {"ko": "서울 1인분 삼겹살 43", "en": "Seoul Solo BBQ Spot 43", "ja": "ソウル 1人前サムギョプサル 43"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 43", "en": "Seoul Solo BBQ Spot 43", "ja": "ソウル 1人前サムギョプサル 43"}, "lat": 35.4199, "lng": 127.5633, "price": 35638, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 43", "en": "Secret Menu 43", "ja": "裏メニュー 43"}, "ownerTip": {"ko": "오너 추천 팁 43", "en": "Owner Tip 43", "ja": "オーナーのヒント 43"}}},
+    {"id": "seoul-bbq-44", "title": {"ko": "서울 1인분 삼겹살 44", "en": "Seoul Solo BBQ Spot 44", "ja": "ソウル 1人前サムギョプサル 44"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 44", "en": "Seoul Solo BBQ Spot 44", "ja": "ソウル 1人前サムギョプサル 44"}, "lat": 37.2152, "lng": 128.766, "price": 51510, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 44", "en": "Secret Menu 44", "ja": "裏メニュー 44"}, "ownerTip": {"ko": "오너 추천 팁 44", "en": "Owner Tip 44", "ja": "オーナーのヒント 44"}}},
+    {"id": "seoul-bbq-45", "title": {"ko": "서울 1인분 삼겹살 45", "en": "Seoul Solo BBQ Spot 45", "ja": "ソウル 1人前サムギョプサル 45"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 45", "en": "Seoul Solo BBQ Spot 45", "ja": "ソウル 1人前サムギョプサル 45"}, "lat": 35.1051, "lng": 126.5924, "price": 70836, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 45", "en": "Secret Menu 45", "ja": "裏メニュー 45"}, "ownerTip": {"ko": "오너 추천 팁 45", "en": "Owner Tip 45", "ja": "オーナーのヒント 45"}}},
+    {"id": "seoul-bbq-46", "title": {"ko": "서울 1인분 삼겹살 46", "en": "Seoul Solo BBQ Spot 46", "ja": "ソウル 1人前サムギョプサル 46"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 46", "en": "Seoul Solo BBQ Spot 46", "ja": "ソウル 1人前サムギョプサル 46"}, "lat": 35.9564, "lng": 127.7843, "price": 53632, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 46", "en": "Secret Menu 46", "ja": "裏メニュー 46"}, "ownerTip": {"ko": "오너 추천 팁 46", "en": "Owner Tip 46", "ja": "オーナーのヒント 46"}}},
+    {"id": "seoul-bbq-47", "title": {"ko": "서울 1인분 삼겹살 47", "en": "Seoul Solo BBQ Spot 47", "ja": "ソウル 1人前サムギョプサル 47"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 47", "en": "Seoul Solo BBQ Spot 47", "ja": "ソウル 1人前サムギョプサル 47"}, "lat": 36.9211, "lng": 128.6118, "price": 41881, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 47", "en": "Secret Menu 47", "ja": "裏メニュー 47"}, "ownerTip": {"ko": "오너 추천 팁 47", "en": "Owner Tip 47", "ja": "オーナーのヒント 47"}}},
+    {"id": "seoul-bbq-48", "title": {"ko": "서울 1인분 삼겹살 48", "en": "Seoul Solo BBQ Spot 48", "ja": "ソウル 1人前サムギョプサル 48"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 48", "en": "Seoul Solo BBQ Spot 48", "ja": "ソウル 1人前サムギョプサル 48"}, "lat": 36.057, "lng": 127.8369, "price": 72678, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 48", "en": "Secret Menu 48", "ja": "裏メニュー 48"}, "ownerTip": {"ko": "오너 추천 팁 48", "en": "Owner Tip 48", "ja": "オーナーのヒント 48"}}},
+    {"id": "seoul-bbq-49", "title": {"ko": "서울 1인분 삼겹살 49", "en": "Seoul Solo BBQ Spot 49", "ja": "ソウル 1人前サムギョプサル 49"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 49", "en": "Seoul Solo BBQ Spot 49", "ja": "ソウル 1人前サムギョプサル 49"}, "lat": 36.1587, "lng": 128.9894, "price": 45717, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 49", "en": "Secret Menu 49", "ja": "裏メニュー 49"}, "ownerTip": {"ko": "오너 추천 팁 49", "en": "Owner Tip 49", "ja": "オーナーのヒント 49"}}},
+    {"id": "seoul-bbq-5", "title": {"ko": "서울 1인분 삼겹살 5", "en": "Seoul Solo BBQ Spot 5", "ja": "ソウル 1人前サムギョプサル 5"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 5", "en": "Seoul Solo BBQ Spot 5", "ja": "ソウル 1人前サムギョプサル 5"}, "lat": 37.0337, "lng": 128.9015, "price": 39002, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 5", "en": "Secret Menu 5", "ja": "裏メニュー 5"}, "ownerTip": {"ko": "오너 추천 팁 5", "en": "Owner Tip 5", "ja": "オーナーのヒント 5"}}},
+    {"id": "seoul-bbq-50", "title": {"ko": "서울 1인분 삼겹살 50", "en": "Seoul Solo BBQ Spot 50", "ja": "ソウル 1人前サムギョプサル 50"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 50", "en": "Seoul Solo BBQ Spot 50", "ja": "ソウル 1人前サムギョプサル 50"}, "lat": 37.3971, "lng": 128.8188, "price": 74620, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 50", "en": "Secret Menu 50", "ja": "裏メニュー 50"}, "ownerTip": {"ko": "오너 추천 팁 50", "en": "Owner Tip 50", "ja": "オーナーのヒント 50"}}},
+    {"id": "seoul-bbq-6", "title": {"ko": "서울 1인분 삼겹살 6", "en": "Seoul Solo BBQ Spot 6", "ja": "ソウル 1人前サムギョプサル 6"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 6", "en": "Seoul Solo BBQ Spot 6", "ja": "ソウル 1人前サムギョプサル 6"}, "lat": 35.8297, "lng": 127.5053, "price": 58679, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 6", "en": "Secret Menu 6", "ja": "裏メニュー 6"}, "ownerTip": {"ko": "오너 추천 팁 6", "en": "Owner Tip 6", "ja": "オーナーのヒント 6"}}},
+    {"id": "seoul-bbq-7", "title": {"ko": "서울 1인분 삼겹살 7", "en": "Seoul Solo BBQ Spot 7", "ja": "ソウル 1人前サムギョプサル 7"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 7", "en": "Seoul Solo BBQ Spot 7", "ja": "ソウル 1人前サムギョプサル 7"}, "lat": 35.9925, "lng": 126.8728, "price": 11655, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 7", "en": "Secret Menu 7", "ja": "裏メニュー 7"}, "ownerTip": {"ko": "오너 추천 팁 7", "en": "Owner Tip 7", "ja": "オーナーのヒント 7"}}},
+    {"id": "seoul-bbq-8", "title": {"ko": "서울 1인분 삼겹살 8", "en": "Seoul Solo BBQ Spot 8", "ja": "ソウル 1人前サムギョプサル 8"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 8", "en": "Seoul Solo BBQ Spot 8", "ja": "ソウル 1人前サムギョプサル 8"}, "lat": 36.212, "lng": 126.8971, "price": 15755, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 8", "en": "Secret Menu 8", "ja": "裏メニュー 8"}, "ownerTip": {"ko": "오너 추천 팁 8", "en": "Owner Tip 8", "ja": "オーナーのヒント 8"}}},
+    {"id": "seoul-bbq-9", "title": {"ko": "서울 1인분 삼겹살 9", "en": "Seoul Solo BBQ Spot 9", "ja": "ソウル 1人前サムギョプサル 9"}, "category": "food", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "혼자서도 눈치 보지 않고 즐길 수 있는 서울의 삼겹살 맛집.", "en": "Verified BBQ spots in Seoul that welcome single diners.", "ja": "ソウルで一人でも気兼ねなく楽しめるサムギョプサルの名店。"}, "query": {"ko": "서울 1인분 삼겹살 9", "en": "Seoul Solo BBQ Spot 9", "ja": "ソウル 1人前サムギョプサル 9"}, "lat": 35.4925, "lng": 127.659, "price": 56598, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 9", "en": "Secret Menu 9", "ja": "裏メニュー 9"}, "ownerTip": {"ko": "오너 추천 팁 9", "en": "Owner Tip 9", "ja": "オーナーのヒント 9"}}},
+    {"id": "seoul-gangnam-1", "title": {"ko": "강남 필승 전략 - 서울 1", "en": "Gangnam Strategy - Seoul 1", "ja": "江南必勝戦略 - ソウル 1"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 1", "en": "Gangnam Strategy - Seoul 1", "ja": "江南必勝戦略 - ソウル 1"}, "lat": 35.6243, "lng": 127.9013, "price": 81902, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 1", "en": "Secret Menu 1", "ja": "裏メニュー 1"}, "ownerTip": {"ko": "오너 추천 팁 1", "en": "Owner Tip 1", "ja": "オーナーのヒント 1"}}},
+    {"id": "seoul-gangnam-10", "title": {"ko": "강남 필승 전략 - 서울 10", "en": "Gangnam Strategy - Seoul 10", "ja": "江南必勝戦略 - ソウル 10"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 10", "en": "Gangnam Strategy - Seoul 10", "ja": "江南必勝戦略 - ソウル 10"}, "lat": 37.2528, "lng": 126.6594, "price": 71149, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 10", "en": "Secret Menu 10", "ja": "裏メニュー 10"}, "ownerTip": {"ko": "오너 추천 팁 10", "en": "Owner Tip 10", "ja": "オーナーのヒント 10"}}},
+    {"id": "seoul-gangnam-11", "title": {"ko": "강남 필승 전략 - 서울 11", "en": "Gangnam Strategy - Seoul 11", "ja": "江南必勝戦略 - ソウル 11"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 11", "en": "Gangnam Strategy - Seoul 11", "ja": "江南必勝戦略 - ソウル 11"}, "lat": 35.1436, "lng": 128.4619, "price": 86135, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 11", "en": "Secret Menu 11", "ja": "裏メニュー 11"}, "ownerTip": {"ko": "오너 추천 팁 11", "en": "Owner Tip 11", "ja": "オーナーのヒント 11"}}},
+    {"id": "seoul-gangnam-12", "title": {"ko": "강남 필승 전략 - 서울 12", "en": "Gangnam Strategy - Seoul 12", "ja": "江南必勝戦略 - ソウル 12"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 12", "en": "Gangnam Strategy - Seoul 12", "ja": "江南必勝戦略 - ソウル 12"}, "lat": 37.403, "lng": 128.651, "price": 40773, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 12", "en": "Secret Menu 12", "ja": "裏メニュー 12"}, "ownerTip": {"ko": "오너 추천 팁 12", "en": "Owner Tip 12", "ja": "オーナーのヒント 12"}}},
+    {"id": "seoul-gangnam-13", "title": {"ko": "강남 필승 전략 - 서울 13", "en": "Gangnam Strategy - Seoul 13", "ja": "江南必勝戦略 - ソウル 13"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 13", "en": "Gangnam Strategy - Seoul 13", "ja": "江南必勝戦略 - ソウル 13"}, "lat": 36.1684, "lng": 128.071, "price": 45272, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 13", "en": "Secret Menu 13", "ja": "裏メニュー 13"}, "ownerTip": {"ko": "오너 추천 팁 13", "en": "Owner Tip 13", "ja": "オーナーのヒント 13"}}},
+    {"id": "seoul-gangnam-14", "title": {"ko": "강남 필승 전략 - 서울 14", "en": "Gangnam Strategy - Seoul 14", "ja": "江南必勝戦略 - ソウル 14"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 14", "en": "Gangnam Strategy - Seoul 14", "ja": "江南必勝戦略 - ソウル 14"}, "lat": 35.1779, "lng": 127.9541, "price": 53945, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 14", "en": "Secret Menu 14", "ja": "裏メニュー 14"}, "ownerTip": {"ko": "오너 추천 팁 14", "en": "Owner Tip 14", "ja": "オーナーのヒント 14"}}},
+    {"id": "seoul-gangnam-15", "title": {"ko": "강남 필승 전략 - 서울 15", "en": "Gangnam Strategy - Seoul 15", "ja": "江南必勝戦略 - ソウル 15"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 15", "en": "Gangnam Strategy - Seoul 15", "ja": "江南必勝戦略 - ソウル 15"}, "lat": 36.2965, "lng": 128.4341, "price": 16732, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 15", "en": "Secret Menu 15", "ja": "裏メニュー 15"}, "ownerTip": {"ko": "오너 추천 팁 15", "en": "Owner Tip 15", "ja": "オーナーのヒント 15"}}},
+    {"id": "seoul-gangnam-16", "title": {"ko": "강남 필승 전략 - 서울 16", "en": "Gangnam Strategy - Seoul 16", "ja": "江南必勝戦略 - ソウル 16"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 16", "en": "Gangnam Strategy - Seoul 16", "ja": "江南必勝戦略 - ソウル 16"}, "lat": 35.7858, "lng": 127.4771, "price": 94695, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 16", "en": "Secret Menu 16", "ja": "裏メニュー 16"}, "ownerTip": {"ko": "오너 추천 팁 16", "en": "Owner Tip 16", "ja": "オーナーのヒント 16"}}},
+    {"id": "seoul-gangnam-17", "title": {"ko": "강남 필승 전략 - 서울 17", "en": "Gangnam Strategy - Seoul 17", "ja": "江南必勝戦略 - ソウル 17"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 17", "en": "Gangnam Strategy - Seoul 17", "ja": "江南必勝戦略 - ソウル 17"}, "lat": 36.0281, "lng": 128.4557, "price": 35749, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 17", "en": "Secret Menu 17", "ja": "裏メニュー 17"}, "ownerTip": {"ko": "오너 추천 팁 17", "en": "Owner Tip 17", "ja": "オーナーのヒント 17"}}},
+    {"id": "seoul-gangnam-18", "title": {"ko": "강남 필승 전략 - 서울 18", "en": "Gangnam Strategy - Seoul 18", "ja": "江南必勝戦略 - ソウル 18"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 18", "en": "Gangnam Strategy - Seoul 18", "ja": "江南必勝戦略 - ソウル 18"}, "lat": 36.9792, "lng": 127.037, "price": 48436, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 18", "en": "Secret Menu 18", "ja": "裏メニュー 18"}, "ownerTip": {"ko": "오너 추천 팁 18", "en": "Owner Tip 18", "ja": "オーナーのヒント 18"}}},
+    {"id": "seoul-gangnam-19", "title": {"ko": "강남 필승 전략 - 서울 19", "en": "Gangnam Strategy - Seoul 19", "ja": "江南必勝戦略 - ソウル 19"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 19", "en": "Gangnam Strategy - Seoul 19", "ja": "江南必勝戦略 - ソウル 19"}, "lat": 35.7366, "lng": 127.7159, "price": 44871, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 19", "en": "Secret Menu 19", "ja": "裏メニュー 19"}, "ownerTip": {"ko": "오너 추천 팁 19", "en": "Owner Tip 19", "ja": "オーナーのヒント 19"}}},
+    {"id": "seoul-gangnam-2", "title": {"ko": "강남 필승 전략 - 서울 2", "en": "Gangnam Strategy - Seoul 2", "ja": "江南必勝戦略 - ソウル 2"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 2", "en": "Gangnam Strategy - Seoul 2", "ja": "江南必勝戦略 - ソウル 2"}, "lat": 36.3138, "lng": 127.481, "price": 64955, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 2", "en": "Secret Menu 2", "ja": "裏メニュー 2"}, "ownerTip": {"ko": "오너 추천 팁 2", "en": "Owner Tip 2", "ja": "オーナーのヒント 2"}}},
+    {"id": "seoul-gangnam-20", "title": {"ko": "강남 필승 전략 - 서울 20", "en": "Gangnam Strategy - Seoul 20", "ja": "江南必勝戦略 - ソウル 20"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 20", "en": "Gangnam Strategy - Seoul 20", "ja": "江南必勝戦略 - ソウル 20"}, "lat": 36.6178, "lng": 127.0604, "price": 17577, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 20", "en": "Secret Menu 20", "ja": "裏メニュー 20"}, "ownerTip": {"ko": "오너 추천 팁 20", "en": "Owner Tip 20", "ja": "オーナーのヒント 20"}}},
+    {"id": "seoul-gangnam-21", "title": {"ko": "강남 필승 전략 - 서울 21", "en": "Gangnam Strategy - Seoul 21", "ja": "江南必勝戦略 - ソウル 21"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 21", "en": "Gangnam Strategy - Seoul 21", "ja": "江南必勝戦略 - ソウル 21"}, "lat": 35.4276, "lng": 127.7948, "price": 79458, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 21", "en": "Secret Menu 21", "ja": "裏メニュー 21"}, "ownerTip": {"ko": "오너 추천 팁 21", "en": "Owner Tip 21", "ja": "オーナーのヒント 21"}}},
+    {"id": "seoul-gangnam-22", "title": {"ko": "강남 필승 전략 - 서울 22", "en": "Gangnam Strategy - Seoul 22", "ja": "江南必勝戦略 - ソウル 22"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 22", "en": "Gangnam Strategy - Seoul 22", "ja": "江南必勝戦略 - ソウル 22"}, "lat": 35.793, "lng": 128.7494, "price": 44947, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 22", "en": "Secret Menu 22", "ja": "裏メニュー 22"}, "ownerTip": {"ko": "오너 추천 팁 22", "en": "Owner Tip 22", "ja": "オーナーのヒント 22"}}},
+    {"id": "seoul-gangnam-23", "title": {"ko": "강남 필승 전략 - 서울 23", "en": "Gangnam Strategy - Seoul 23", "ja": "江南必勝戦略 - ソウル 23"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 23", "en": "Gangnam Strategy - Seoul 23", "ja": "江南必勝戦略 - ソウル 23"}, "lat": 37.1732, "lng": 126.8643, "price": 76016, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 23", "en": "Secret Menu 23", "ja": "裏メニュー 23"}, "ownerTip": {"ko": "오너 추천 팁 23", "en": "Owner Tip 23", "ja": "オーナーのヒント 23"}}},
+    {"id": "seoul-gangnam-24", "title": {"ko": "강남 필승 전략 - 서울 24", "en": "Gangnam Strategy - Seoul 24", "ja": "江南必勝戦略 - ソウル 24"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 24", "en": "Gangnam Strategy - Seoul 24", "ja": "江南必勝戦略 - ソウル 24"}, "lat": 35.5001, "lng": 126.5176, "price": 40616, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 24", "en": "Secret Menu 24", "ja": "裏メニュー 24"}, "ownerTip": {"ko": "오너 추천 팁 24", "en": "Owner Tip 24", "ja": "オーナーのヒント 24"}}},
+    {"id": "seoul-gangnam-25", "title": {"ko": "강남 필승 전략 - 서울 25", "en": "Gangnam Strategy - Seoul 25", "ja": "江南必勝戦略 - ソウル 25"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 25", "en": "Gangnam Strategy - Seoul 25", "ja": "江南必勝戦略 - ソウル 25"}, "lat": 37.1414, "lng": 128.4796, "price": 68928, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 25", "en": "Secret Menu 25", "ja": "裏メニュー 25"}, "ownerTip": {"ko": "오너 추천 팁 25", "en": "Owner Tip 25", "ja": "オーナーのヒント 25"}}},
+    {"id": "seoul-gangnam-26", "title": {"ko": "강남 필승 전략 - 서울 26", "en": "Gangnam Strategy - Seoul 26", "ja": "江南必勝戦略 - ソウル 26"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 26", "en": "Gangnam Strategy - Seoul 26", "ja": "江南必勝戦略 - ソウル 26"}, "lat": 36.9573, "lng": 127.3791, "price": 61775, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 26", "en": "Secret Menu 26", "ja": "裏メニュー 26"}, "ownerTip": {"ko": "오너 추천 팁 26", "en": "Owner Tip 26", "ja": "オーナーのヒント 26"}}},
+    {"id": "seoul-gangnam-27", "title": {"ko": "강남 필승 전략 - 서울 27", "en": "Gangnam Strategy - Seoul 27", "ja": "江南必勝戦略 - ソウル 27"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 27", "en": "Gangnam Strategy - Seoul 27", "ja": "江南必勝戦略 - ソウル 27"}, "lat": 36.272, "lng": 126.9545, "price": 58367, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 27", "en": "Secret Menu 27", "ja": "裏メニュー 27"}, "ownerTip": {"ko": "오너 추천 팁 27", "en": "Owner Tip 27", "ja": "オーナーのヒント 27"}}},
+    {"id": "seoul-gangnam-28", "title": {"ko": "강남 필승 전략 - 서울 28", "en": "Gangnam Strategy - Seoul 28", "ja": "江南必勝戦略 - ソウル 28"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 28", "en": "Gangnam Strategy - Seoul 28", "ja": "江南必勝戦略 - ソウル 28"}, "lat": 36.2038, "lng": 126.684, "price": 51196, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 28", "en": "Secret Menu 28", "ja": "裏メニュー 28"}, "ownerTip": {"ko": "오너 추천 팁 28", "en": "Owner Tip 28", "ja": "オーナーのヒント 28"}}},
+    {"id": "seoul-gangnam-29", "title": {"ko": "강남 필승 전략 - 서울 29", "en": "Gangnam Strategy - Seoul 29", "ja": "江南必勝戦略 - ソウル 29"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 29", "en": "Gangnam Strategy - Seoul 29", "ja": "江南必勝戦略 - ソウル 29"}, "lat": 36.2074, "lng": 128.0253, "price": 47114, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 29", "en": "Secret Menu 29", "ja": "裏メニュー 29"}, "ownerTip": {"ko": "오너 추천 팁 29", "en": "Owner Tip 29", "ja": "オーナーのヒント 29"}}},
+    {"id": "seoul-gangnam-3", "title": {"ko": "강남 필승 전략 - 서울 3", "en": "Gangnam Strategy - Seoul 3", "ja": "江南必勝戦略 - ソウル 3"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 3", "en": "Gangnam Strategy - Seoul 3", "ja": "江南必勝戦略 - ソウル 3"}, "lat": 35.7131, "lng": 128.2971, "price": 65555, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 3", "en": "Secret Menu 3", "ja": "裏メニュー 3"}, "ownerTip": {"ko": "오너 추천 팁 3", "en": "Owner Tip 3", "ja": "オーナーのヒント 3"}}},
+    {"id": "seoul-gangnam-30", "title": {"ko": "강남 필승 전략 - 서울 30", "en": "Gangnam Strategy - Seoul 30", "ja": "江南必勝戦略 - ソウル 30"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 30", "en": "Gangnam Strategy - Seoul 30", "ja": "江南必勝戦略 - ソウル 30"}, "lat": 35.9711, "lng": 128.0041, "price": 56480, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 30", "en": "Secret Menu 30", "ja": "裏メニュー 30"}, "ownerTip": {"ko": "오너 추천 팁 30", "en": "Owner Tip 30", "ja": "オーナーのヒント 30"}}},
+    {"id": "seoul-gangnam-31", "title": {"ko": "강남 필승 전략 - 서울 31", "en": "Gangnam Strategy - Seoul 31", "ja": "江南必勝戦略 - ソウル 31"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 31", "en": "Gangnam Strategy - Seoul 31", "ja": "江南必勝戦略 - ソウル 31"}, "lat": 35.2594, "lng": 128.3161, "price": 36593, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 31", "en": "Secret Menu 31", "ja": "裏メニュー 31"}, "ownerTip": {"ko": "오너 추천 팁 31", "en": "Owner Tip 31", "ja": "オーナーのヒント 31"}}},
+    {"id": "seoul-gangnam-32", "title": {"ko": "강남 필승 전략 - 서울 32", "en": "Gangnam Strategy - Seoul 32", "ja": "江南必勝戦略 - ソウル 32"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 32", "en": "Gangnam Strategy - Seoul 32", "ja": "江南必勝戦略 - ソウル 32"}, "lat": 35.8015, "lng": 127.8836, "price": 71172, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 32", "en": "Secret Menu 32", "ja": "裏メニュー 32"}, "ownerTip": {"ko": "오너 추천 팁 32", "en": "Owner Tip 32", "ja": "オーナーのヒント 32"}}},
+    {"id": "seoul-gangnam-33", "title": {"ko": "강남 필승 전략 - 서울 33", "en": "Gangnam Strategy - Seoul 33", "ja": "江南必勝戦略 - ソウル 33"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 33", "en": "Gangnam Strategy - Seoul 33", "ja": "江南必勝戦略 - ソウル 33"}, "lat": 36.8981, "lng": 128.0146, "price": 50743, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 33", "en": "Secret Menu 33", "ja": "裏メニュー 33"}, "ownerTip": {"ko": "오너 추천 팁 33", "en": "Owner Tip 33", "ja": "オーナーのヒント 33"}}},
+    {"id": "seoul-gangnam-34", "title": {"ko": "강남 필승 전략 - 서울 34", "en": "Gangnam Strategy - Seoul 34", "ja": "江南必勝戦略 - ソウル 34"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 34", "en": "Gangnam Strategy - Seoul 34", "ja": "江南必勝戦略 - ソウル 34"}, "lat": 36.921, "lng": 128.0271, "price": 99693, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 34", "en": "Secret Menu 34", "ja": "裏メニュー 34"}, "ownerTip": {"ko": "오너 추천 팁 34", "en": "Owner Tip 34", "ja": "オーナーのヒント 34"}}},
+    {"id": "seoul-gangnam-35", "title": {"ko": "강남 필승 전략 - 서울 35", "en": "Gangnam Strategy - Seoul 35", "ja": "江南必勝戦略 - ソウル 35"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 35", "en": "Gangnam Strategy - Seoul 35", "ja": "江南必勝戦略 - ソウル 35"}, "lat": 36.1501, "lng": 126.9465, "price": 74277, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 35", "en": "Secret Menu 35", "ja": "裏メニュー 35"}, "ownerTip": {"ko": "오너 추천 팁 35", "en": "Owner Tip 35", "ja": "オーナーのヒント 35"}}},
+    {"id": "seoul-gangnam-36", "title": {"ko": "강남 필승 전략 - 서울 36", "en": "Gangnam Strategy - Seoul 36", "ja": "江南必勝戦略 - ソウル 36"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 36", "en": "Gangnam Strategy - Seoul 36", "ja": "江南必勝戦略 - ソウル 36"}, "lat": 36.7265, "lng": 127.6203, "price": 24308, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 36", "en": "Secret Menu 36", "ja": "裏メニュー 36"}, "ownerTip": {"ko": "오너 추천 팁 36", "en": "Owner Tip 36", "ja": "オーナーのヒント 36"}}},
+    {"id": "seoul-gangnam-37", "title": {"ko": "강남 필승 전략 - 서울 37", "en": "Gangnam Strategy - Seoul 37", "ja": "江南必勝戦略 - ソウル 37"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 37", "en": "Gangnam Strategy - Seoul 37", "ja": "江南必勝戦略 - ソウル 37"}, "lat": 37.1409, "lng": 128.342, "price": 72923, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 37", "en": "Secret Menu 37", "ja": "裏メニュー 37"}, "ownerTip": {"ko": "오너 추천 팁 37", "en": "Owner Tip 37", "ja": "オーナーのヒント 37"}}},
+    {"id": "seoul-gangnam-38", "title": {"ko": "강남 필승 전략 - 서울 38", "en": "Gangnam Strategy - Seoul 38", "ja": "江南必勝戦略 - ソウル 38"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 38", "en": "Gangnam Strategy - Seoul 38", "ja": "江南必勝戦略 - ソウル 38"}, "lat": 37.1674, "lng": 128.1243, "price": 21066, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 38", "en": "Secret Menu 38", "ja": "裏メニュー 38"}, "ownerTip": {"ko": "오너 추천 팁 38", "en": "Owner Tip 38", "ja": "オーナーのヒント 38"}}},
+    {"id": "seoul-gangnam-39", "title": {"ko": "강남 필승 전략 - 서울 39", "en": "Gangnam Strategy - Seoul 39", "ja": "江南必勝戦略 - ソウル 39"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 39", "en": "Gangnam Strategy - Seoul 39", "ja": "江南必勝戦略 - ソウル 39"}, "lat": 35.824, "lng": 127.8181, "price": 22025, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 39", "en": "Secret Menu 39", "ja": "裏メニュー 39"}, "ownerTip": {"ko": "오너 추천 팁 39", "en": "Owner Tip 39", "ja": "オーナーのヒント 39"}}},
+    {"id": "seoul-gangnam-4", "title": {"ko": "강남 필승 전략 - 서울 4", "en": "Gangnam Strategy - Seoul 4", "ja": "江南必勝戦略 - ソウル 4"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 4", "en": "Gangnam Strategy - Seoul 4", "ja": "江南必勝戦略 - ソウル 4"}, "lat": 35.2487, "lng": 127.3366, "price": 63318, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 4", "en": "Secret Menu 4", "ja": "裏メニュー 4"}, "ownerTip": {"ko": "오너 추천 팁 4", "en": "Owner Tip 4", "ja": "オーナーのヒント 4"}}},
+    {"id": "seoul-gangnam-40", "title": {"ko": "강남 필승 전략 - 서울 40", "en": "Gangnam Strategy - Seoul 40", "ja": "江南必勝戦略 - ソウル 40"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 40", "en": "Gangnam Strategy - Seoul 40", "ja": "江南必勝戦略 - ソウル 40"}, "lat": 36.1135, "lng": 127.2078, "price": 35253, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 40", "en": "Secret Menu 40", "ja": "裏メニュー 40"}, "ownerTip": {"ko": "오너 추천 팁 40", "en": "Owner Tip 40", "ja": "オーナーのヒント 40"}}},
+    {"id": "seoul-gangnam-41", "title": {"ko": "강남 필승 전략 - 서울 41", "en": "Gangnam Strategy - Seoul 41", "ja": "江南必勝戦略 - ソウル 41"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 41", "en": "Gangnam Strategy - Seoul 41", "ja": "江南必勝戦略 - ソウル 41"}, "lat": 36.7956, "lng": 126.5236, "price": 74882, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 41", "en": "Secret Menu 41", "ja": "裏メニュー 41"}, "ownerTip": {"ko": "오너 추천 팁 41", "en": "Owner Tip 41", "ja": "オーナーのヒント 41"}}},
+    {"id": "seoul-gangnam-42", "title": {"ko": "강남 필승 전략 - 서울 42", "en": "Gangnam Strategy - Seoul 42", "ja": "江南必勝戦略 - ソウル 42"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 42", "en": "Gangnam Strategy - Seoul 42", "ja": "江南必勝戦略 - ソウル 42"}, "lat": 35.9686, "lng": 128.3017, "price": 67799, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 42", "en": "Secret Menu 42", "ja": "裏メニュー 42"}, "ownerTip": {"ko": "오너 추천 팁 42", "en": "Owner Tip 42", "ja": "オーナーのヒント 42"}}},
+    {"id": "seoul-gangnam-43", "title": {"ko": "강남 필승 전략 - 서울 43", "en": "Gangnam Strategy - Seoul 43", "ja": "江南必勝戦略 - ソウル 43"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 43", "en": "Gangnam Strategy - Seoul 43", "ja": "江南必勝戦略 - ソウル 43"}, "lat": 36.5486, "lng": 128.129, "price": 89295, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 43", "en": "Secret Menu 43", "ja": "裏メニュー 43"}, "ownerTip": {"ko": "오너 추천 팁 43", "en": "Owner Tip 43", "ja": "オーナーのヒント 43"}}},
+    {"id": "seoul-gangnam-44", "title": {"ko": "강남 필승 전략 - 서울 44", "en": "Gangnam Strategy - Seoul 44", "ja": "江南必勝戦略 - ソウル 44"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 44", "en": "Gangnam Strategy - Seoul 44", "ja": "江南必勝戦略 - ソウル 44"}, "lat": 35.1239, "lng": 128.5834, "price": 46062, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 44", "en": "Secret Menu 44", "ja": "裏メニュー 44"}, "ownerTip": {"ko": "오너 추천 팁 44", "en": "Owner Tip 44", "ja": "オーナーのヒント 44"}}},
+    {"id": "seoul-gangnam-45", "title": {"ko": "강남 필승 전략 - 서울 45", "en": "Gangnam Strategy - Seoul 45", "ja": "江南必勝戦略 - ソウル 45"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 45", "en": "Gangnam Strategy - Seoul 45", "ja": "江南必勝戦略 - ソウル 45"}, "lat": 36.5757, "lng": 128.3689, "price": 69010, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 45", "en": "Secret Menu 45", "ja": "裏メニュー 45"}, "ownerTip": {"ko": "오너 추천 팁 45", "en": "Owner Tip 45", "ja": "オーナーのヒント 45"}}},
+    {"id": "seoul-gangnam-46", "title": {"ko": "강남 필승 전략 - 서울 46", "en": "Gangnam Strategy - Seoul 46", "ja": "江南必勝戦略 - ソウル 46"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 46", "en": "Gangnam Strategy - Seoul 46", "ja": "江南必勝戦略 - ソウル 46"}, "lat": 35.4101, "lng": 127.1632, "price": 67745, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 46", "en": "Secret Menu 46", "ja": "裏メニュー 46"}, "ownerTip": {"ko": "오너 추천 팁 46", "en": "Owner Tip 46", "ja": "オーナーのヒント 46"}}},
+    {"id": "seoul-gangnam-47", "title": {"ko": "강남 필승 전략 - 서울 47", "en": "Gangnam Strategy - Seoul 47", "ja": "江南必勝戦略 - ソウル 47"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 47", "en": "Gangnam Strategy - Seoul 47", "ja": "江南必勝戦略 - ソウル 47"}, "lat": 36.5439, "lng": 127.4663, "price": 34262, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 47", "en": "Secret Menu 47", "ja": "裏メニュー 47"}, "ownerTip": {"ko": "오너 추천 팁 47", "en": "Owner Tip 47", "ja": "オーナーのヒント 47"}}},
+    {"id": "seoul-gangnam-48", "title": {"ko": "강남 필승 전략 - 서울 48", "en": "Gangnam Strategy - Seoul 48", "ja": "江南必勝戦略 - ソウル 48"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 48", "en": "Gangnam Strategy - Seoul 48", "ja": "江南必勝戦略 - ソウル 48"}, "lat": 35.0079, "lng": 127.5443, "price": 25385, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 48", "en": "Secret Menu 48", "ja": "裏メニュー 48"}, "ownerTip": {"ko": "오너 추천 팁 48", "en": "Owner Tip 48", "ja": "オーナーのヒント 48"}}},
+    {"id": "seoul-gangnam-49", "title": {"ko": "강남 필승 전략 - 서울 49", "en": "Gangnam Strategy - Seoul 49", "ja": "江南必勝戦略 - ソウル 49"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 49", "en": "Gangnam Strategy - Seoul 49", "ja": "江南必勝戦略 - ソウル 49"}, "lat": 36.8055, "lng": 128.9197, "price": 50204, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 49", "en": "Secret Menu 49", "ja": "裏メニュー 49"}, "ownerTip": {"ko": "오너 추천 팁 49", "en": "Owner Tip 49", "ja": "オーナーのヒント 49"}}},
+    {"id": "seoul-gangnam-5", "title": {"ko": "강남 필승 전략 - 서울 5", "en": "Gangnam Strategy - Seoul 5", "ja": "江南必勝戦略 - ソウル 5"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 5", "en": "Gangnam Strategy - Seoul 5", "ja": "江南必勝戦略 - ソウル 5"}, "lat": 35.3239, "lng": 128.847, "price": 89859, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 5", "en": "Secret Menu 5", "ja": "裏メニュー 5"}, "ownerTip": {"ko": "오너 추천 팁 5", "en": "Owner Tip 5", "ja": "オーナーのヒント 5"}}},
+    {"id": "seoul-gangnam-50", "title": {"ko": "강남 필승 전략 - 서울 50", "en": "Gangnam Strategy - Seoul 50", "ja": "江南必勝戦略 - ソウル 50"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 50", "en": "Gangnam Strategy - Seoul 50", "ja": "江南必勝戦略 - ソウル 50"}, "lat": 35.8154, "lng": 127.6826, "price": 61609, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 50", "en": "Secret Menu 50", "ja": "裏メニュー 50"}, "ownerTip": {"ko": "오너 추천 팁 50", "en": "Owner Tip 50", "ja": "オーナーのヒント 50"}}},
+    {"id": "seoul-gangnam-6", "title": {"ko": "강남 필승 전략 - 서울 6", "en": "Gangnam Strategy - Seoul 6", "ja": "江南必勝戦略 - ソウル 6"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 6", "en": "Gangnam Strategy - Seoul 6", "ja": "江南必勝戦略 - ソウル 6"}, "lat": 37.1587, "lng": 126.6972, "price": 44833, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 6", "en": "Secret Menu 6", "ja": "裏メニュー 6"}, "ownerTip": {"ko": "오너 추천 팁 6", "en": "Owner Tip 6", "ja": "オーナーのヒント 6"}}},
+    {"id": "seoul-gangnam-7", "title": {"ko": "강남 필승 전략 - 서울 7", "en": "Gangnam Strategy - Seoul 7", "ja": "江南必勝戦略 - ソウル 7"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 7", "en": "Gangnam Strategy - Seoul 7", "ja": "江南必勝戦略 - ソウル 7"}, "lat": 35.0147, "lng": 128.5974, "price": 41089, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 7", "en": "Secret Menu 7", "ja": "裏メニュー 7"}, "ownerTip": {"ko": "오너 추천 팁 7", "en": "Owner Tip 7", "ja": "オーナーのヒント 7"}}},
+    {"id": "seoul-gangnam-8", "title": {"ko": "강남 필승 전략 - 서울 8", "en": "Gangnam Strategy - Seoul 8", "ja": "江南必勝戦略 - ソウル 8"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 8", "en": "Gangnam Strategy - Seoul 8", "ja": "江南必勝戦略 - ソウル 8"}, "lat": 35.1041, "lng": 128.8291, "price": 85374, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 8", "en": "Secret Menu 8", "ja": "裏メニュー 8"}, "ownerTip": {"ko": "오너 추천 팁 8", "en": "Owner Tip 8", "ja": "オーナーのヒント 8"}}},
+    {"id": "seoul-gangnam-9", "title": {"ko": "강남 필승 전략 - 서울 9", "en": "Gangnam Strategy - Seoul 9", "ja": "江南必勝戦略 - ソウル 9"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "트렌디한 장소에서 즐기는 서울 투어.", "en": "A trendy Seoul tour in the heart of Korea.", "ja": "韓国の中心で楽しむトレンディなソウルツアー。"}, "query": {"ko": "강남 필승 전략 - 서울 9", "en": "Gangnam Strategy - Seoul 9", "ja": "江南必勝戦略 - ソウル 9"}, "lat": 36.3542, "lng": 128.4439, "price": 62388, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 9", "en": "Secret Menu 9", "ja": "裏メニュー 9"}, "ownerTip": {"ko": "오너 추천 팁 9", "en": "Owner Tip 9", "ja": "オーナーのヒント 9"}}},
+    {"id": "seoul-tea-1", "title": {"ko": "서울 시크릿 티 투어 1", "en": "Seoul Secret Tea Tour 1", "ja": "ソウル シークレットティーツアー 1"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 1", "en": "Seoul Secret Tea Tour 1", "ja": "ソウル シークレットティーツアー 1"}, "lat": 36.0017, "lng": 126.913, "price": 25212, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 1", "en": "Secret Menu 1", "ja": "裏メニュー 1"}, "ownerTip": {"ko": "오너 추천 팁 1", "en": "Owner Tip 1", "ja": "オーナーのヒント 1"}}},
+    {"id": "seoul-tea-10", "title": {"ko": "서울 시크릿 티 투어 10", "en": "Seoul Secret Tea Tour 10", "ja": "ソウル シークレットティーツアー 10"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 10", "en": "Seoul Secret Tea Tour 10", "ja": "ソウル シークレットティーツアー 10"}, "lat": 37.1228, "lng": 128.0807, "price": 68758, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 10", "en": "Secret Menu 10", "ja": "裏メニュー 10"}, "ownerTip": {"ko": "오너 추천 팁 10", "en": "Owner Tip 10", "ja": "オーナーのヒント 10"}}},
+    {"id": "seoul-tea-11", "title": {"ko": "서울 시크릿 티 투어 11", "en": "Seoul Secret Tea Tour 11", "ja": "ソウル シークレットティーツアー 11"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 11", "en": "Seoul Secret Tea Tour 11", "ja": "ソウル シークレットティーツアー 11"}, "lat": 37.0943, "lng": 128.1707, "price": 85364, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 11", "en": "Secret Menu 11", "ja": "裏メニュー 11"}, "ownerTip": {"ko": "오너 추천 팁 11", "en": "Owner Tip 11", "ja": "オーナーのヒント 11"}}},
+    {"id": "seoul-tea-12", "title": {"ko": "서울 시크릿 티 투어 12", "en": "Seoul Secret Tea Tour 12", "ja": "ソウル シークレットティーツアー 12"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 12", "en": "Seoul Secret Tea Tour 12", "ja": "ソウル シークレットティーツアー 12"}, "lat": 37.0025, "lng": 127.3198, "price": 19616, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 12", "en": "Secret Menu 12", "ja": "裏メニュー 12"}, "ownerTip": {"ko": "오너 추천 팁 12", "en": "Owner Tip 12", "ja": "オーナーのヒント 12"}}},
+    {"id": "seoul-tea-13", "title": {"ko": "서울 시크릿 티 투어 13", "en": "Seoul Secret Tea Tour 13", "ja": "ソウル シークレットティーツアー 13"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 13", "en": "Seoul Secret Tea Tour 13", "ja": "ソウル シークレットティーツアー 13"}, "lat": 36.5908, "lng": 127.4055, "price": 48392, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 13", "en": "Secret Menu 13", "ja": "裏メニュー 13"}, "ownerTip": {"ko": "오너 추천 팁 13", "en": "Owner Tip 13", "ja": "オーナーのヒント 13"}}},
+    {"id": "seoul-tea-14", "title": {"ko": "서울 시크릿 티 투어 14", "en": "Seoul Secret Tea Tour 14", "ja": "ソウル シークレットティーツアー 14"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 14", "en": "Seoul Secret Tea Tour 14", "ja": "ソウル シークレットティーツアー 14"}, "lat": 36.8258, "lng": 128.4979, "price": 82084, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 14", "en": "Secret Menu 14", "ja": "裏メニュー 14"}, "ownerTip": {"ko": "오너 추천 팁 14", "en": "Owner Tip 14", "ja": "オーナーのヒント 14"}}},
+    {"id": "seoul-tea-15", "title": {"ko": "서울 시크릿 티 투어 15", "en": "Seoul Secret Tea Tour 15", "ja": "ソウル シークレットティーツアー 15"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 15", "en": "Seoul Secret Tea Tour 15", "ja": "ソウル シークレットティーツアー 15"}, "lat": 35.9813, "lng": 127.3629, "price": 43171, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 15", "en": "Secret Menu 15", "ja": "裏メニュー 15"}, "ownerTip": {"ko": "오너 추천 팁 15", "en": "Owner Tip 15", "ja": "オーナーのヒント 15"}}},
+    {"id": "seoul-tea-16", "title": {"ko": "서울 시크릿 티 투어 16", "en": "Seoul Secret Tea Tour 16", "ja": "ソウル シークレットティーツアー 16"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 16", "en": "Seoul Secret Tea Tour 16", "ja": "ソウル シークレットティーツアー 16"}, "lat": 35.721, "lng": 128.4078, "price": 81768, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 16", "en": "Secret Menu 16", "ja": "裏メニュー 16"}, "ownerTip": {"ko": "오너 추천 팁 16", "en": "Owner Tip 16", "ja": "オーナーのヒント 16"}}},
+    {"id": "seoul-tea-17", "title": {"ko": "서울 시크릿 티 투어 17", "en": "Seoul Secret Tea Tour 17", "ja": "ソウル シークレットティーツアー 17"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 17", "en": "Seoul Secret Tea Tour 17", "ja": "ソウル シークレットティーツアー 17"}, "lat": 35.0736, "lng": 127.5279, "price": 22171, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 17", "en": "Secret Menu 17", "ja": "裏メニュー 17"}, "ownerTip": {"ko": "오너 추천 팁 17", "en": "Owner Tip 17", "ja": "オーナーのヒント 17"}}},
+    {"id": "seoul-tea-18", "title": {"ko": "서울 시크릿 티 투어 18", "en": "Seoul Secret Tea Tour 18", "ja": "ソウル シークレットティーツアー 18"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 18", "en": "Seoul Secret Tea Tour 18", "ja": "ソウル シークレットティーツアー 18"}, "lat": 36.1566, "lng": 128.6866, "price": 49295, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 18", "en": "Secret Menu 18", "ja": "裏メニュー 18"}, "ownerTip": {"ko": "오너 추천 팁 18", "en": "Owner Tip 18", "ja": "オーナーのヒント 18"}}},
+    {"id": "seoul-tea-19", "title": {"ko": "서울 시크릿 티 투어 19", "en": "Seoul Secret Tea Tour 19", "ja": "ソウル シークレットティーツアー 19"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 19", "en": "Seoul Secret Tea Tour 19", "ja": "ソウル シークレットティーツアー 19"}, "lat": 35.3089, "lng": 126.6558, "price": 77651, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 19", "en": "Secret Menu 19", "ja": "裏メニュー 19"}, "ownerTip": {"ko": "오너 추천 팁 19", "en": "Owner Tip 19", "ja": "オーナーのヒント 19"}}},
+    {"id": "seoul-tea-2", "title": {"ko": "서울 시크릿 티 투어 2", "en": "Seoul Secret Tea Tour 2", "ja": "ソウル シークレットティーツアー 2"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 2", "en": "Seoul Secret Tea Tour 2", "ja": "ソウル シークレットティーツアー 2"}, "lat": 35.1187, "lng": 127.2225, "price": 46184, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 2", "en": "Secret Menu 2", "ja": "裏メニュー 2"}, "ownerTip": {"ko": "오너 추천 팁 2", "en": "Owner Tip 2", "ja": "オーナーのヒント 2"}}},
+    {"id": "seoul-tea-20", "title": {"ko": "서울 시크릿 티 투어 20", "en": "Seoul Secret Tea Tour 20", "ja": "ソウル シークレットティーツアー 20"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 20", "en": "Seoul Secret Tea Tour 20", "ja": "ソウル シークレットティーツアー 20"}, "lat": 36.7504, "lng": 127.4363, "price": 84988, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 20", "en": "Secret Menu 20", "ja": "裏メニュー 20"}, "ownerTip": {"ko": "오너 추천 팁 20", "en": "Owner Tip 20", "ja": "オーナーのヒント 20"}}},
+    {"id": "seoul-tea-21", "title": {"ko": "서울 시크릿 티 투어 21", "en": "Seoul Secret Tea Tour 21", "ja": "ソウル シークレットティーツアー 21"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 21", "en": "Seoul Secret Tea Tour 21", "ja": "ソウル シークレットティーツアー 21"}, "lat": 36.0204, "lng": 128.4942, "price": 23615, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 21", "en": "Secret Menu 21", "ja": "裏メニュー 21"}, "ownerTip": {"ko": "오너 추천 팁 21", "en": "Owner Tip 21", "ja": "オーナーのヒント 21"}}},
+    {"id": "seoul-tea-22", "title": {"ko": "서울 시크릿 티 투어 22", "en": "Seoul Secret Tea Tour 22", "ja": "ソウル シークレットティーツアー 22"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 22", "en": "Seoul Secret Tea Tour 22", "ja": "ソウル シークレットティーツアー 22"}, "lat": 37.0238, "lng": 128.8212, "price": 24947, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 22", "en": "Secret Menu 22", "ja": "裏メニュー 22"}, "ownerTip": {"ko": "오너 추천 팁 22", "en": "Owner Tip 22", "ja": "オーナーのヒント 22"}}},
+    {"id": "seoul-tea-23", "title": {"ko": "서울 시크릿 티 투어 23", "en": "Seoul Secret Tea Tour 23", "ja": "ソウル シークレットティーツアー 23"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 23", "en": "Seoul Secret Tea Tour 23", "ja": "ソウル シークレットティーツアー 23"}, "lat": 37.0642, "lng": 128.1446, "price": 60913, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 23", "en": "Secret Menu 23", "ja": "裏メニュー 23"}, "ownerTip": {"ko": "오너 추천 팁 23", "en": "Owner Tip 23", "ja": "オーナーのヒント 23"}}},
+    {"id": "seoul-tea-24", "title": {"ko": "서울 시크릿 티 투어 24", "en": "Seoul Secret Tea Tour 24", "ja": "ソウル シークレットティーツアー 24"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 24", "en": "Seoul Secret Tea Tour 24", "ja": "ソウル シークレットティーツアー 24"}, "lat": 35.5281, "lng": 126.883, "price": 21966, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 24", "en": "Secret Menu 24", "ja": "裏メニュー 24"}, "ownerTip": {"ko": "오너 추천 팁 24", "en": "Owner Tip 24", "ja": "オーナーのヒント 24"}}},
+    {"id": "seoul-tea-25", "title": {"ko": "서울 시크릿 티 투어 25", "en": "Seoul Secret Tea Tour 25", "ja": "ソウル シークレットティーツアー 25"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 25", "en": "Seoul Secret Tea Tour 25", "ja": "ソウル シークレットティーツアー 25"}, "lat": 35.4951, "lng": 126.8683, "price": 34643, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 25", "en": "Secret Menu 25", "ja": "裏メニュー 25"}, "ownerTip": {"ko": "오너 추천 팁 25", "en": "Owner Tip 25", "ja": "オーナーのヒント 25"}}},
+    {"id": "seoul-tea-26", "title": {"ko": "서울 시크릿 티 투어 26", "en": "Seoul Secret Tea Tour 26", "ja": "ソウル シークレットティーツアー 26"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 26", "en": "Seoul Secret Tea Tour 26", "ja": "ソウル シークレットティーツアー 26"}, "lat": 36.2792, "lng": 126.5155, "price": 16717, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 26", "en": "Secret Menu 26", "ja": "裏メニュー 26"}, "ownerTip": {"ko": "오너 추천 팁 26", "en": "Owner Tip 26", "ja": "オーナーのヒント 26"}}},
+    {"id": "seoul-tea-27", "title": {"ko": "서울 시크릿 티 투어 27", "en": "Seoul Secret Tea Tour 27", "ja": "ソウル シークレットティーツアー 27"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 27", "en": "Seoul Secret Tea Tour 27", "ja": "ソウル シークレットティーツアー 27"}, "lat": 36.3451, "lng": 127.2442, "price": 90556, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 27", "en": "Secret Menu 27", "ja": "裏メニュー 27"}, "ownerTip": {"ko": "오너 추천 팁 27", "en": "Owner Tip 27", "ja": "オーナーのヒント 27"}}},
+    {"id": "seoul-tea-28", "title": {"ko": "서울 시크릿 티 투어 28", "en": "Seoul Secret Tea Tour 28", "ja": "ソウル シークレットティーツアー 28"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 28", "en": "Seoul Secret Tea Tour 28", "ja": "ソウル シークレットティーツアー 28"}, "lat": 35.7462, "lng": 127.5409, "price": 69767, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 28", "en": "Secret Menu 28", "ja": "裏メニュー 28"}, "ownerTip": {"ko": "오너 추천 팁 28", "en": "Owner Tip 28", "ja": "オーナーのヒント 28"}}},
+    {"id": "seoul-tea-29", "title": {"ko": "서울 시크릿 티 투어 29", "en": "Seoul Secret Tea Tour 29", "ja": "ソウル シークレットティーツアー 29"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 29", "en": "Seoul Secret Tea Tour 29", "ja": "ソウル シークレットティーツアー 29"}, "lat": 35.4097, "lng": 128.3881, "price": 71136, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 29", "en": "Secret Menu 29", "ja": "裏メニュー 29"}, "ownerTip": {"ko": "오너 추천 팁 29", "en": "Owner Tip 29", "ja": "オーナーのヒント 29"}}},
+    {"id": "seoul-tea-3", "title": {"ko": "서울 시크릿 티 투어 3", "en": "Seoul Secret Tea Tour 3", "ja": "ソウル シークレットティーツアー 3"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 3", "en": "Seoul Secret Tea Tour 3", "ja": "ソウル シークレットティーツアー 3"}, "lat": 36.2345, "lng": 128.4212, "price": 76471, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 3", "en": "Secret Menu 3", "ja": "裏メニュー 3"}, "ownerTip": {"ko": "오너 추천 팁 3", "en": "Owner Tip 3", "ja": "オーナーのヒント 3"}}},
+    {"id": "seoul-tea-30", "title": {"ko": "서울 시크릿 티 투어 30", "en": "Seoul Secret Tea Tour 30", "ja": "ソウル シークレットティーツアー 30"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 30", "en": "Seoul Secret Tea Tour 30", "ja": "ソウル シークレットティーツアー 30"}, "lat": 36.3073, "lng": 127.0771, "price": 81392, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 30", "en": "Secret Menu 30", "ja": "裏メニュー 30"}, "ownerTip": {"ko": "오너 추천 팁 30", "en": "Owner Tip 30", "ja": "オーナーのヒント 30"}}},
+    {"id": "seoul-tea-31", "title": {"ko": "서울 시크릿 티 투어 31", "en": "Seoul Secret Tea Tour 31", "ja": "ソウル シークレットティーツアー 31"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 31", "en": "Seoul Secret Tea Tour 31", "ja": "ソウル シークレットティーツアー 31"}, "lat": 36.2136, "lng": 127.7983, "price": 97732, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 31", "en": "Secret Menu 31", "ja": "裏メニュー 31"}, "ownerTip": {"ko": "오너 추천 팁 31", "en": "Owner Tip 31", "ja": "オーナーのヒント 31"}}},
+    {"id": "seoul-tea-32", "title": {"ko": "서울 시크릿 티 투어 32", "en": "Seoul Secret Tea Tour 32", "ja": "ソウル シークレットティーツアー 32"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 32", "en": "Seoul Secret Tea Tour 32", "ja": "ソウル シークレットティーツアー 32"}, "lat": 35.2339, "lng": 126.5493, "price": 37390, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 32", "en": "Secret Menu 32", "ja": "裏メニュー 32"}, "ownerTip": {"ko": "오너 추천 팁 32", "en": "Owner Tip 32", "ja": "オーナーのヒント 32"}}},
+    {"id": "seoul-tea-33", "title": {"ko": "서울 시크릿 티 투어 33", "en": "Seoul Secret Tea Tour 33", "ja": "ソウル シークレットティーツアー 33"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 33", "en": "Seoul Secret Tea Tour 33", "ja": "ソウル シークレットティーツアー 33"}, "lat": 36.9187, "lng": 128.8369, "price": 55346, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 33", "en": "Secret Menu 33", "ja": "裏メニュー 33"}, "ownerTip": {"ko": "오너 추천 팁 33", "en": "Owner Tip 33", "ja": "オーナーのヒント 33"}}},
+    {"id": "seoul-tea-34", "title": {"ko": "서울 시크릿 티 투어 34", "en": "Seoul Secret Tea Tour 34", "ja": "ソウル シークレットティーツアー 34"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 34", "en": "Seoul Secret Tea Tour 34", "ja": "ソウル シークレットティーツアー 34"}, "lat": 36.072, "lng": 128.4152, "price": 68121, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 34", "en": "Secret Menu 34", "ja": "裏メニュー 34"}, "ownerTip": {"ko": "오너 추천 팁 34", "en": "Owner Tip 34", "ja": "オーナーのヒント 34"}}},
+    {"id": "seoul-tea-35", "title": {"ko": "서울 시크릿 티 투어 35", "en": "Seoul Secret Tea Tour 35", "ja": "ソウル シークレットティーツアー 35"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 35", "en": "Seoul Secret Tea Tour 35", "ja": "ソウル シークレットティーツアー 35"}, "lat": 37.0428, "lng": 126.648, "price": 60152, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 35", "en": "Secret Menu 35", "ja": "裏メニュー 35"}, "ownerTip": {"ko": "오너 추천 팁 35", "en": "Owner Tip 35", "ja": "オーナーのヒント 35"}}},
+    {"id": "seoul-tea-36", "title": {"ko": "서울 시크릿 티 투어 36", "en": "Seoul Secret Tea Tour 36", "ja": "ソウル シークレットティーツアー 36"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 36", "en": "Seoul Secret Tea Tour 36", "ja": "ソウル シークレットティーツアー 36"}, "lat": 36.5203, "lng": 127.5901, "price": 23652, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 36", "en": "Secret Menu 36", "ja": "裏メニュー 36"}, "ownerTip": {"ko": "오너 추천 팁 36", "en": "Owner Tip 36", "ja": "オーナーのヒント 36"}}},
+    {"id": "seoul-tea-37", "title": {"ko": "서울 시크릿 티 투어 37", "en": "Seoul Secret Tea Tour 37", "ja": "ソウル シークレットティーツアー 37"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 37", "en": "Seoul Secret Tea Tour 37", "ja": "ソウル シークレットティーツアー 37"}, "lat": 36.6245, "lng": 128.5111, "price": 79595, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 37", "en": "Secret Menu 37", "ja": "裏メニュー 37"}, "ownerTip": {"ko": "오너 추천 팁 37", "en": "Owner Tip 37", "ja": "オーナーのヒント 37"}}},
+    {"id": "seoul-tea-38", "title": {"ko": "서울 시크릿 티 투어 38", "en": "Seoul Secret Tea Tour 38", "ja": "ソウル シークレットティーツアー 38"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 38", "en": "Seoul Secret Tea Tour 38", "ja": "ソウル シークレットティーツアー 38"}, "lat": 36.1694, "lng": 126.9115, "price": 45027, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 38", "en": "Secret Menu 38", "ja": "裏メニュー 38"}, "ownerTip": {"ko": "오너 추천 팁 38", "en": "Owner Tip 38", "ja": "オーナーのヒント 38"}}},
+    {"id": "seoul-tea-39", "title": {"ko": "서울 시크릿 티 투어 39", "en": "Seoul Secret Tea Tour 39", "ja": "ソウル シークレットティーツアー 39"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 39", "en": "Seoul Secret Tea Tour 39", "ja": "ソウル シークレットティーツアー 39"}, "lat": 36.9516, "lng": 127.1009, "price": 91478, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 39", "en": "Secret Menu 39", "ja": "裏メニュー 39"}, "ownerTip": {"ko": "오너 추천 팁 39", "en": "Owner Tip 39", "ja": "オーナーのヒント 39"}}},
+    {"id": "seoul-tea-4", "title": {"ko": "서울 시크릿 티 투어 4", "en": "Seoul Secret Tea Tour 4", "ja": "ソウル シークレットティーツアー 4"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 4", "en": "Seoul Secret Tea Tour 4", "ja": "ソウル シークレットティーツアー 4"}, "lat": 35.2816, "lng": 128.1513, "price": 13371, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 4", "en": "Secret Menu 4", "ja": "裏メニュー 4"}, "ownerTip": {"ko": "오너 추천 팁 4", "en": "Owner Tip 4", "ja": "オーナーのヒント 4"}}},
+    {"id": "seoul-tea-40", "title": {"ko": "서울 시크릿 티 투어 40", "en": "Seoul Secret Tea Tour 40", "ja": "ソウル シークレットティーツアー 40"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 40", "en": "Seoul Secret Tea Tour 40", "ja": "ソウル シークレットティーツアー 40"}, "lat": 36.8253, "lng": 127.3271, "price": 23843, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 40", "en": "Secret Menu 40", "ja": "裏メニュー 40"}, "ownerTip": {"ko": "오너 추천 팁 40", "en": "Owner Tip 40", "ja": "オーナーのヒント 40"}}},
+    {"id": "seoul-tea-41", "title": {"ko": "서울 시크릿 티 투어 41", "en": "Seoul Secret Tea Tour 41", "ja": "ソウル シークレットティーツアー 41"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 41", "en": "Seoul Secret Tea Tour 41", "ja": "ソウル シークレットティーツアー 41"}, "lat": 37.0218, "lng": 126.5043, "price": 71576, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 41", "en": "Secret Menu 41", "ja": "裏メニュー 41"}, "ownerTip": {"ko": "오너 추천 팁 41", "en": "Owner Tip 41", "ja": "オーナーのヒント 41"}}},
+    {"id": "seoul-tea-42", "title": {"ko": "서울 시크릿 티 투어 42", "en": "Seoul Secret Tea Tour 42", "ja": "ソウル シークレットティーツアー 42"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 42", "en": "Seoul Secret Tea Tour 42", "ja": "ソウル シークレットティーツアー 42"}, "lat": 35.1669, "lng": 127.6173, "price": 78031, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 42", "en": "Secret Menu 42", "ja": "裏メニュー 42"}, "ownerTip": {"ko": "오너 추천 팁 42", "en": "Owner Tip 42", "ja": "オーナーのヒント 42"}}},
+    {"id": "seoul-tea-43", "title": {"ko": "서울 시크릿 티 투어 43", "en": "Seoul Secret Tea Tour 43", "ja": "ソウル シークレットティーツアー 43"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 43", "en": "Seoul Secret Tea Tour 43", "ja": "ソウル シークレットティーツアー 43"}, "lat": 35.0431, "lng": 126.6877, "price": 94800, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 43", "en": "Secret Menu 43", "ja": "裏メニュー 43"}, "ownerTip": {"ko": "오너 추천 팁 43", "en": "Owner Tip 43", "ja": "オーナーのヒント 43"}}},
+    {"id": "seoul-tea-44", "title": {"ko": "서울 시크릿 티 투어 44", "en": "Seoul Secret Tea Tour 44", "ja": "ソウル シークレットティーツアー 44"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.5, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 44", "en": "Seoul Secret Tea Tour 44", "ja": "ソウル シークレットティーツアー 44"}, "lat": 37.0469, "lng": 127.7621, "price": 47056, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 44", "en": "Secret Menu 44", "ja": "裏メニュー 44"}, "ownerTip": {"ko": "오너 추천 팁 44", "en": "Owner Tip 44", "ja": "オーナーのヒント 44"}}},
+    {"id": "seoul-tea-45", "title": {"ko": "서울 시크릿 티 투어 45", "en": "Seoul Secret Tea Tour 45", "ja": "ソウル シークレットティーツアー 45"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.8, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 45", "en": "Seoul Secret Tea Tour 45", "ja": "ソウル シークレットティーツアー 45"}, "lat": 35.5065, "lng": 127.2196, "price": 26951, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 45", "en": "Secret Menu 45", "ja": "裏メニュー 45"}, "ownerTip": {"ko": "오너 추천 팁 45", "en": "Owner Tip 45", "ja": "オーナーのヒント 45"}}},
+    {"id": "seoul-tea-46", "title": {"ko": "서울 시크릿 티 투어 46", "en": "Seoul Secret Tea Tour 46", "ja": "ソウル シークレットティーツアー 46"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 46", "en": "Seoul Secret Tea Tour 46", "ja": "ソウル シークレットティーツアー 46"}, "lat": 36.2617, "lng": 127.2432, "price": 97147, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 46", "en": "Secret Menu 46", "ja": "裏メニュー 46"}, "ownerTip": {"ko": "오너 추천 팁 46", "en": "Owner Tip 46", "ja": "オーナーのヒント 46"}}},
+    {"id": "seoul-tea-47", "title": {"ko": "서울 시크릿 티 투어 47", "en": "Seoul Secret Tea Tour 47", "ja": "ソウル シークレットティーツアー 47"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.2, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 47", "en": "Seoul Secret Tea Tour 47", "ja": "ソウル シークレットティーツアー 47"}, "lat": 36.063, "lng": 128.248, "price": 56559, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 47", "en": "Secret Menu 47", "ja": "裏メニュー 47"}, "ownerTip": {"ko": "오너 추천 팁 47", "en": "Owner Tip 47", "ja": "オーナーのヒント 47"}}},
+    {"id": "seoul-tea-48", "title": {"ko": "서울 시크릿 티 투어 48", "en": "Seoul Secret Tea Tour 48", "ja": "ソウル シークレットティーツアー 48"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.1, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 48", "en": "Seoul Secret Tea Tour 48", "ja": "ソウル シークレットティーツアー 48"}, "lat": 37.0871, "lng": 127.4752, "price": 17275, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 48", "en": "Secret Menu 48", "ja": "裏メニュー 48"}, "ownerTip": {"ko": "오너 추천 팁 48", "en": "Owner Tip 48", "ja": "オーナーのヒント 48"}}},
+    {"id": "seoul-tea-49", "title": {"ko": "서울 시크릿 티 투어 49", "en": "Seoul Secret Tea Tour 49", "ja": "ソウル シークレットティーツアー 49"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 49", "en": "Seoul Secret Tea Tour 49", "ja": "ソウル シークレットティーツアー 49"}, "lat": 35.152, "lng": 126.8807, "price": 56631, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 49", "en": "Secret Menu 49", "ja": "裏メニュー 49"}, "ownerTip": {"ko": "오너 추천 팁 49", "en": "Owner Tip 49", "ja": "オーナーのヒント 49"}}},
+    {"id": "seoul-tea-5", "title": {"ko": "서울 시크릿 티 투어 5", "en": "Seoul Secret Tea Tour 5", "ja": "ソウル シークレットティーツアー 5"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.4, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 5", "en": "Seoul Secret Tea Tour 5", "ja": "ソウル シークレットティーツアー 5"}, "lat": 37.2217, "lng": 126.6258, "price": 68082, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 5", "en": "Secret Menu 5", "ja": "裏メニュー 5"}, "ownerTip": {"ko": "오너 추천 팁 5", "en": "Owner Tip 5", "ja": "オーナーのヒント 5"}}},
+    {"id": "seoul-tea-50", "title": {"ko": "서울 시크릿 티 투어 50", "en": "Seoul Secret Tea Tour 50", "ja": "ソウル シークレットティーツアー 50"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.7, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 50", "en": "Seoul Secret Tea Tour 50", "ja": "ソウル シークレットティーツアー 50"}, "lat": 37.0395, "lng": 127.5925, "price": 38858, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 50", "en": "Secret Menu 50", "ja": "裏メニュー 50"}, "ownerTip": {"ko": "오너 추천 팁 50", "en": "Owner Tip 50", "ja": "オーナーのヒント 50"}}},
+    {"id": "seoul-tea-6", "title": {"ko": "서울 시크릿 티 투어 6", "en": "Seoul Secret Tea Tour 6", "ja": "ソウル シークレットティーツアー 6"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.3, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 6", "en": "Seoul Secret Tea Tour 6", "ja": "ソウル シークレットティーツアー 6"}, "lat": 35.8123, "lng": 126.5054, "price": 99053, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 6", "en": "Secret Menu 6", "ja": "裏メニュー 6"}, "ownerTip": {"ko": "오너 추천 팁 6", "en": "Owner Tip 6", "ja": "オーナーのヒント 6"}}},
+    {"id": "seoul-tea-7", "title": {"ko": "서울 시크릿 티 투어 7", "en": "Seoul Secret Tea Tour 7", "ja": "ソウル シークレットティーツアー 7"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.9, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 7", "en": "Seoul Secret Tea Tour 7", "ja": "ソウル シークレットティーツアー 7"}, "lat": 37.034, "lng": 128.1156, "price": 18479, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 7", "en": "Secret Menu 7", "ja": "裏メニュー 7"}, "ownerTip": {"ko": "오너 추천 팁 7", "en": "Owner Tip 7", "ja": "オーナーのヒント 7"}}},
+    {"id": "seoul-tea-8", "title": {"ko": "서울 시크릿 티 투어 8", "en": "Seoul Secret Tea Tour 8", "ja": "ソウル シークレットティーツアー 8"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 4.6, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 8", "en": "Seoul Secret Tea Tour 8", "ja": "ソウル シークレットティーツアー 8"}, "lat": 36.1727, "lng": 128.157, "price": 19427, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 8", "en": "Secret Menu 8", "ja": "裏メニュー 8"}, "ownerTip": {"ko": "오너 추천 팁 8", "en": "Owner Tip 8", "ja": "オーナーのヒント 8"}}},
+    {"id": "seoul-tea-9", "title": {"ko": "서울 시크릿 티 투어 9", "en": "Seoul Secret Tea Tour 9", "ja": "ソウル シークレットティーツアー 9"}, "category": "activity", "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80", "rating": 5.0, "description": {"ko": "도심 속에서 즐기는 서울의 고즈넉한 전통/현대 티 룸.", "en": "Quiet traditional and modern tea rooms in Seoul.", "ja": "都会の中で楽しむソウルの静かな伝統/現代ティールーム。"}, "query": {"ko": "서울 시크릿 티 투어 9", "en": "Seoul Secret Tea Tour 9", "ja": "ソウル シークレットティーツアー 9"}, "lat": 36.0813, "lng": 128.7225, "price": 65755, "vipContent": {"secretMenu": {"ko": "비밀 메뉴 9", "en": "Secret Menu 9", "ja": "裏メニュー 9"}, "ownerTip": {"ko": "오너 추천 팁 9", "en": "Owner Tip 9", "ja": "オーナーのヒント 9"}}},
 ];

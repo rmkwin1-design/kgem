@@ -144,6 +144,10 @@ export default function Home() {
   const [isInstallable, setIsInstallable] = useState(false);
   const [showIosPrompt, setShowIosPrompt] = useState(false);
   const [showInAppModal, setShowInAppModal] = useState(false);
+  const [showTopButton, setShowTopButton] = useState(false); // Moved up
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isAiSearching, setIsAiSearching] = useState(false);
 
   const handleInstallApp = async () => {
     if (deferredPrompt) {
@@ -198,11 +202,6 @@ export default function Home() {
   const { openMap } = useMapNavigation();
   const { preferredMap, setPreferredMap } = usePreference();
   const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
-
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isAiSearching, setIsAiSearching] = useState(false);
-  const [showTopButton, setShowTopButton] = useState(false);
 
   // 🛡️ 2026 Strategy: Deterministic Filter Reset
   // Whenever the active category changes, we nuke the search query to ensure a clean slate.
