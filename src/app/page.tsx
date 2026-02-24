@@ -194,6 +194,7 @@ export default function Home() {
     };
   }, []);
 
+
   const { openMap } = useMapNavigation();
   const { preferredMap, setPreferredMap } = usePreference();
   const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
@@ -202,6 +203,13 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiSearching, setIsAiSearching] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
+
+  // 🛡️ 2026 Strategy: Deterministic Filter Reset
+  // Whenever the active category changes, we nuke the search query to ensure a clean slate.
+  // This addresses the user feedback about "BBQ" sticking to "Filming" categories.
+  useEffect(() => {
+    setSearchQuery('');
+  }, [activeCategory]);
 
 
   const scrollToTop = () => {
@@ -386,7 +394,6 @@ export default function Home() {
   });
 
   const getRotatedSpots = (spots: TravelSpot[]) => {
-    if (searchQuery.trim().length > 0) return spots; // Don't rotate when searching
     const rotated = [...spots];
     // Seed-based stable shuffle for the period
     const offset = (rotationTick * 7) % Math.max(1, spots.length);
@@ -395,13 +402,28 @@ export default function Home() {
 
   const rotatedSpots = getRotatedSpots(sampleSpots);
 
+  const keywords = searchQuery.trim().toLowerCase().split(/\s+/);
+
+  const matchesSearch = (spot: TravelSpot) => {
+    if (!searchQuery.trim()) return true;
+    const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
+    const description = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
+    const query = `${(spot.query as any)?.[language] || ''} ${(spot.query as any)?.['ko'] || ''}`.toLowerCase();
+    const id = spot.id.toString().toLowerCase();
+    const searchBuffer = `${title} ${description} ${query} ${id}`;
+    return keywords.every(kw => searchBuffer.includes(kw));
+  };
+
   const filteredSpots = rotatedSpots.filter(spot => {
     const matchesCategory = activeCategory === 'all' || spot.category === activeCategory;
-    const title = (spot.title as any)[language] || (spot.title as any)['ko'];
-    const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      spot.title['ko'].toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesSearch(spot);
   });
+
+  const handleCategorySelect = (categoryKey: string) => {
+    setIsAiSearching(false);
+    setActiveCategory(categoryKey);
+    // Note: setSearchQuery('') is now handled by useEffect for maximum reliability
+  };
 
   const trendingSpots = rotatedSpots.filter(spot => spot.isTrending);
   const ladiesSpots = rotatedSpots.filter(spot => spot.category === 'beauty' || spot.category === 'dessert');
@@ -458,6 +480,7 @@ export default function Home() {
           lat: 37.5665 + (Math.random() - 0.5) * 0.1,
           lng: 126.9780 + (Math.random() - 0.5) * 0.1,
           query: `${searchQuery} ${i + 1}`,
+          category: activeCategory, // Fix: ensures AI spots respect the current filter
           isTrending: i < 5,
           isFallback: true
         };
@@ -577,6 +600,22 @@ export default function Home() {
         </div>
       </div>
 
+      {/* 📍 Sticky Category Filter 2026 */}
+      <div className="sticky top-[64px] sm:top-[72px] z-40 bg-[var(--bg-dark)]/90 backdrop-blur-xl border-b border-[var(--glass)] overflow-x-auto no-scrollbar py-3 px-4 flex gap-2 sm:justify-center shadow-xl">
+        {Object.entries(t.categories).map(([key, label]) => (
+          <button
+            key={`sticky-${key}`}
+            onClick={() => handleCategorySelect(key)}
+            className={`whitespace-nowrap px-5 py-1.5 rounded-full border transition-all duration-300 font-bold text-[11px] uppercase tracking-wider ${activeCategory === key
+              ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20'
+              : 'bg-slate-900/50 border-slate-800 text-slate-500 hover:text-slate-300'
+              }`}
+          >
+            {label as any}
+          </button>
+        ))}
+      </div>
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden bg-[var(--bg-dark)]">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[var(--primary)]/20 to-transparent pointer-events-none" />
@@ -613,19 +652,32 @@ export default function Home() {
           {/* ⚡️ 2026 Strategy: One-Click Action Commands */}
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => { setSearchQuery("Gangnam style trip plan"); triggerSearch("Gangnam style trip plan"); }}
+              onClick={() => {
+                setActiveCategory('all');
+                // Using a small timeout or ensuring state updates are processed consistently
+                setSearchQuery(t.commands.gangnam);
+                handleSearch(undefined, t.commands.gangnam);
+              }}
               className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 text-indigo-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.gangnam}
             </button>
             <button
-              onClick={() => { setSearchQuery("Solo BBQ spots"); triggerSearch("Solo BBQ spots"); }}
+              onClick={() => {
+                setActiveCategory('all');
+                setSearchQuery(t.commands.bbq);
+                handleSearch(undefined, t.commands.bbq);
+              }}
               className="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 hover:bg-pink-500/20 text-pink-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.bbq}
             </button>
             <button
-              onClick={() => { setSearchQuery("Secret Tea Tour"); triggerSearch("Secret Tea Tour"); }}
+              onClick={() => {
+                setActiveCategory('all');
+                setSearchQuery(t.commands.tea);
+                handleSearch(undefined, t.commands.tea);
+              }}
               className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.tea}
@@ -649,7 +701,7 @@ export default function Home() {
             {Object.entries(t.categories).map(([key, label]) => (
               <button
                 key={key}
-                onClick={() => setActiveCategory(key)}
+                onClick={() => handleCategorySelect(key)}
                 className={`whitespace-nowrap px-6 py-2.5 rounded-2xl border transition-all duration-300 font-bold text-sm ${activeCategory === key
                   ? 'bg-indigo-600 border-indigo-500 shadow-xl shadow-indigo-600/30 text-white'
                   : 'bg-slate-900/50 border-slate-800 hover:border-slate-700 text-slate-500 hover:text-slate-300 border-dashed'

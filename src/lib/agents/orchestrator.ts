@@ -21,12 +21,13 @@ export interface AgentResponse {
     }[];
 }
 
+import { sampleSpots } from "../../data/spots";
+
 export class AgentOrchestrator {
     private planner: Agent;
     private actionAgent: Agent;
 
     constructor() {
-        // Defined based on the 2026 Strategy
         this.planner = new Agent({
             role: 'Hyper-Local Planner',
             goal: 'Design a seamless travel itinerary based on local secret spots and user preference.',
@@ -44,76 +45,41 @@ export class AgentOrchestrator {
 
     async processRequest(query: string): Promise<AgentResponse> {
         console.log(`Processing KGEM 2026 Agent Request: ${query}`);
+        const lowerQuery = query.toLowerCase();
 
-        // PRD Requirement: First Action Command (Gangnam style trip plan)
-        if (query.toLowerCase().includes('gangnam style')) {
+        // 1. Detect Category
+        let categoryKey = '';
+        if (lowerQuery.includes('gangnam') || lowerQuery.includes('강남')) categoryKey = 'gangnam';
+        else if (lowerQuery.includes('bbq') || lowerQuery.includes('삼겹살') || lowerQuery.includes('solo') || lowerQuery.includes('혼밥')) categoryKey = 'bbq';
+        else if (lowerQuery.includes('tea') || lowerQuery.includes('티 투어') || lowerQuery.includes('찻집')) categoryKey = 'tea';
+
+        // 2. Detect Region (Basic)
+        const regions = ['seoul', 'busan', 'jeju', 'incheon', 'gyeonggi', 'gangwon', 'daegu', 'daejeon', 'gwangju', 'ulsan', 'sejong'];
+        const detectedRegion = regions.find(r => lowerQuery.includes(r));
+
+        // 3. Filter Spots
+        const filteredSpots = sampleSpots.filter(spot => {
+            const matchesCategory = categoryKey ? (spot.id as string).includes(categoryKey) : true;
+            const matchesRegion = detectedRegion ? (spot.id as string).includes(detectedRegion) : true;
+            const matchesText = spot.title.ko.includes(query) || spot.title.en.toLowerCase().includes(lowerQuery);
+            return (matchesCategory && matchesRegion) || matchesText;
+        }).slice(0, 50); // Limit to top 50 for UI performance
+
+        if (filteredSpots.length > 0) {
             return {
-                plan: "KGEM Gangnam Strategy: High-conversion route optimized for K-Pop & Luxury.\n" +
-                    "1. Start at Gangnam Station (K-Pop Square).\n" +
-                    "2. Taxi to Apgujeong Rodeo for Personal Color Diagnosis.\n" +
-                    "3. Dinner at a 0.1% local secret steakhouse in Sinsa.",
+                plan: `I've found ${filteredSpots.length} premium spots matching your request for "${query}". These are verified 0.1% local favorites.`,
                 actions: [
                     {
                         type: 'info',
-                        target: 'Gangnam Route',
-                        details: { transport: 'Taxi/Subway mix', avoidRushHour: true }
-                    },
-                    {
-                        type: 'reservation',
-                        target: 'Apgujeong Color Lab',
-                        details: { time: '15:00', deepLink: 'kgem://book/color-lab' }
+                        target: 'Filtered Results',
+                        details: {
+                            spots: filteredSpots.map(s => s.id),
+                            count: filteredSpots.length
+                        }
                     }
                 ]
             };
         }
-        // PRD Requirement: Solo Dining Intent
-        if (query.toLowerCase().includes('solo') || query.toLowerCase().includes('alone')) {
-            return {
-                plan: "KGEM Solo Strategy: Verified BBQ spots that welcome single diners.\n" +
-                    "1. 'Gogi-ui Gijul' - Sinsa: Accepts 1-portion orders for lunch/dinner.\n" +
-                    "2. 'Solo-Zen' - Hongdae: Individual grilling stations.",
-                actions: [
-                    { type: 'info', target: 'Solo Spot List', details: { filter: 'No 2-person min' } }
-                ]
-            };
-        }
-
-        // PRD Requirement: Trash Bin Intent
-        if (query.toLowerCase().includes('trash') || query.toLowerCase().includes('bin')) {
-            return {
-                plan: "KGEM Utility: Finding nearest public trash cans to your location.",
-                actions: [
-                    { type: 'map_layer', target: 'Trash Bins', details: { source: 'Seoul Open Data' } }
-                ]
-            };
-        }
-        // PRD Requirement: T-money Cash Trap Intent
-        if (query.toLowerCase().includes('t-money') || query.toLowerCase().includes('cash')) {
-            return {
-                plan: "KGEM Transport: Managing the T-money 'Cash Trap'.\n" +
-                    "1. Nearest charging station identified.\n" +
-                    "2. 'Charge Me' screen ready for convenience store staff.",
-                actions: [
-                    { type: 'info', target: 'T-money Assistant', details: { action: 'find_stations' } }
-                ]
-            };
-        }
-
-        // 2026 Strategy: Regional Scaling (Si/Gun/Gu detection)
-        const koreanRegions = ['seoul', 'busan', 'jeju', 'incheon', 'gyeongju', 'suwon', 'seongsu', 'gangnam'];
-        const isRegionalRequest = koreanRegions.some(region => query.toLowerCase().includes(region));
-
-        if (isRegionalRequest) {
-            return {
-                plan: `KGEM Regional Strategy: High-density exploration in ${query}.\n` +
-                    "Scaling content to 50+ premium points for maximum local immersion.",
-                actions: [
-                    { type: 'info', target: 'Regional Data Pack', details: { region: query, count: 50, premium: true } }
-                ]
-            };
-        }
-
-        // Return structured plan for other queries
 
         return {
             plan: "Based on your interest, I've curated a unique Korean experience with local verified spots.",
@@ -126,7 +92,6 @@ export class AgentOrchestrator {
             ]
         };
     }
-
 }
 
 export const kgemAgent = new AgentOrchestrator();
