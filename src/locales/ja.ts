@@ -127,5 +127,10 @@ export const ja = {
         bbq: "🥩 一人焼肉",
         trash: "♻️ ゴミ箱を探す",
         tea: "🍵 秘密のお茶巡り"
+    },
+    marquee: {
+        warning: "⚠️ 韓国ではGoogleマップが不正確な場合があります。K-Gemナビをご利用ください。",
+        navigate: "🏯 現地人のように旅する - K-Gem精密ガイド",
+        verified: "🚀 リアルタイムAIが検証した0.1%プレミアムスポット"
     }
 };

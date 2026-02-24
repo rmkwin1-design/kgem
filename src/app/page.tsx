@@ -562,17 +562,17 @@ export default function Home() {
       <div className="bg-[var(--primary)]/10 border-y border-[var(--primary)]/20 py-2 overflow-hidden whitespace-nowrap">
         <div className="flex animate-marquee gap-8 items-center">
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
-            ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
+            {t.marquee.warning}
           </span>
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
-            🏯 Navigate Like a Local with K-Gem's Precision Guide.
+            {t.marquee.navigate}
           </span>
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
-            🚀 0.1% Premium Spots Verified by Real-time AI.
+            {t.marquee.verified}
           </span>
           {/* Repeat for continuous effect */}
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
-            ⚠️ Google Maps doesn't work well in Korea. Use K-Gem navigation instead.
+            {t.marquee.warning}
           </span>
         </div>
       </div>
@@ -616,25 +616,25 @@ export default function Home() {
               onClick={() => { setSearchQuery("Gangnam style trip plan"); triggerSearch("Gangnam style trip plan"); }}
               className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 text-indigo-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              {(t as any).commands.gangnam}
+              {t.commands.gangnam}
             </button>
             <button
               onClick={() => { setSearchQuery("Solo BBQ spots"); triggerSearch("Solo BBQ spots"); }}
               className="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 hover:bg-pink-500/20 text-pink-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              {(t as any).commands.bbq}
+              {t.commands.bbq}
             </button>
             <button
               onClick={() => { setSearchQuery("Find nearest trash bins"); triggerSearch("Find nearest trash bins"); }}
               className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 hover:bg-green-500/20 text-green-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              {(t as any).commands.trash}
+              {t.commands.trash}
             </button>
             <button
               onClick={() => { setSearchQuery("Secret Tea Tour"); triggerSearch("Secret Tea Tour"); }}
               className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 text-[11px] font-black uppercase tracking-widest transition-all"
             >
-              {(t as any).commands.tea}
+              {t.commands.tea}
             </button>
           </div>
 

@@ -127,5 +127,10 @@ export const en = {
         bbq: "🥩 Solo BBQ",
         trash: "♻️ Trash Bins",
         tea: "🍵 Secret Tea Tour"
+    },
+    marquee: {
+        warning: "⚠️ Google Maps can be inaccurate in Korea. Use K-Gem navigation.",
+        navigate: "🏯 Navigate Like a Local with K-Gem's Precision Guide.",
+        verified: "🚀 0.1% Premium Spots Verified by Real-time AI."
     }
 };

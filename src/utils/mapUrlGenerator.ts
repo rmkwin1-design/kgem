@@ -80,9 +80,9 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const { lat, lng, name, enName } = dest;
 
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
+    const encodedName = encodeURIComponent(language === 'ko' ? name : (enName || name));
 
     if (type === 'naver') {
-        const encodedName = encodeURIComponent(language === 'ko' ? name : (enName || name));
         return mode === 'search'
             ? `https://map.naver.com/v5/search/${encodedName}/?lang=${naverLang}`
             : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedName},,-/transit?lang=${naverLang}`;
