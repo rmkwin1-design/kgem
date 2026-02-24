@@ -24,7 +24,7 @@ export const NaverMapV3: React.FC<NaverMapV3Props> = ({
         if (!document.getElementById(scriptId)) {
             const script = document.createElement('script');
             script.id = scriptId;
-            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}&submodules=geocoder&language=${language}`;
+            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder&language=${language}`;
             script.async = true;
             document.head.appendChild(script);
         }

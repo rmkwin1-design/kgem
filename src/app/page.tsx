@@ -208,30 +208,20 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim().length > 1) {
+  const handleSearch = async (e?: React.FormEvent, overrideQuery?: string) => {
+    if (e) e.preventDefault();
+    const query = overrideQuery || searchQuery;
+    if (query.trim().length > 1) {
       setIsAiSearching(true);
-
-      // 2026 Strategy: Security Sanitization
-      const sanitizedQuery = securityManager.sanitizeInput(searchQuery);
-
-      // 2026 Strategy: Agentic AI Orchestration
+      const sanitizedQuery = securityManager.sanitizeInput(query);
       const response = await kgemAgent.processRequest(sanitizedQuery);
-
       console.log("KGEM Agent Response:", response);
-
-      // Artificial delay for premium feel
       setTimeout(() => setIsAiSearching(false), 1500);
     }
   };
 
-  const handleGangnamStrategy = async () => {
-    setSearchQuery("Gangnam style trip plan");
-    setIsAiSearching(true);
-    const response = await kgemAgent.processRequest("Gangnam style trip plan");
-    // In a real app, this would update the UI state to show the specific route
-    setTimeout(() => setIsAiSearching(false), 2000);
+  const triggerSearch = (query: string) => {
+    handleSearch(undefined, query);
   };
 
 

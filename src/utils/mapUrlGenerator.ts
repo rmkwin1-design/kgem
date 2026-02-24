@@ -19,20 +19,17 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
     // Naver Map requires hybrid for accuracy in web, but for App query, Korean is most reliable
     let hybridName = language === 'ko' ? name : (enName || name);
-    // For Web links, include Korean in brackets
-    let naverWebName = language === 'ko' ? name : `${enName || name} (${name})`;
     // For Native App deep links, use ONLY Korean to ensure the POI is found (Image 3 Fix)
     let naverAppQuery = name;
 
     const encodedName = encodeURIComponent(hybridName);
-    const encodedNaverWebName = encodeURIComponent(naverWebName);
     const encodedNaverAppQuery = encodeURIComponent(naverAppQuery);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
     switch (type) {
         case 'naver':
-            const naverSearchWeb = `https://map.naver.com/v5/search/${encodedNaverWebName}/?lang=${naverLang}`;
-            const naverRouteWeb = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverWebName},,-/transit?lang=${naverLang}`;
+            const naverSearchWeb = `https://map.naver.com/v5/search/${encodedName}/?lang=${naverLang}`;
+            const naverRouteWeb = `https://map.naver.com/p/directions/-/${lng},${lat},${encodedName},,-/transit?lang=${naverLang}`;
 
             if (isAndroid) {
                 // Pin View (Search): Use 'place' scheme for explicit marker with localized name (EN/JA/KO)
@@ -41,8 +38,8 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
                     : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
             }
             return mode === 'search'
-                ? `https://map.naver.com/v5/search/${encodedNaverAppQuery}/?lang=${naverLang}`
-                : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverAppQuery},,-/transit?lang=${naverLang}`;
+                ? naverSearchWeb
+                : naverRouteWeb;
 
         case 'kakao':
             if (isAndroid) {
@@ -84,17 +81,11 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
 
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
-    // Google/Kakao should use localized only, Naver needs Korean for pinpointing
-    const hybridName = language === 'ko' ? name : (enName || name);
-    const naverName = language === 'ko' ? name : `${enName || name} (${name})`;
-
-    const encodedName = encodeURIComponent(hybridName);
-    const encodedNaverName = encodeURIComponent(naverName);
-
     if (type === 'naver') {
+        const encodedName = encodeURIComponent(language === 'ko' ? name : (enName || name));
         return mode === 'search'
-            ? `https://map.naver.com/v5/search/${encodedNaverAppQuery}/?lang=${naverLang}`
-            : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedNaverAppQuery},,-/transit?lang=${naverLang}`;
+            ? `https://map.naver.com/v5/search/${encodedName}/?lang=${naverLang}`
+            : `https://map.naver.com/p/directions/-/${lng},${lat},${encodedName},,-/transit?lang=${naverLang}`;
     }
 
     if (type === 'kakao') {

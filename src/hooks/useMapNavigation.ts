@@ -62,8 +62,14 @@ export const useMapNavigation = () => {
                 }
             }, 1500);
         } else {
-            // PC: Force Multi-language Web Map
-            window.open(webUrl, '_blank');
+            // PC: Force pure language experience
+            // If English or Japanese, force Google Maps as Naver/Kakao PC search often mixes Korean
+            if (language !== 'ko') {
+                const googleScheme = getMapScheme(dest, 'google', false, language, mode);
+                window.open(googleScheme, '_blank');
+            } else {
+                window.open(webUrl, '_blank');
+            }
         }
     }, [preferredMap, language]);
 
