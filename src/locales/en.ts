@@ -150,6 +150,11 @@ export const en = {
             title: "Cashless in Korea",
             desc: "Forget T-money cash top-ups. Pay, Nav, and Book everything in one app.",
             iconLabel: "PAY"
+        },
+        contactless: {
+            title: "Contactless Revolution",
+            desc: "We guide you only to the 0.1% routes where everything is possible without cash.",
+            iconLabel: "CARD"
         }
     }
 };

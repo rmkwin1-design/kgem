@@ -150,6 +150,11 @@ export const zh = {
             title: "无现金韩国行",
             desc: "别再为了 T-money 充值找现金了。一个 App 搞定从支付到导航的所有需求。",
             iconLabel: "支付"
+        },
+        contactless: {
+            title: "无现金支付革命",
+            desc: "我们只引导您前往即使没有现金也能搞定一切的 0.1% 路线。",
+            iconLabel: "刷卡"
         }
     }
 };
