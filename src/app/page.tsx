@@ -319,7 +319,17 @@ export default function Home() {
     const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
     const koQuery = spot.query['ko'] || spot.title['ko'];
 
-    const finalSearchQuery = language === 'ko' ? koQuery : targetQuery;
+    // 🔥 Clean up auto-generated labels: remove [Premium], emojis, 히든 스팟 patterns
+    const cleanQuery = (q: string) => q
+      .replace(/\[Premium\]\s*/gi, '')
+      .replace(/\(Premium\)\s*/gi, '')
+      .replace(/[\u{1F300}-\u{1F9FF}]\s*/gu, '')
+      .replace(/히든\s*스팟\s*#?\d*/g, '')
+      .replace(/Hidden\s*Spot\s*#?\d*/gi, '')
+      .replace(/隠れスポット\s*#?\d*/g, '')
+      .trim();
+
+    const finalSearchQuery = cleanQuery(language === 'ko' ? koQuery : targetQuery);
     const encodedQuery = encodeURIComponent(finalSearchQuery);
 
     const googleRegions: any = { en: 'us', ja: 'jp', ko: 'kr' };
