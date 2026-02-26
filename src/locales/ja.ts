@@ -131,6 +131,22 @@ export const ja = {
     marquee: {
         warning: "⚠️ 韓国ではGoogleマップが不正確な場合があります。K-Gemナビをご利用ください。",
         navigate: "🏯 現地人のように旅する - K-Gem精密ガイド",
-        verified: "🚀 リアルタイムAIが検証した0.1%プレミアムスポット"
+        verified: "🚀 リアルタイムAIが検証した0.1%のプレミアムスポット。"
+    },
+    usp: {
+        title: "Why K-Gem?",
+        badge: "The Problem Solver",
+        map: {
+            title: "Googleマップの限界を克服",
+            desc: "韓国でGoogleマップは不正確です。ネイバーの精密データとグローバルUIを統合しました。"
+        },
+        solo: {
+            title: "一人旅の強い味方",
+            desc: "一人ご飯お断り？K-Gemは1人前から注文可能な本物のローカル名店だけを厳選します。"
+        },
+        cash: {
+            title: "現金いらずの韓国旅行",
+            desc: "T-moneyのチャージに現金は不要です。アプリ一つで決済からナビまで完結。"
+        }
     }
 };

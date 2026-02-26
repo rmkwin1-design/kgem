@@ -1,0 +1,31 @@
+﻿{
+    "screenshot":  {
+                       "name":  "projects/17180792545610776042/files/d9e9bc5910754fc78d25028401da323e",
+                       "downloadUrl":  "https://lh3.googleusercontent.com/aida/AOfcidWZvDoAtZA3CcfnfE7jjoZ5_99OL0mKXNxNmn3HpJ6OsyUv6boCMIJtOZ6j4EVX1AB7H5Nf0SDUjmOychwxsC3EqQZcWIrb_6sv9mbXUlBI_zM8sobHOqc9GyEddGYIawCsC4NaWoKa9BiRedDBeeaVox2OvslWjicpHT64hxwcJgoDfnNRqs-jB9zGBAjH1kLOuI-ZtfIU-acmDG3z_iwmoMqhRG1G4DDmUQykoNNZ5l_n86M8r4_vcSg"
+                   },
+    "htmlCode":  {
+                     "name":  "projects/17180792545610776042/files/0793ee374da6479e879546452f960c22",
+                     "downloadUrl":  "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2E1NDJlY2UyY2IzMDRiZDQ4YTViYjhhYjc0Mzc4ODJlEgsSBxDI_OiE4AUYAZIBJAoKcHJvamVjdF9pZBIWQhQxNzE4MDc5MjU0NTYxMDc3NjA0Mg\u0026filename=\u0026opi=89354086",
+                     "mimeType":  "text/html"
+                 },
+    "id":  "90ed35cb26b84d159e9a1cdd37416ced",
+    "generatedBy":  "figaro_agent",
+    "width":  "780",
+    "height":  "2358",
+    "title":  "지도 안내 (케이젬)",
+    "prompt":  "Map Navigation screen for \u0027케이젬 (K-Gem)\u0027. \n- Features: Custom dark-themed map skin. Search bar \u0027장소 검색\u0027. \n- Navigation Card: Destination \u0027경복궁 (Gyeongbokgung Palace)\u0027, route info \u0027이동 중 (En Route)\u0027, time (12 min), distance (3.4km). \n- Next step guidance: \u0027세종대로 방면으로 우회전하세요\u0027 (Turn right onto Sejong-daero). \n- Buttons: \u0027길 안내 시작\u0027 (Start Guide) in Gold, Share button. \n- Top Header: App name \u0027K-GEM\u0027 and language selector (KO/EN/ZH/JA). \n- Theme: Dark mode, Gold and Purple accents.",
+    "name":  "projects/17180792545610776042/screens/90ed35cb26b84d159e9a1cdd37416ced",
+    "theme":  {
+                  "colorMode":  "DARK",
+                  "font":  "PLUS_JAKARTA_SANS",
+                  "roundness":  "ROUND_FULL",
+                  "customColor":  "#d4af35",
+                  "saturation":  2
+              },
+    "deviceType":  "MOBILE",
+    "screenType":  "DESIGN",
+    "screenMetadata":  {
+                           "agentType":  "HATTER_AGENT",
+                           "status":  "COMPLETE"
+                       }
+}

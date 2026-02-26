@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#6d4e73",
+  themeColor: "#d4af35",
 };
 
 import ClientTracker from "@/components/ClientTracker";

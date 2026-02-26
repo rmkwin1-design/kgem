@@ -1,0 +1,31 @@
+﻿{
+    "screenshot":  {
+                       "name":  "projects/17180792545610776042/files/ea7961e8310f4074bff0d7e1d866218b",
+                       "downloadUrl":  "https://lh3.googleusercontent.com/aida/AOfcidUCoqmtwqzEJDQJVs0KLVAm2Q4ubC-c9bhk1DmnCM0LLV281hAWh7G1c070z0BXkLfibCy6ZorE8s3HRz-sZB-GuJiOmb_9BHSvp0Q9h8IwvaoLDYioKWHzKRuSDQ9U3SUDBVTMUli97wsNUpOOMLEmRtz3n0f6LxDRA5FDgt_xSaRi6_2iUSZo_aKgvQy_XnpAUEeC6Bk_NeqrsaKFH4Dpo0wXsu_5pxUIDjHcmCawbo4R5fX2HIGtf0cT"
+                   },
+    "htmlCode":  {
+                     "name":  "projects/17180792545610776042/files/5aa303543a1343638fc710a3c105ca07",
+                     "downloadUrl":  "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzdhNzJiZTI4YTE0ZDQ3ZDlhOTJhNDgwMjVmMWIxMjgxEgsSBxDI_OiE4AUYAZIBJAoKcHJvamVjdF9pZBIWQhQxNzE4MDc5MjU0NTYxMDc3NjA0Mg\u0026filename=\u0026opi=89354086",
+                     "mimeType":  "text/html"
+                 },
+    "id":  "ce8571f3006245f99b04b6b669308500",
+    "generatedBy":  "figaro_agent",
+    "width":  "780",
+    "height":  "2226",
+    "title":  "메인 홈 (케이젬)",
+    "prompt":  "Main Home screen for \u0027케이젬 (K-Gem)\u0027. \n- Features: Personalized welcome message \u0027반갑습니다, 여행자님!\u0027, Search bar for hidden gems, Category icons (Palaces, Trad Food, Nightlife, Nature), \u0027My Travel Stats\u0027 dashboard with regions visited (08/17), distance walked (124km), and earned badges. \n- Top Header: App name \u0027케이젬\u0027 and language selector (KO/EN/ZH/JA). \n- Theme: Dark mode, Gold (#d4af35) and Purple accents, Glassmorphism, Rounded corners (Full). \n- Target: 2040 international travelers. \n- Typography: Noto Sans (KR/EN/JP/ZH support).",
+    "name":  "projects/17180792545610776042/screens/ce8571f3006245f99b04b6b669308500",
+    "theme":  {
+                  "colorMode":  "DARK",
+                  "font":  "PLUS_JAKARTA_SANS",
+                  "roundness":  "ROUND_FULL",
+                  "customColor":  "#d4af35",
+                  "saturation":  2
+              },
+    "deviceType":  "MOBILE",
+    "screenType":  "DESIGN",
+    "screenMetadata":  {
+                           "agentType":  "HATTER_AGENT",
+                           "status":  "COMPLETE"
+                       }
+}

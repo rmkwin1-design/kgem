@@ -4,8 +4,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ko } from '../locales/ko';
 import { en } from '../locales/en';
 import { ja } from '../locales/ja';
+import { zh } from '../locales/zh';
 
-type Language = 'ko' | 'en' | 'ja';
+type Language = 'ko' | 'en' | 'ja' | 'zh';
 type Translations = typeof ko;
 
 interface LanguageContextType {
@@ -14,7 +15,7 @@ interface LanguageContextType {
     t: Translations;
 }
 
-const translations = { ko, en, ja };
+const translations = { ko, en, ja, zh };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
@@ -25,6 +26,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const savedLang = localStorage.getItem('kgem_lang') as Language;
         if (savedLang && translations[savedLang]) {
             setLanguage(savedLang);
+        } else {
+            // Auto-detect browser language
+            const browserLang = navigator.language.toLowerCase();
+            if (browserLang.startsWith('ko')) setLanguage('ko');
+            else if (browserLang.startsWith('ja')) setLanguage('ja');
+            else if (browserLang.startsWith('zh')) setLanguage('zh');
+            else setLanguage('en');
         }
     }, []);
 

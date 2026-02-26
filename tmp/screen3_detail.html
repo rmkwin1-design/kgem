@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af35",
+                        "accent": "#9d4edd",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#1a1814",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Top Navigation -->
+<header class="fixed top-0 z-50 w-full bg-background-dark/80 backdrop-blur-md border-b border-primary/10 px-4 py-3 flex items-center justify-between">
+<button class="flex items-center justify-center p-2 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-sm text-primary">language</span>
+<span class="text-xs font-bold text-primary tracking-widest">KO/EN/ZH/JA</span>
+</div>
+<button class="flex items-center justify-center p-2 text-primary">
+<span class="material-symbols-outlined">share</span>
+</button>
+</header>
+<!-- Hero Section -->
+<div class="relative w-full h-[45vh] overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Traditional Korean gate illuminated at night in Seoul" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSf8csEaqnxL7sLeCocQ3fy_xYhyvLeTQUltSfJEk4zoZwbX1beCaKM3PHCqRx8ZPfawL2BCYygFiWRHbYtMmNZf6j7v50RFx6umCqlDsbYvyINh5DzawOTBsYtl1_q7UNO9X9R72_O7QmR3Rj6FIjBqhjhqJNhjtqqHGaQNhOpgcKjifPkH8IJkPz7UvsR7UJrgR6-W65h6JUU-pQ7OpMOYmuYScVVgNVyS3_ifQ7MABzhIRvIUQLuX62T_sGGTdVkQiTADRE8UaH')"></div>
+<div class="absolute bottom-0 left-0 w-full p-6 z-20">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-extrabold text-white leading-tight">명동 케이젬<br/><span class="text-xl font-medium opacity-90 text-primary">Myeong-dong K-Gem</span></h1>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined fill-1 text-sm">star</span>
+<span class="text-sm font-bold">4.9</span>
+<span class="text-xs text-slate-400 font-normal ml-1">(128 reviews)</span>
+</div>
+<div class="w-1 h-1 bg-slate-600 rounded-full"></div>
+<div class="flex items-center gap-1 text-slate-300">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-sm">Myeong-dong, Seoul</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<main class="px-4 py-6 flex flex-col gap-6 max-w-2xl mx-auto">
+<!-- Challenge Section -->
+<section class="bg-gradient-to-br from-primary/20 to-accent/10 rounded-xl p-5 border border-primary/30 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-9xl text-primary">military_tech</span>
+</div>
+<div class="relative z-10 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-primary text-background-dark p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-primary">Seoul Insider Challenge</h3>
+<p class="text-sm text-slate-300">Earn the exclusive Insider Badge!</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background-dark bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-xs text-background-dark">done</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center">
+<span class="text-[10px] text-slate-500 font-bold">2/3</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark px-6 py-2 rounded-full font-bold text-sm transition-all transform active:scale-95">
+                        Check-in
+                    </button>
+</div>
+</div>
+</section>
+<!-- Progressive Disclosure: Owner's Tips & Hacks -->
+<section class="flex flex-col gap-3">
+<div class="group border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden">
+<details class="w-full">
+<summary class="list-none cursor-pointer p-4 flex items-center justify-between text-slate-100 font-bold">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">tips_and_updates</span>
+<span>Owner's Secret Tips</span>
+</div>
+<span class="material-symbols-outlined text-slate-500 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-sm text-slate-400 leading-relaxed border-t border-slate-800 pt-3">
+<p>To experience the full ambiance, visit between 7:00 PM and 8:30 PM. The terrace garden offers the best view of the traditional architecture under the moonlight.</p>
+</div>
+</details>
+</div>
+<div class="group border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden">
+<details class="w-full">
+<summary class="list-none cursor-pointer p-4 flex items-center justify-between text-slate-100 font-bold">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-accent">bolt</span>
+<span>Reservation Hack</span>
+</div>
+<span class="material-symbols-outlined text-slate-500 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-sm text-slate-400 leading-relaxed border-t border-slate-800 pt-3">
+<p>Members who book 48 hours in advance through the app get priority seating in the "Lotus Room" and a complimentary welcome tea ceremony.</p>
+</div>
+</details>
+</div>
+</section>
+<!-- Members Only Section -->
+<section class="bg-slate-900/60 rounded-xl p-6 border border-accent/30">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold text-accent flex items-center gap-2">
+<span class="material-symbols-outlined">lock_open</span>
+                    Members Only
+                </h3>
+<span class="px-2 py-0.5 bg-accent/20 text-accent text-[10px] font-bold uppercase tracking-wider rounded border border-accent/30">Secret Menu</span>
+</div>
+<div class="flex gap-4 items-center bg-background-dark/50 p-3 rounded-lg border border-slate-800">
+<div class="w-24 h-24 rounded-lg bg-cover bg-center shrink-0 border border-accent/20" data-alt="Deep purple glowing cocktail with edible glitter" style="background-image: linear-gradient(to bottom right, rgba(157, 78, 221, 0.4), rgba(212, 175, 53, 0.4)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdXjW1br6L8QR8s5KVDLo9mj7zgYOoYwZ2OVdonWlpa9V848M9i2XtSP1mBUNj4MFyQ1w8H1EaDHB-iH2YMpr_iesvZUCwx_voUxuk2Ra5MuNrsXlIwtyRaIfVVIzf7D0oEFTZKTZ60XlS4Q76ePIpSFY1Zr5zgsHAvAERLr_8IeuQL_AcyDjf6N1zAhKewZ_u1gckboI7MgP8ho4flhJT1Z6hDY6h5jECwdbXJAjrEbC280bGOdxByLoaDu04bkxrI5bVBscYz1Hq')">
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-bold text-slate-100 text-lg">Purple Haze Ade</h4>
+<p class="text-xs text-slate-400">A mysterious blend of butterfly pea flower, yuzu, and sparkling mountain water with gold flakes.</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="text-accent font-bold">12,000 ₩</span>
+<span class="text-[10px] text-slate-500 line-through">15,000 ₩</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Map Snippet -->
+<section class="rounded-xl overflow-hidden h-40 relative border border-slate-800">
+<div class="absolute inset-0 grayscale opacity-60" data-alt="Stylized dark map showing location in Myeong-dong" data-location="Myeong-dong, Seoul" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSXpRiIsSRcK2v1ddqcy1brQB2M_o1Y5QrIW6FEqZQS8ehMqIli5nmJk4NpaSGylcwPVeuwtaraqCt4fbRRXIDO3DK7NE4K9sg_tZfeGROtzAwwZWZH9qGjv7CVhzcjMfv9ZFrQoOJdJrKfrP2Xjhu5kzOT4VrCrxOSMYr_9MHV7MJS5AjMt6QO_9hGKmDZOXvFBsTdIpcrtgA5W0qhKDL-lI0FK7MCmkzNrfwNI5R9ZOcrr2vTbsUOml26xFWxVclwbl0TwicXAf-')"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+<div class="w-4 h-4 bg-primary rounded-full border-2 border-background-dark"></div>
+</div>
+</div>
+<button class="absolute bottom-3 right-3 bg-background-dark/80 backdrop-blur text-primary p-2 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-sm">directions</span>
+</button>
+</section>
+</main>
+<!-- Bottom Action Bar -->
+<nav class="fixed bottom-0 left-0 w-full bg-background-dark/95 border-t border-primary/20 backdrop-blur-lg px-6 py-4 flex items-center justify-between z-50">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Starts from</span>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-black text-primary">85,000</span>
+<span class="text-xs font-bold text-primary/70">KRW</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark font-black px-10 py-3.5 rounded-full text-base shadow-[0_0_20px_rgba(212,175,83,0.3)] transition-all active:scale-95">
+            BOOK NOW
+        </button>
+</nav>
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af35",
+                        "secondary": "#8b5cf6",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#12110a",
+                        "glass-dark": "rgba(32, 29, 18, 0.6)",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans KR", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(45, 41, 28, 0.7);
+            border: 1px solid rgba(212, 175, 53, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Top Header -->
+<header class="flex items-center justify-between p-6 sticky top-0 z-50 glass-effect">
+<h1 class="text-primary text-2xl font-bold tracking-tight">케이젬 <span class="text-slate-400 font-medium text-sm ml-1">K-Gem</span></h1>
+<div class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-primary text-sm">language</span>
+<p class="text-primary text-xs font-bold leading-normal">KO/EN/ZH/JA</p>
+</div>
+</header>
+<main class="px-6 py-4 space-y-8">
+<!-- Hero Section -->
+<section class="space-y-4">
+<div class="flex flex-col gap-1">
+<span class="text-primary font-medium text-sm tracking-widest uppercase">Welcome back</span>
+<h2 class="text-slate-100 text-3xl font-bold leading-tight">반갑습니다, 여행자님!</h2>
+</div>
+<!-- Search Bar -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary group-focus-within:text-white transition-colors">search</span>
+</div>
+<input class="w-full bg-slate-800/50 border-none rounded-full py-4 pl-12 pr-6 text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-primary/50 glass-effect" placeholder="숨겨진 보석같은 장소를 찾아보세요" type="text"/>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="grid grid-cols-4 gap-3">
+<div class="flex flex-col items-center gap-2">
+<div class="w-14 h-14 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary group hover:bg-primary hover:text-background-dark transition-all cursor-pointer">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<span class="text-xs font-medium text-slate-400">고궁</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-14 h-14 rounded-full bg-secondary/20 border border-secondary/30 flex items-center justify-center text-secondary group hover:bg-secondary hover:text-white transition-all cursor-pointer">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<span class="text-xs font-medium text-slate-400">전통음식</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-14 h-14 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary group hover:bg-primary hover:text-background-dark transition-all cursor-pointer">
+<span class="material-symbols-outlined">nightlife</span>
+</div>
+<span class="text-xs font-medium text-slate-400">밤문화</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-14 h-14 rounded-full bg-secondary/20 border border-secondary/30 flex items-center justify-center text-secondary group hover:bg-secondary hover:text-white transition-all cursor-pointer">
+<span class="material-symbols-outlined">forest</span>
+</div>
+<span class="text-xs font-medium text-slate-400">자연</span>
+</div>
+</section>
+<!-- Stats Dashboard -->
+<section class="space-y-4">
+<h3 class="text-slate-100 text-xl font-bold px-1">My Travel Stats</h3>
+<div class="glass-effect rounded-lg p-6 space-y-6 relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1 border-r border-slate-700/50">
+<p class="text-slate-400 text-xs uppercase tracking-wider">Regions Visited</p>
+<div class="flex items-baseline gap-1">
+<span class="text-primary text-3xl font-bold">08</span>
+<span class="text-slate-500 text-lg">/ 17</span>
+</div>
+</div>
+<div class="space-y-1 pl-2">
+<p class="text-slate-400 text-xs uppercase tracking-wider">Distance Walked</p>
+<div class="flex items-baseline gap-1">
+<span class="text-secondary text-3xl font-bold">124</span>
+<span class="text-slate-500 text-lg">km</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<p class="text-slate-400 text-xs uppercase tracking-wider">Earned Badges</p>
+<div class="flex gap-3">
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-yellow-200 p-0.5 shadow-lg shadow-primary/20">
+<div class="w-full h-full bg-background-dark rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1">stars</span>
+</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-secondary to-purple-300 p-0.5 shadow-lg shadow-secondary/20">
+<div class="w-full h-full bg-background-dark rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-xl" style="font-variation-settings: 'FILL' 1">military_tech</span>
+</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center border border-slate-600 border-dashed">
+<span class="material-symbols-outlined text-slate-500 text-xl">lock</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center border border-slate-600 border-dashed">
+<span class="material-symbols-outlined text-slate-500 text-xl">add</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recommendation Preview -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-slate-100 text-xl font-bold">Trending Hidden Gems</h3>
+<a class="text-primary text-sm font-medium" href="#">See all</a>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+<div class="min-w-[240px] h-64 rounded-lg overflow-hidden relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Grand traditional Korean palace architecture at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwsQ58xe_qWMHQ2havAn7c2lvFfEigHv5YCypldCucOntUBqui7PEvE2j20YJY_aM7Lxt4srNp_rOT50jjttpuMW0HCVgkEFT_y3xPyAYYashNCqCXDFrCb4ABkF_B5BNZbsIXydoN7a9GW5h9m6jHU2146XBa8aKDqjT_wxwyIHbFEvcL82qdIddatrHG--sPxqnkGrqpDo9fT6QnMJUF0WE125gE_uWGTMyust5XwroP-DstF8lbBsAlFWitNNKyfY-n_PCcpBIy"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Palace</p>
+<h4 class="text-white text-lg font-bold leading-tight">경복궁 야간 특별 관람</h4>
+</div>
+</div>
+<div class="min-w-[240px] h-64 rounded-lg overflow-hidden relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Traditional Korean food table spread" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhSOnnPGinEITibiwvo0WK-5EiAM0vd0u8bQPwm1RN5zR_Nx0xNk62UqQ20YohVY39uVlOBFUuP6-DlZirLVYX57PWCCfISbtgp2nBX1pUXCk4S9XcgaaWzMwcLFeQ612nTsli2jYSPGfZqo55tojf6SnNPotd9eXTLabPGjD8VGv3ahCd9CBtFMpK-F46ea0pSgB2xLROvjAhDK-w-gjPDS_42I6r-TlWwKURoN5vVmako9Lt-hiCwvsQuPO6M3fqbofrnBIAfVOk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<p class="text-secondary text-xs font-bold uppercase tracking-wider">Food</p>
+<h4 class="text-white text-lg font-bold leading-tight">인사동 정통 한식 코스</h4>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 px-6 pb-6">
+<div class="max-w-md mx-auto glass-effect rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/50">
+<a class="flex flex-col items-center justify-center w-14 h-14 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">home</span>
+<span class="text-[10px] font-bold mt-0.5">홈</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-bold mt-0.5">탐험</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[10px] font-bold mt-0.5">커뮤니티</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold mt-0.5">프로필</span>
+</a>
+</div>
+</nav>
+</body></html>

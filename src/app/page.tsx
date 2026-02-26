@@ -36,7 +36,7 @@ const NativeAdCard = ({ t }: { t: any }) => (
         alt="Sponsored"
         className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
       />
-      <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white">
+      <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[var(--bg-dark)]">
         {t.ad.sponsored}
       </div>
     </div>
@@ -44,7 +44,7 @@ const NativeAdCard = ({ t }: { t: any }) => (
       <span className="text-[var(--secondary)] text-[10px] font-bold uppercase tracking-widest mb-2">{t.ad.partner}</span>
       <h3 className="text-xl font-bold mb-4 premium-gradient">{t.ad.title}</h3>
       <p className="text-[var(--text-muted)] text-sm mb-6 leading-relaxed">{t.ad.desc}</p>
-      <button className="w-full py-3 rounded-xl bg-[var(--bg-dark)]/50 hover:bg-[var(--primary)] text-white text-xs font-bold transition-all border border-[var(--glass)] hover:border-[var(--primary)]">
+      <button className="w-full py-3 rounded-xl bg-[var(--surface-dark)] hover:bg-[var(--primary)] text-white hover:text-[var(--bg-dark)] text-xs font-bold transition-all border border-[var(--glass)] hover:border-[var(--primary)]">
         {t.ad.learnMore}
       </button>
     </div>
@@ -54,7 +54,7 @@ const NativeAdCard = ({ t }: { t: any }) => (
 // --- Skeleton Card for Premium Loading Experience ---
 const SkeletonCard = () => (
   <div className="glass-card overflow-hidden animate-pulse p-4">
-    <div className="h-64 bg-[var(--glass)] rounded-[20px]" />
+    <div className="h-64 bg-[var(--surface-dark)] rounded-[20px]" />
     <div className="p-7 space-y-4">
       <div className="h-6 bg-[var(--glass)] rounded w-3/4" />
       <div className="h-4 bg-[var(--glass)] rounded w-full" />
@@ -72,10 +72,10 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
   const { registerCard, isProcessing } = usePayment();
 
   return (
-    <div className="p-8 rounded-[var(--radius-premium)] bg-[var(--bg-dark)]/40 border border-[var(--primary)]/30 text-center backdrop-blur-xl relative overflow-hidden group">
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-transparent pointer-events-none" />
+    <div className="p-8 rounded-[var(--radius-premium)] bg-[var(--surface-dark)] border border-[var(--primary)]/30 text-center backdrop-blur-xl relative overflow-hidden group">
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/10 to-[var(--secondary)]/5 pointer-events-none" />
       <div className="relative z-10">
-        <div className="w-16 h-16 rounded-2xl bg-[var(--primary)]/20 flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner animate-pulse">
+        <div className="w-16 h-16 rounded-2xl bg-[var(--primary)]/20 flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner animate-pulse border border-[var(--primary)]/30">
           🔓
         </div>
         <h4 className="text-lg font-black text-white mb-2 uppercase tracking-tight">{t.vipModal.restricted}</h4>
@@ -87,14 +87,14 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
           <button
             onClick={registerCard}
             disabled={isProcessing}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-90 text-white font-black text-sm transition-all shadow-xl shadow-[var(--primary)]/20 active:scale-95 disabled:opacity-50"
+            className="w-full py-4 rounded-2xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] font-black text-sm transition-all shadow-xl shadow-[var(--primary)]/20 active:scale-95 disabled:opacity-50"
           >
             {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
           </button>
 
           <div className="relative py-2">
-            <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--glass)]" />
-            <span className="relative z-10 px-3 bg-[var(--bg-dark)] text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">or pay with</span>
+            <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--primary)]/20" />
+            <span className="relative z-10 px-3 bg-[var(--surface-dark)] text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">or pay with</span>
           </div>
 
           <PayPalButtons
@@ -353,8 +353,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f172a] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-[var(--bg-dark)] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin" />
       </div>
     );
   }
@@ -362,9 +362,9 @@ export default function Home() {
   // --- Login Gate Component for Mobile-first Premium Experience ---
   const LoginGate = () => (
     <div className="relative py-20 px-6 text-center max-w-2xl mx-auto flex flex-col items-center">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-500/10 blur-[100px] pointer-events-none rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[var(--primary)]/10 blur-[100px] pointer-events-none rounded-full" />
 
-      <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-4xl shadow-2xl mb-8 animate-bounce-slow">
+      <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center text-4xl shadow-2xl mb-8 animate-bounce-slow">
         🔒
       </div>
 
@@ -378,15 +378,15 @@ export default function Home() {
 
       <button
         onClick={() => login()}
-        className="group relative px-10 py-5 rounded-3xl bg-indigo-600 hover:bg-indigo-500 text-lg font-black transition-all shadow-2xl shadow-indigo-600/30 active:scale-95 overflow-hidden"
+        className="group relative px-10 py-5 rounded-3xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] text-lg font-black transition-all shadow-2xl shadow-[var(--primary)]/30 active:scale-95 overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
         {t.ui.gateButton}
       </button>
 
-      <div className="mt-12 flex items-center gap-4 text-slate-500 text-xs font-bold uppercase tracking-widest">
+      <div className="mt-12 flex items-center gap-4 text-[var(--primary)]/60 text-xs font-bold uppercase tracking-widest">
         <span>Verified Content</span>
-        <div className="w-1 h-1 rounded-full bg-slate-700" />
+        <div className="w-1 h-1 rounded-full bg-[var(--primary)]/40" />
         <span>0.1% Premium</span>
       </div>
     </div>
@@ -470,25 +470,25 @@ export default function Home() {
       />
 
       {/* Navigation */}
-      <nav className="nav-blur px-6 py-4 flex justify-between items-center bg-[var(--bg-dark)]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--glass)]">
+      <nav className="nav-blur px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-2 max-w-[60%]">
-          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center font-bold shadow-lg shadow-[var(--primary)]/20">
+          <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[var(--primary)] flex items-center justify-center font-bold text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/30 text-sm">
             {t.header.logo}
           </div>
-          <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate text-[var(--text-main)]">{t.header.title}</span>
+          <span className="text-[var(--primary)] font-extrabold text-lg sm:text-xl tracking-tight truncate">{t.header.title}</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <div className="hidden lg:flex flex-col items-end text-[10px] text-[var(--text-muted)] font-medium uppercase tracking-[0.2em]">
             <span>{t.header.refreshLabel}</span>
-            <span className="text-[var(--secondary)] font-bold">{t.header.refreshCycle}</span>
+            <span className="text-[var(--primary)] font-bold">{t.header.refreshCycle}</span>
           </div>
-          <div className="flex gap-2 bg-[var(--bg-dark)]/50 p-1 rounded-full border border-[var(--glass)]">
-            {(['ko', 'en', 'ja'] as const).map((lang) => (
+          <div className="flex gap-1 bg-[var(--primary)]/10 p-1 rounded-full border border-[var(--primary)]/20">
+            {(['ko', 'en', 'ja', 'zh'] as const).map((lang) => (
               <button
                 key={lang}
                 onClick={() => setLanguage(lang)}
-                className={`px-3 py-1 rounded-full text-sm transition-all duration-300 ${language === lang ? 'bg-[var(--primary)] text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                className={`px-3 py-1 rounded-full text-sm font-bold transition-all duration-300 ${language === lang ? 'bg-[var(--primary)] text-[var(--bg-dark)] shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--primary)]'
                   }`}
               >
                 {lang.toUpperCase()}
@@ -499,16 +499,16 @@ export default function Home() {
           {!user ? (
             <button
               onClick={() => login()}
-              className="px-5 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--primary)] text-[var(--text-main)] text-xs font-bold transition-all border border-[var(--glass)]"
+              className="px-5 py-1.5 rounded-full bg-[var(--primary)]/10 hover:bg-[var(--primary)] text-[var(--primary)] hover:text-[var(--bg-dark)] text-xs font-bold transition-all border border-[var(--primary)]/20 hover:border-[var(--primary)]"
             >
               {t.ui.login}
             </button>
           ) : (
             <div className="flex items-center gap-3">
-              <img src={user.photoURL || ""} alt="User" className="w-8 h-8 rounded-full border border-[var(--primary)] shadow-[0_0_10px_var(--primary-glow)]" />
+              <img src={user.photoURL || ""} alt="User" className="w-8 h-8 rounded-full border-2 border-[var(--primary)] shadow-[0_0_12px_var(--primary-glow)]" />
               <button
                 onClick={() => logout()}
-                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] underline"
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] underline"
               >
                 Logout
               </button>
@@ -518,14 +518,14 @@ export default function Home() {
           {isInstallable && (
             <button
               onClick={handleInstallApp}
-              className="px-5 py-1.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white text-[10px] font-black shadow-lg shadow-[var(--primary-glow)] active:scale-95 transition-all animate-pulse"
+              className="px-5 py-1.5 rounded-full bg-[var(--primary)] text-[var(--bg-dark)] text-[10px] font-black shadow-lg shadow-[var(--primary)]/30 active:scale-95 transition-all animate-pulse"
             >
               {t.ui.installApp}
             </button>
           )}
 
           <button
-            className="hidden sm:block px-5 py-1.5 rounded-full bg-gradient-to-r from-[#10b981] to-[#059669] text-white text-[10px] font-black shadow-lg shadow-emerald-600/20 active:scale-95 transition-all"
+            className="hidden sm:block px-5 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-[10px] font-black border border-[var(--primary)]/20 active:scale-95 transition-all hover:bg-[var(--primary)] hover:text-[var(--bg-dark)]"
           >
             {t.ui.freeAccess}
           </button>
@@ -533,33 +533,33 @@ export default function Home() {
       </nav>
 
       {/* 🚀 역발상 마케팅 배지 (GEO/SEO 전략 반영) */}
-      <div className="bg-[var(--primary)]/10 border-y border-[var(--primary)]/20 py-2 overflow-hidden whitespace-nowrap">
+      <div className="bg-[var(--primary)]/5 border-y border-[var(--primary)]/10 py-2 overflow-hidden whitespace-nowrap">
         <div className="flex animate-marquee gap-8 items-center">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]">
             {t.marquee.warning}
           </span>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]/70">
             {t.marquee.navigate}
           </span>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]">
             {t.marquee.verified}
           </span>
           {/* Repeat for continuous effect */}
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--secondary)]">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]/70">
             {t.marquee.warning}
           </span>
         </div>
       </div>
 
       {/* 📍 Sticky Category Filter 2026 */}
-      <div className="sticky top-[64px] sm:top-[72px] z-40 bg-[var(--bg-dark)]/90 backdrop-blur-xl border-b border-[var(--glass)] overflow-x-auto no-scrollbar py-3 px-4 flex gap-2 sm:justify-center shadow-xl">
+      <div className="sticky top-[64px] sm:top-[72px] z-40 bg-[var(--bg-dark)]/90 backdrop-blur-xl border-b border-[var(--primary)]/10 overflow-x-auto no-scrollbar py-3 px-4 flex gap-2 sm:justify-center shadow-xl">
         {Object.entries(t.categories).map(([key, label]) => (
           <button
             key={`sticky-${key}`}
             onClick={() => handleCategorySelect(key)}
             className={`whitespace-nowrap px-5 py-1.5 rounded-full border transition-all duration-300 font-bold text-[11px] uppercase tracking-wider ${activeCategory === key
-              ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20'
-              : 'bg-slate-900/50 border-slate-800 text-slate-500 hover:text-slate-300'
+              ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/20'
+              : 'bg-[var(--surface-dark)] border-[var(--primary)]/10 text-slate-500 hover:text-[var(--primary)] hover:border-[var(--primary)]/30'
               }`}
           >
             {label as any}
@@ -586,17 +586,17 @@ export default function Home() {
 
           <form
             onSubmit={handleSearch}
-            className="max-w-2xl mx-auto relative p-1 rounded-[var(--radius-premium)] bg-gradient-to-r from-[var(--primary)] via-[var(--accent)] to-[var(--secondary)] shadow-2xl group focus-within:ring-2 ring-[var(--primary)]/50 transition-all font-sans"
+            className="max-w-2xl mx-auto relative p-1 rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--primary)] shadow-2xl shadow-[var(--primary)]/10 group focus-within:ring-2 ring-[var(--primary)]/50 transition-all font-sans"
           >
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.hero.searchPlaceholder}
-              className="w-full px-6 py-4 bg-[var(--bg-dark)] rounded-[20px] text-lg focus:outline-none placeholder:text-[var(--text-muted)] text-[var(--text-main)]"
+              className="w-full px-6 py-4 bg-[var(--bg-dark)] rounded-full text-lg focus:outline-none placeholder:text-slate-500 text-[var(--text-main)]"
             />
-            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:opacity-90 px-5 sm:px-6 py-2.5 rounded-xl font-black transition-all flex items-center gap-2 shadow-lg active:scale-95 text-white">
-              {isAiSearching ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : "GO"}
+            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:brightness-110 px-5 sm:px-6 py-2.5 rounded-full font-black transition-all flex items-center gap-2 shadow-lg active:scale-95 text-[var(--bg-dark)]">
+              {isAiSearching ? <div className="w-4 h-4 border-2 border-[var(--bg-dark)]/20 border-t-[var(--bg-dark)] rounded-full animate-spin" /> : "GO"}
             </button>
           </form>
 
@@ -605,11 +605,10 @@ export default function Home() {
             <button
               onClick={() => {
                 setActiveCategory('all');
-                // Using a small timeout or ensuring state updates are processed consistently
                 setSearchQuery(t.commands.gangnam);
                 handleSearch(undefined, t.commands.gangnam);
               }}
-              className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 text-indigo-400 text-[11px] font-black uppercase tracking-widest transition-all"
+              className="px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30 hover:bg-[var(--primary)]/20 text-[var(--primary)] text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.gangnam}
             </button>
@@ -619,7 +618,7 @@ export default function Home() {
                 setSearchQuery(t.commands.bbq);
                 handleSearch(undefined, t.commands.bbq);
               }}
-              className="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 hover:bg-pink-500/20 text-pink-400 text-[11px] font-black uppercase tracking-widest transition-all"
+              className="px-4 py-2 rounded-full bg-[var(--secondary)]/10 border border-[var(--secondary)]/30 hover:bg-[var(--secondary)]/20 text-[var(--secondary)] text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.bbq}
             </button>
@@ -629,7 +628,7 @@ export default function Home() {
                 setSearchQuery(t.commands.tea);
                 handleSearch(undefined, t.commands.tea);
               }}
-              className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 text-[11px] font-black uppercase tracking-widest transition-all"
+              className="px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30 hover:bg-[var(--primary)]/20 text-[var(--primary)] text-[11px] font-black uppercase tracking-widest transition-all"
             >
               {t.commands.tea}
             </button>
@@ -640,11 +639,52 @@ export default function Home() {
           <div className="mt-5 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
             <button
               onClick={handleCopyEmail}
-              className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/40 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-indigo-400"
+              className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-[var(--surface-dark)] hover:bg-[var(--primary)]/10 border border-[var(--primary)]/10 hover:border-[var(--primary)]/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-[var(--primary)]"
             >
-              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
               {t.footer.business}
             </button>
+          </div>
+
+          {/* 📈 2026 Strategy: Why K-Gem? USP Section */}
+          <div className="mt-20 mb-10 max-w-5xl mx-auto px-4">
+            <div className="mb-10">
+              <span className="px-3 py-1 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)] text-[10px] font-black uppercase tracking-widest mb-4 inline-block">
+                {t.usp.badge}
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black premium-gradient">
+                {t.usp.title}
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Map USP */}
+              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20">
+                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">map_off</span>
+                </div>
+                <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.map.title}</h3>
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.map.desc}</p>
+              </div>
+
+              {/* Solo USP */}
+              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--secondary)]/20">
+                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">person</span>
+                </div>
+                <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.solo.title}</h3>
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.solo.desc}</p>
+              </div>
+
+              {/* Cashless USP */}
+              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20">
+                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">contactless</span>
+                </div>
+                <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.cash.title}</h3>
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.cash.desc}</p>
+              </div>
+            </div>
           </div>
 
           {/* Category Filter Moved Here */}
@@ -653,9 +693,9 @@ export default function Home() {
               <button
                 key={key}
                 onClick={() => handleCategorySelect(key)}
-                className={`whitespace-nowrap px-6 py-2.5 rounded-2xl border transition-all duration-300 font-bold text-sm ${activeCategory === key
-                  ? 'bg-indigo-600 border-indigo-500 shadow-xl shadow-indigo-600/30 text-white'
-                  : 'bg-slate-900/50 border-slate-800 hover:border-slate-700 text-slate-500 hover:text-slate-300 border-dashed'
+                className={`whitespace-nowrap px-6 py-2.5 rounded-full border transition-all duration-300 font-bold text-sm ${activeCategory === key
+                  ? 'bg-[var(--primary)] border-[var(--primary)] shadow-xl shadow-[var(--primary)]/30 text-[var(--bg-dark)]'
+                  : 'bg-[var(--surface-dark)] border-[var(--primary)]/10 hover:border-[var(--primary)]/30 text-slate-500 hover:text-[var(--primary)]'
                   }`}
               >
                 {label as any}
@@ -676,20 +716,20 @@ export default function Home() {
                 {isInstallable && (
                   <button
                     onClick={handleInstallApp}
-                    className="mb-8 w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-xl shadow-indigo-600/20 active:scale-[0.98]"
+                    className="mb-8 w-full py-4 rounded-2xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-xl shadow-[var(--primary)]/20 active:scale-[0.98]"
                   >
                     <span>📱</span> {t.ui.installApp} (Free)
                   </button>
                 )}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-2xl">🔥</div>
+                    <div className="w-12 h-12 rounded-2xl bg-[var(--primary)]/20 flex items-center justify-center text-2xl">🔥</div>
                     <div>
                       <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.sections.trending}</h2>
                       <p className="text-slate-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t.header.refreshCycle}</p>
                     </div>
                   </div>
-                  <span className="sm:ml-auto px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-400 text-xs font-bold border border-indigo-500/10 uppercase tracking-widest">
+                  <span className="sm:ml-auto px-4 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs font-bold border border-[var(--primary)]/10 uppercase tracking-widest">
                     {t.ui.realtime}
                   </span>
                 </div>
@@ -703,11 +743,11 @@ export default function Home() {
                             alt={(spot.title as any)[language]}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
-                          <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg">
+                          <div className="absolute top-4 left-4 bg-[var(--primary)]/90 backdrop-blur-lg px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-lg text-[var(--bg-dark)]">
                             {t.card.trending}
                           </div>
                           {spot.vipContent && (
-                            <div className="absolute top-14 left-4 bg-emerald-600/90 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border border-emerald-500/20 shadow-lg">
+                            <div className="absolute top-14 left-4 bg-[var(--secondary)]/90 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border border-[var(--secondary)]/20 shadow-lg text-white">
                               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                               0.1% SECRET
                             </div>
@@ -715,7 +755,7 @@ export default function Home() {
                           <SocialProof type="live" count={12} className="absolute bottom-4 left-4 bg-slate-900/60 backdrop-blur-md" />
                         </div>
                         <div className="p-6 flex-1 flex flex-col">
-                          <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{(spot.title as any)[language]}</h3>
+                          <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--primary)] transition-colors">{(spot.title as any)[language]}</h3>
                           <p className="text-slate-400 text-sm mb-6 line-clamp-2 leading-relaxed">{(spot.description as any)[language]}</p>
 
                           {/* Transport Info - More readable on mobile with dual buttons */}
@@ -728,13 +768,13 @@ export default function Home() {
                               <div className="flex gap-2">
                                 <button
                                   onClick={() => handleDirections(spot)}
-                                  className="flex-1 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                                  className="flex-1 py-2.5 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 hover:bg-[var(--primary)]/20 text-[var(--primary)] font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                                 >
                                   🧭 {t.ui.navNaver}
                                 </button>
                                 <button
                                   onClick={() => handleGoogleDirections(spot)}
-                                  className="flex-1 py-2.5 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                                  className="flex-1 py-2.5 rounded-xl bg-[var(--surface-dark)] border border-[var(--primary)]/10 hover:bg-[var(--primary)]/10 text-slate-400 font-black text-[11px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                                 >
                                   🌍 {t.ui.navGoogle}
                                 </button>
@@ -746,13 +786,13 @@ export default function Home() {
                           {spot.vipContent && (
                             <div className="mb-6">
                               {isPremium ? (
-                                <div className="p-5 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 relative overflow-hidden">
+                                <div className="p-5 rounded-3xl bg-[var(--primary)]/5 border border-[var(--primary)]/10 relative overflow-hidden">
                                   <div className="flex items-center gap-2 mb-3">
-                                    <div className="p-1 rounded-full bg-[var(--bg-dark)] border-2 border-white shadow-lg animate-bounce-slow">
-                                      <div className="w-3 h-3 rounded-full bg-white"></div>
+                                    <div className="p-1 rounded-full bg-[var(--bg-dark)] border-2 border-[var(--primary)] shadow-lg animate-bounce-slow">
+                                      <div className="w-3 h-3 rounded-full bg-[var(--primary)]"></div>
                                     </div>
-                                    <span className="text-xs font-black text-indigo-400 uppercase tracking-tighter">{t.ui.secretInfo}</span>
-                                    <div className="h-[1px] flex-1 bg-indigo-500/20" />
+                                    <span className="text-xs font-black text-[var(--primary)] uppercase tracking-tighter">{t.ui.secretInfo}</span>
+                                    <div className="h-[1px] flex-1 bg-[var(--primary)]/20" />
                                   </div>
                                   <div>
                                     <p className="text-[13px] text-slate-200 font-bold leading-snug">
@@ -776,13 +816,13 @@ export default function Home() {
                           <div className="flex gap-3 mt-auto">
                             <button
                               onClick={(e) => handleAction(e, 'map', spot)}
-                              className="flex-1 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-sm font-bold transition-all border border-slate-700/50 active:scale-95"
+                              className="flex-1 py-4 rounded-2xl bg-[var(--surface-dark)] hover:bg-[var(--primary)]/10 text-sm font-bold transition-all border border-[var(--primary)]/10 active:scale-95 text-slate-300"
                             >
                               {t.card.viewMap}
                             </button>
                             <button
                               onClick={(e) => handleAction(e, 'details', spot)}
-                              className="flex-1 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                              className="flex-1 py-4 rounded-2xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] text-sm font-bold transition-all shadow-lg shadow-[var(--primary)]/20 active:scale-95"
                             >
                               {t.card.details}
                             </button>
@@ -799,11 +839,11 @@ export default function Home() {
 
             {/* Ladies Choice Section */}
             {!searchQuery && activeCategory === 'all' && (
-              <div className="mb-24 p-8 rounded-[40px] bg-gradient-to-br from-indigo-900/20 via-slate-900 to-purple-900/10 border border-indigo-500/10">
+              <div className="mb-24 p-8 rounded-[40px] bg-gradient-to-br from-[var(--primary)]/10 via-[var(--surface-dark)] to-[var(--secondary)]/5 border border-[var(--primary)]/10">
                 <div className="flex items-center gap-3 mb-10">
-                  <div className="w-10 h-10 rounded-2xl bg-purple-500/20 flex items-center justify-center text-xl">✨</div>
+                  <div className="w-10 h-10 rounded-2xl bg-[var(--secondary)]/20 flex items-center justify-center text-xl">✨</div>
                   <div>
-                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] bg-clip-text text-transparent">
                       {t.sections.ladies}
                     </h2>
                     <p className="text-slate-500 text-sm mt-1">Skin · Cosmetic · Dessert · Cafe</p>
@@ -811,7 +851,7 @@ export default function Home() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {ladiesSpots.map((spot) => (
-                    <div key={`ladies-${spot.id}`} className="bg-slate-950/50 border border-slate-800 rounded-3xl overflow-hidden group hover:border-purple-500/30 transition-all">
+                    <div key={`ladies-${spot.id}`} className="bg-[var(--bg-dark)]/80 border border-[var(--primary)]/10 rounded-3xl overflow-hidden group hover:border-[var(--primary)]/30 transition-all">
                       <div className="h-40 overflow-hidden relative">
                         <img
                           src={spot.image}
@@ -820,13 +860,13 @@ export default function Home() {
                         />
                       </div>
                       <div className="p-5">
-                        <span className="text-[10px] text-purple-400 font-bold uppercase tracking-widest">{(t.categories as any)[spot.category || 'beauty']}</span>
+                        <span className="text-[10px] text-[var(--primary)] font-bold uppercase tracking-widest">{(t.categories as any)[spot.category || 'beauty']}</span>
                         <h3 className="font-bold mt-1 text-sm line-clamp-1">{(spot.title as any)[language]}</h3>
                         <div className="flex gap-3 mt-5">
-                          <button onClick={(e) => handleAction(e, 'map', spot)} className="flex-1 text-xs py-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 active:scale-95 transition-all">
+                          <button onClick={(e) => handleAction(e, 'map', spot)} className="flex-1 text-xs py-3 rounded-xl bg-[var(--surface-dark)] border border-[var(--primary)]/10 hover:bg-[var(--primary)]/10 active:scale-95 transition-all">
                             {t.ui.map}
                           </button>
-                          <button onClick={(e) => handleAction(e, 'details', spot)} className="flex-1 text-xs py-3 rounded-xl bg-purple-600 hover:bg-purple-500 font-bold active:scale-95 transition-all">
+                          <button onClick={(e) => handleAction(e, 'details', spot)} className="flex-1 text-xs py-3 rounded-xl bg-[var(--primary)] hover:brightness-110 font-bold text-[var(--bg-dark)] active:scale-95 transition-all">
                             {t.ui.info}
                           </button>
                         </div>
@@ -844,7 +884,7 @@ export default function Home() {
                 {searchQuery ? (
                   <span className="flex items-center gap-3">
                     {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (10+)`}
-                    {!isAiSearching && <span className="text-emerald-400 text-xs font-black bg-emerald-400/10 px-2 py-1 rounded">{t.ui.verified}</span>}
+                    {!isAiSearching && <span className="text-[var(--primary)] text-xs font-black bg-[var(--primary)]/10 px-2 py-1 rounded">{t.ui.verified}</span>}
                   </span>
                 ) : t.sections.curated}
               </h2>
@@ -871,11 +911,11 @@ export default function Home() {
 
                         {/* 💎 2026 Strategy: Premium Badges (Screenshot Match) */}
                         <div className="absolute top-4 left-4 flex flex-col gap-2">
-                          <div className="bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
-                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                          <div className="bg-[var(--bg-dark)]/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-[var(--primary)] border border-[var(--primary)]/30 flex items-center gap-1.5">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
                             AI 광고 필터링
                           </div>
-                          <div className="bg-emerald-500 px-3 py-1 rounded-full text-[10px] font-black text-white shadow-lg shadow-emerald-500/20 uppercase tracking-wider">
+                          <div className="bg-[var(--secondary)] px-3 py-1 rounded-full text-[10px] font-black text-white shadow-lg shadow-[var(--secondary)]/20 uppercase tracking-wider">
                             0.1% SECRET
                           </div>
                         </div>
@@ -886,15 +926,15 @@ export default function Home() {
                           {spot.viewingCount || (Math.floor(Math.random() * 10) + 3)} TRAVELERS VIEWING NOW
                         </div>
 
-                        <div className="absolute bottom-4 right-4 bg-indigo-600/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-sm font-black flex items-center gap-1 shadow-xl">
-                          <span className="text-yellow-400">★</span> {spot.rating}
+                        <div className="absolute bottom-4 right-4 bg-[var(--primary)]/90 backdrop-blur-md text-[var(--bg-dark)] px-2.5 py-1 rounded-lg text-sm font-black flex items-center gap-1 shadow-xl">
+                          <span className="text-[var(--bg-dark)]">★</span> {spot.rating}
                         </div>
                       </div>
                       <div className="p-7 flex-1 flex flex-col">
                         <div className="flex justify-between items-start mb-3">
                           <h3 className="text-xl font-bold tracking-tight">{spot.title[language] || spot.title['ko']}</h3>
                           <div className="flex flex-col items-end">
-                            <span className="text-xs font-black text-indigo-400">{getPriceTag(spot.price)}</span>
+                            <span className="text-xs font-black text-[var(--primary)]">{getPriceTag(spot.price)}</span>
                           </div>
                         </div>
                         {/* 2026 Strategy: BLUF Content for GEO */}
@@ -906,19 +946,19 @@ export default function Home() {
                         <div className="grid grid-cols-2 gap-2 mb-6">
                           <button
                             onClick={() => handleDirections(spot)}
-                            className="py-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                            className="py-3 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 hover:bg-[var(--primary)]/20 text-[var(--primary)] font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🧭 {t.ui.navNaver}
                           </button>
                           <button
                             onClick={() => handleGoogleDirections(spot)}
-                            className="py-3 rounded-xl bg-slate-800/30 border border-slate-800 hover:bg-slate-800/50 text-slate-400 font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                            className="py-3 rounded-xl bg-[var(--surface-dark)] border border-[var(--primary)]/10 hover:bg-[var(--primary)]/10 text-slate-400 font-extrabold text-[10px] transition-all flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🌍 {t.ui.navGoogle}
                           </button>
                           <button
                             onClick={() => handleAccommodation(spot)}
-                            className="col-span-2 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-all text-[10px] font-extrabold uppercase tracking-tighter flex items-center justify-center gap-1.5 active:scale-95"
+                            className="col-span-2 py-3 rounded-xl bg-[var(--surface-dark)] border border-[var(--primary)]/10 hover:border-[var(--primary)]/30 transition-all text-[10px] font-extrabold uppercase tracking-tighter flex items-center justify-center gap-1.5 active:scale-95"
                           >
                             🏨 {t.ui.accommodation}
                           </button>
@@ -927,14 +967,14 @@ export default function Home() {
                         <div className="grid grid-cols-2 gap-2 mb-4">
                           <button
                             onClick={(e) => handleAction(e, 'map', spot)}
-                            className="flex-1 bg-slate-800/80 hover:bg-slate-700 text-white py-3 rounded-xl font-bold text-xs transition-all border border-slate-700 active:scale-95"
+                            className="flex-1 bg-[var(--surface-dark)] hover:bg-[var(--primary)]/10 text-white py-3 rounded-xl font-bold text-xs transition-all border border-[var(--primary)]/10 active:scale-95"
                           >
                             {t.card.viewMap}
                           </button>
 
                           <button
                             onClick={(e) => handleAction(e, 'details', spot)}
-                            className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
+                            className="flex-1 bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] py-3 rounded-xl font-bold text-xs transition-all shadow-lg shadow-[var(--primary)]/20 active:scale-95"
                           >
                             {t.card.details}
                           </button>
@@ -1005,7 +1045,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl animate-in fade-in duration-500" />
           <div className="relative w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-indigo-500/20 rounded-[40px] p-10 shadow-2xl animate-in zoom-in-95 duration-500">
             <div className="flex flex-col items-center text-center">
-              <div className="w-20 h-20 rounded-3xl bg-indigo-600/20 flex items-center justify-center text-4xl mb-8 animate-bounce">
+              <div className="w-20 h-20 rounded-3xl bg-[var(--primary)]/20 flex items-center justify-center text-4xl mb-8 animate-bounce border border-[var(--primary)]/30">
                 🛡️
               </div>
               <h3 className="text-2xl font-black text-white mb-4 leading-tight">
@@ -1026,7 +1066,7 @@ export default function Home() {
                       alert(language === 'ko' ? 'URL이 복사되었습니다. 브라우저 주소창에 붙여넣어주세요!' : 'URL Copied!');
                     }
                   }}
-                  className="w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm transition-all shadow-xl shadow-indigo-600/20 active:scale-95"
+                  className="w-full py-4 rounded-2xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] font-black text-sm transition-all shadow-xl shadow-[var(--primary)]/20 active:scale-95"
                 >
                   {t.ui.copyUrl}
                 </button>

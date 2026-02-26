@@ -1,0 +1,31 @@
+﻿{
+    "screenshot":  {
+                       "name":  "projects/17180792545610776042/files/a6d45759f6724924a6ab9262952ba7cd",
+                       "downloadUrl":  "https://lh3.googleusercontent.com/aida/AOfcidXtCy7KtLcSDi9gzX6a4CiAJ-kzLeYlAnFlNkrwD68nHXHFAcJPXBjJYYXyI41bzccm34tnd7BRhUUbQnyqXw7IzI3YB3P4KIB63nMFWwU0lwXTP3z5ANDkgELxUUfzosStIDnt7okTSU7Nl1rR3EW3m3PqOrmzPHSQaqzmW61_ghotCeJY0k9NCJo6MP-F27bvg4A0yyXiJLlRDrC8sLhLcVJFYX1brEv3JO9ChHm2VFN1V8vOlVSqR6ve"
+                   },
+    "htmlCode":  {
+                     "name":  "projects/17180792545610776042/files/bceaceae6f0c424f8a96dec065f69112",
+                     "downloadUrl":  "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2RmYTQwYmRiYzg0OTRlOTZhNTQ5ZWFmNWZlZTZkNzRhEgsSBxDI_OiE4AUYAZIBJAoKcHJvamVjdF9pZBIWQhQxNzE4MDc5MjU0NTYxMDc3NjA0Mg\u0026filename=\u0026opi=89354086",
+                     "mimeType":  "text/html"
+                 },
+    "id":  "c2bc145d78d34edda3b889133c8c9d74",
+    "generatedBy":  "figaro_agent",
+    "width":  "780",
+    "height":  "2592",
+    "title":  "명소 상세 (케이젬)",
+    "prompt":  "Spot Details screen for \u0027Myeong-dong K-Gem\u0027. \n- Features: Hero image of a traditional Korean gate at night. Title \u0027명동 케이젬 (Myeong-dong K-Gem)\u0027, rating (4.9), location. \n- Gamification: \u0027Seoul Insider\u0027 badge challenge with \u0027Check-in\u0027 button. \n- Progressive Disclosure: Accordion menus for \u0027Owner\u0027s Tips\u0027 and \u0027Reservation Hack\u0027. \n- Members Only section: \u0027Secret Menu\u0027 featuring \u0027Purple Haze Ade\u0027. \n- Bottom Bar: Price and \u0027Book Now\u0027 button in Gold. \n- Top Header: Language selector (KO/EN/ZH/JA). \n- Theme: Dark mode, Gold and Purple accents.",
+    "name":  "projects/17180792545610776042/screens/c2bc145d78d34edda3b889133c8c9d74",
+    "theme":  {
+                  "colorMode":  "DARK",
+                  "font":  "PLUS_JAKARTA_SANS",
+                  "roundness":  "ROUND_FULL",
+                  "customColor":  "#d4af35",
+                  "saturation":  2
+              },
+    "deviceType":  "MOBILE",
+    "screenType":  "DESIGN",
+    "screenMetadata":  {
+                           "agentType":  "HATTER_AGENT",
+                           "status":  "COMPLETE"
+                       }
+}

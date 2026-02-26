@@ -1,0 +1,31 @@
+﻿{
+    "screenshot":  {
+                       "name":  "projects/17180792545610776042/files/f71a9140d16844438131ac62ae34172b",
+                       "downloadUrl":  "https://lh3.googleusercontent.com/aida/AOfcidUMlDCRWLqkwcrNhCo9Pfm05KHiIovyPdZpopJMnkwipmfEecr4g3lcBX5ezsT3vWJkduFD0uXiI_2Yfgj95jyHz2n0AZqo4t3A7PUR8BSc0PCz-m3_QvaFM9GLwE-lkzCcdKS4wG6g-isBRadCzS-EcxFp9OrgGX1D80SxfeSoc8jYPv6wkJt3W0UGnuAX2YTEJh-GpBUKYM8-R77z8RLNT40lSyRkQXEBa48CDWwn6NmcZYWzHvnetWEf"
+                   },
+    "htmlCode":  {
+                     "name":  "projects/17180792545610776042/files/24e4eb1c546c4ed6a2f44a7c7c802ebe",
+                     "downloadUrl":  "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2Y4NDgzNmJmZjliYjQwNDk5OGE2NGIzMjg3ZDIyMTI0EgsSBxDI_OiE4AUYAZIBJAoKcHJvamVjdF9pZBIWQhQxNzE4MDc5MjU0NTYxMDc3NjA0Mg\u0026filename=\u0026opi=89354086",
+                     "mimeType":  "text/html"
+                 },
+    "id":  "f36145f974c24078906ccde621401e87",
+    "generatedBy":  "figaro_agent",
+    "width":  "780",
+    "height":  "3940",
+    "title":  "명소 리스트 (케이젬)",
+    "prompt":  "Spot List screen for \u0027케이젬 (K-Gem)\u0027. \n- Features: Top title \u0027프리미엄 명소\u0027, search icon, Filter chips (Price, Distance, Rating). \n- List items: Premium spots like \u00271인 삼겹살 정식\u0027 (Single-portion Samgyeopsal), \u0027시크릿 티 투어\u0027 (Secret Tea Tour), \u0027달빛 한식\u0027 (Moonlight Hansik), \u0027에스테틱 아카이브\u0027. \n- Each item: High-res image, \u0027Secret\u0027 badge, rating, distance, and price. \n- Top Header: Language selector (KO/EN/ZH/JA). \n- Theme: Dark mode, Gold and Purple accents, Glassmorphism.",
+    "name":  "projects/17180792545610776042/screens/f36145f974c24078906ccde621401e87",
+    "theme":  {
+                  "colorMode":  "DARK",
+                  "font":  "PLUS_JAKARTA_SANS",
+                  "roundness":  "ROUND_FULL",
+                  "customColor":  "#d4af35",
+                  "saturation":  2
+              },
+    "deviceType":  "MOBILE",
+    "screenType":  "DESIGN",
+    "screenMetadata":  {
+                           "agentType":  "HATTER_AGENT",
+                           "status":  "COMPLETE"
+                       }
+}

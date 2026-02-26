@@ -37,7 +37,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setIsProcessing(true);
         try {
             // @ts-ignore
-            const tossPayments = window.TossPayments('test_ck_D4a3mOwvbyq60M9NxP63V5E1el7X');
+            const tossPayments = window.TossPayments(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || 'test_ck_D4a3mOwvbyq60M9NxP63V5E1el7X');
             await tossPayments.requestBillingAuth('CARD', {
                 customerKey: user.uid,
                 successUrl: `${window.location.origin}/payment/success`,

@@ -22,7 +22,22 @@ export const marketingKB = {
             res: "韓国の電話번호がなくても大丈夫。話題のカフェ予約も、タクシー手配も、KGEMのAIエージェントにお任せ。"
         },
         zh: {
-            pay: "T-money 充值還要找現金？用 KGEM 一鍵解決交通與支付，韓國旅行從此不卡關。"
+            pay: "T-money 充值還要找現金？用 KGEM 一鍵解決交通與支付，韓國旅行從此不卡關。",
+            red: "还在被小红书上的‘韩国旅行避雷’刷屏？KGEM 独家‘极简暗黑+玻璃拟态’UI，带你直达 0.1% 的当地人宝藏店。别再跟着谷歌地图在首尔迷路了！"
+        }
+    },
+    usp: {
+        MAP_VOID: {
+            title: "Google Maps is a Void",
+            desc: "Stop getting lost. We use Naver's precision with an intuitive Global UX."
+        },
+        SOLO_DINING: {
+            title: "Solo-Dining Hero",
+            desc: "BBQ for one? We filter spots that welcome solo travelers without the '2-person minimum' stress."
+        },
+        NO_CASH: {
+            title: "Cashless in Korea",
+            desc: "Forget T-money cash top-ups. Pay, Nav, and Book everything in one app."
         }
     },
 

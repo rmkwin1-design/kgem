@@ -1,0 +1,31 @@
+﻿{
+    "screenshot":  {
+                       "name":  "projects/17180792545610776042/files/5c9314ac65034b0986718f967c7e1594",
+                       "downloadUrl":  "https://lh3.googleusercontent.com/aida/AOfcidULrGkYrjqZe58rSZO7dx8QLSe_GvOaTjKXVP_x0A46BGjVxdbfU4B9up5BC_3HUBBblhxgjB1wqKZjA1ShZYEDy7_HIKToXWz4RYypfA6RoPb8pjYQixa02jSUoZkNqW7HaKwkf2QCaJWWPvfU4rODFNWXthZoZunzA8jPrOQpeg32hXiE1tORkYgDct93ZBzJJYHGC1-Tr-F00QKjuRfFSANwJTmpS5Er40kfan0lh02eOaHaLoyanDiz"
+                   },
+    "htmlCode":  {
+                     "name":  "projects/17180792545610776042/files/62f24a63948c4965a7731b3165f61749",
+                     "downloadUrl":  "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2IyY2FmNWUwY2ZkOTQxN2FhOWVjMzdkNGZlZGY2NThiEgsSBxDI_OiE4AUYAZIBJAoKcHJvamVjdF9pZBIWQhQxNzE4MDc5MjU0NTYxMDc3NjA0Mg\u0026filename=\u0026opi=89354086",
+                     "mimeType":  "text/html"
+                 },
+    "id":  "9205c32ee99242d5992ab8b2387975a5",
+    "generatedBy":  "figaro_agent",
+    "width":  "780",
+    "height":  "1954",
+    "title":  "결제 페이지 (케이젬)",
+    "prompt":  "Payment screen for \u0027케이젬 (K-Gem)\u0027. \n- Features: Title \u0027케이젬 결제하기\u0027. Product card for \u002724시간 시크릿 패스\u0027 with night view image. \n- Order Summary: Secret Pass Access, Service Fee, Total Amount (₩60,500). \n- Payment Methods: Card, Apple Pay, Google Pay. Card form (Card number, Expiry, CVV). \n- Trust: Security badges (Secure SSL, PCI DSS). \n- Button: \u0027₩60,500 결제하기\u0027 in Gold. \n- Top Header: Language selector (KO/EN/ZH/JA). \n- Theme: Dark mode, Gold and Purple accents.",
+    "name":  "projects/17180792545610776042/screens/9205c32ee99242d5992ab8b2387975a5",
+    "theme":  {
+                  "colorMode":  "DARK",
+                  "font":  "PLUS_JAKARTA_SANS",
+                  "roundness":  "ROUND_FULL",
+                  "customColor":  "#d4af35",
+                  "saturation":  2
+              },
+    "deviceType":  "MOBILE",
+    "screenType":  "DESIGN",
+    "screenMetadata":  {
+                           "agentType":  "HATTER_AGENT",
+                           "status":  "COMPLETE"
+                       }
+}

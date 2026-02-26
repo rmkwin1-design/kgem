@@ -132,5 +132,21 @@ export const en = {
         warning: "⚠️ Google Maps can be inaccurate in Korea. Use K-Gem navigation.",
         navigate: "🏯 Navigate Like a Local with K-Gem's Precision Guide.",
         verified: "🚀 0.1% Premium Spots Verified by Real-time AI."
+    },
+    usp: {
+        title: "Why K-Gem?",
+        badge: "The Problem Solver",
+        map: {
+            title: "Google Maps is a Void",
+            desc: "Stop getting lost. We use Naver's precision with an intuitive Global UX."
+        },
+        solo: {
+            title: "Solo-Dining Hero",
+            desc: "BBQ for one? We filter spots that welcome solo travelers without the '2-person minimum' stress."
+        },
+        cash: {
+            title: "Cashless in Korea",
+            desc: "Forget T-money cash top-ups. Pay, Nav, and Book everything in one app."
+        }
     }
 };

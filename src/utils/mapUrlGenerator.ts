@@ -66,7 +66,7 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
     let hybridName = language === 'ko' ? name : (enName || name);
 
     const encodedName = encodeURIComponent(hybridName);
-    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
+    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : language === 'zh' ? 'zh' : 'en';
 
     // Always use text search with the real name
     const useCoords = hasCoords;
@@ -74,16 +74,16 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
     switch (type) {
         case 'naver':
             if (isAndroid) {
-                if (useCoords) {
-                    return mode === 'search'
-                        ? `nmap://place?lat=${lat}&lng=${lng}&name=${encodedName}&appname=com.kgem.app`
-                        : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
-                }
+                const intentScheme = `intent://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=KGem#Intent;scheme=nmap;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(getWebFallbackUrl(dest, 'naver', language, mode))};end`;
+                return intentScheme;
+            }
+            if (window.navigator.userAgent.match(/iphone|ipad|ipod/i)) {
+                // iOS Scheme: nmap://route/public
                 return mode === 'search'
                     ? `nmap://place?lat=${lat}&lng=${lng}&name=${encodedName}&appname=com.kgem.app`
                     : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encodedName}&appname=com.kgem.app`;
             }
-            // PC/iOS Web
+            // PC/Fallback Web
             if (useCoords) {
                 return mode === 'search'
                     ? `https://map.naver.com/v5/search/${encodedName}?c=${lng},${lat},15,0,0,0,dh&lang=${naverLang}`
@@ -106,10 +106,10 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 
         case 'google':
         default:
-            const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr' };
+            const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr', zh: 'com' };
             const tld = googleTlds[language] || 'com';
-            const langParam = language === 'ja' ? 'ja' : 'en';
-            const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
+            const langParam = language === 'ja' ? 'ja' : language === 'zh' ? 'zh-CN' : 'en';
+            const lrParam = language === 'ja' ? 'lang_ja' : language === 'zh' ? 'lang_zh-CN' : 'lang_en';
 
             let webUrl = "";
 
@@ -141,7 +141,7 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const hasCoords = lat !== undefined && lng !== undefined && lat !== 0 && lng !== 0;
     const useCoords = hasCoords;
 
-    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
+    const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : language === 'zh' ? 'zh' : 'en';
 
     // Always use the actual spot name - no more fake fallbacks
     let displayName = language === 'ko' ? name : (enName || name);
@@ -171,10 +171,10 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     }
 
     // Google
-    const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr' };
+    const googleTlds: { [key: string]: string } = { en: 'com', ja: 'co.jp', ko: 'ko.kr', zh: 'com' };
     const tld = googleTlds[language] || 'com';
-    const langParam = language === 'ja' ? 'ja' : 'en';
-    const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
+    const langParam = language === 'ja' ? 'ja' : language === 'zh' ? 'zh-CN' : 'en';
+    const lrParam = language === 'ja' ? 'lang_ja' : language === 'zh' ? 'lang_zh-CN' : 'lang_en';
 
     if (useCoords && hasCoords) {
         if (mode === 'directions') {
