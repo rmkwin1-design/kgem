@@ -626,9 +626,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Map USP */}
               <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-2 overflow-hidden shrink-0">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">map_off</span>
-                  <span className="text-[11px] font-black text-[var(--bg-dark)] uppercase mt-1 w-full text-center leading-tight">{(t.usp.map as any).iconLabel}</span>
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-4 overflow-hidden shrink-0">
+                  <span className="text-xl font-black text-[var(--bg-dark)] uppercase w-full text-center leading-tight tracking-tighter">{(t.usp.map as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.map.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.map.desc}</p>
@@ -636,9 +635,8 @@ export default function Home() {
 
               {/* Solo USP */}
               <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--secondary)]/20 p-2 overflow-hidden shrink-0">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">person</span>
-                  <span className="text-[11px] font-black text-[var(--bg-dark)] uppercase mt-1 w-full text-center leading-tight">{(t.usp.solo as any).iconLabel}</span>
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--secondary)]/20 p-4 overflow-hidden shrink-0">
+                  <span className="text-xl font-black text-[var(--bg-dark)] uppercase w-full text-center leading-tight tracking-tighter">{(t.usp.solo as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.solo.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.solo.desc}</p>
@@ -646,9 +644,8 @@ export default function Home() {
 
               {/* Cashless USP */}
               <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-2 overflow-hidden shrink-0">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">contactless</span>
-                  <span className="text-[11px] font-black text-[var(--bg-dark)] uppercase mt-1 w-full text-center leading-tight">{(t.usp.cash as any).iconLabel}</span>
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-4 overflow-hidden shrink-0">
+                  <span className="text-xl font-black text-[var(--bg-dark)] uppercase w-full text-center leading-tight tracking-tighter">{(t.usp.cash as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.cash.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.cash.desc}</p>

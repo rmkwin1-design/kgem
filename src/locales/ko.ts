@@ -144,7 +144,7 @@ export const ko = {
         cash: {
             title: "현금 없는 한국 여행",
             desc: "티머니 충전을 위해 현금을 찾지 마세요. 앱 하나로 결제부터 내비까지 해결하세요.",
-            iconLabel: "지도"
+            iconLabel: "결제"
         },
         solo: {
             title: "나홀로 여행의 구세주",
