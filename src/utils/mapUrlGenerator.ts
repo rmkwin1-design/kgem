@@ -62,23 +62,14 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
     const { lat, lng, name, enName } = dest;
     const hasCoords = lat !== undefined && lng !== undefined && lat !== 0 && lng !== 0;
 
-    // Determine the display name for labels
-    const isAuto = !isRealPOI(name);
-    let rawName = language === 'ko' ? name : (enName || name);
-
-    // Clean label for auto-generated/premium spots
-    let hybridName = rawName;
-    if (isAuto) {
-        if (language === 'ko') hybridName = "AI 추천 기밀 장소";
-        else if (language === 'ja') hybridName = "AI おすすめ 秘密スポット";
-        else hybridName = "AI Curated Secret Spot";
-    }
+    // Always use the actual spot name for map search - no more fallbacks
+    let hybridName = language === 'ko' ? name : (enName || name);
 
     const encodedName = encodeURIComponent(hybridName);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
-    // Determine if we should use coordinates or text search
-    const useCoords = hasCoords && isAuto;
+    // Always use text search with the real name
+    const useCoords = hasCoords;
 
     switch (type) {
         case 'naver':
@@ -148,18 +139,12 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
 export const getWebFallbackUrl = (dest: Destination, type: MapType, language: string, mode: MapMode = 'search'): string => {
     const { lat, lng, name, enName } = dest;
     const hasCoords = lat !== undefined && lng !== undefined && lat !== 0 && lng !== 0;
-    const useCoords = hasCoords && !isRealPOI(name);
+    const useCoords = hasCoords;
 
-    const isAuto = !isRealPOI(name);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
-    let rawDisplayName = language === 'ko' ? name : (enName || name);
-    let displayName = rawDisplayName;
-    if (isAuto) {
-        if (language === 'ko') displayName = "AI 추천 기밀 장소";
-        else if (language === 'ja') displayName = "AI おすすめ 秘密スポット";
-        else displayName = "AI Curated Secret Spot";
-    }
+    // Always use the actual spot name - no more fake fallbacks
+    let displayName = language === 'ko' ? name : (enName || name);
 
     const encodedName = encodeURIComponent(displayName);
 
