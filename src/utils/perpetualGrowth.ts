@@ -42,6 +42,10 @@ class PerpetualGrowthEngine {
                 this.state = JSON.parse(saved);
             }
         }
+        this.checkGrowthCycle();
+    }
+
+    public checkGrowthCycle() {
         this.checkAndTriggerDataUpdate();
         this.checkAndTriggerDailyTrendSync();
         this.triggerGlobalMarketing();
