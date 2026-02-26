@@ -134,8 +134,8 @@ export const ko = {
         verified: "🚀 실시간 AI가 검증한 0.1% 프리미엄 장소."
     },
     usp: {
-        title: "Why K-Gem?",
-        badge: "The Problem Solver",
+        title: "왜 케이젬(K-Gem)인가요?",
+        badge: "대한민국 여행의 해결사",
         map: {
             title: "구글 지도의 한계 극복",
             desc: "한국에서 구글 지도는 정확하지 않습니다. 네이버의 정밀 데이터와 글로벌 UI를 결합했습니다.",

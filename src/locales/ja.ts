@@ -134,8 +134,8 @@ export const ja = {
         verified: "🚀 リアルタイムAIが検証した0.1%のプレミアムスポット。"
     },
     usp: {
-        title: "Why K-Gem?",
-        badge: "The Problem Solver",
+        title: "なぜ K-Gem なのか？",
+        badge: "韓国旅行の解決策",
         map: {
             title: "Googleマップの限界を克服",
             desc: "한국에서 구글 지도는 정확하지 않습니다. 네이버의 정밀 데이터와 글로벌 UI를 결합했습니다。",

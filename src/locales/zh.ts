@@ -134,8 +134,8 @@ export const zh = {
         verified: "🚀 实时 AI 验证的 0.1% 高端地点。"
     },
     usp: {
-        title: "Why K-Gem?",
-        badge: "问题解决者",
+        title: "为什么选择 K-Gem？",
+        badge: "韩国旅行问题的解决者",
         map: {
             title: "克服 Google 地图的局限",
             desc: "Google 地图在韩国并不准确。我们结合了 Naver 的精准数据和全球化 UI。",
