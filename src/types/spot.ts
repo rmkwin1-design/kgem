@@ -29,6 +29,7 @@ export interface TravelSpot {
     image: string;
     rating: number | string;
     description: LocalizedString;
+    region?: LocalizedString;
     query: LocalizedString;
     isTrending?: boolean;
     isFallback?: boolean;

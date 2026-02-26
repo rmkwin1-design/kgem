@@ -416,9 +416,10 @@ export default function Home() {
     if (!searchQuery.trim()) return true;
     const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
     const description = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
+    const region = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
     const query = `${(spot.query as any)?.[language] || ''} ${(spot.query as any)?.['ko'] || ''}`.toLowerCase();
     const id = spot.id.toString().toLowerCase();
-    const searchBuffer = `${title} ${description} ${query} ${id}`;
+    const searchBuffer = `${title} ${description} ${region} ${query} ${id}`;
     return keywords.every(kw => searchBuffer.includes(kw));
   };
 
