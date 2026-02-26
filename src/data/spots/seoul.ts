@@ -12,9 +12,9 @@ export const seoulSpots: TravelSpot[] = [
         "image": "https://images.unsplash.com/photo-1624300629298-e9de39c13be5?w=800&q=80",
         "rating": 4.9,
         "description": {
-            "ko": "미쉐린 빕 구르망에 선정된 맑은 국물의 전설. 지리산 흑돼지만을 엄선해 우려낸 국물은 잡내가 전혀 없고 깊은 감칠맛을 자랑합니다. 밥알 하나하나에 국물이 배어드는 '토렴' 방식으로 제공되어 최상의 온도와 식감을 느낄 수 있습니다.",
-            "en": "A Michelin Bib Gourmand legendary spot for clear pork soup. Using ONLY premium black pork from Jirisan, the broth is refined, elegant, and completely free of any gamey odor. Served with the 'Toryeom' method for optimal temperature and depth.",
-            "ja": "ミシュラン・ビブグルマン에選ばれた澄んだスープの伝説。智異山の黒豚のみを厳選して煮出したスープは、臭みが全くなく、深い旨味を誇ります。ご飯一粒一粒にスープが染み込む『トリョム』方式で提供され、最高の温度と食感を楽しめます。",
+            "ko": "미쉐린 빕 구르망에 선정된 맑은 국물의 전설.",
+            "en": "A Michelin Bib Gourmand legendary spot for clear pork soup.",
+            "ja": "ミシュラン・ビブグルマンに選ばれた澄んだスープの伝説。"
         },
         "query": {
             "ko": "옥동식 홍대",
@@ -26,14 +26,14 @@ export const seoulSpots: TravelSpot[] = [
         "price": 10000,
         "vipContent": {
             "secretMenu": {
-                "ko": "대식가라면 고기 양이 훨씬 풍부한 '특' 사이즈를 강력 추천합니다.",
-                "en": "Highly recommend the 'Special' size if you want a significantly larger meat portion.",
-                "ja": "たくさん食べたい方は、肉の量が格段に多い「特」サイズを強くお勧めします。"
+                "ko": "대식가라면 '특' 사이즈를 강력 추천합니다.",
+                "en": "Highly recommend the Special size for larger portion.",
+                "ja": "たくさん食べたい方は特サイズを強くお勧めします。"
             },
             "ownerTip": {
-                "ko": "고추지는 국물에 풀지 말고 고기에 얹어 드세요. 국물에 풀면 본연의 맑은 맛이 변합니다.",
-                "en": "Put the pepper pickle (Gochu-ji) ON the meat. Don't mix it into the broth to preserve its clear, refined flavor.",
-                "ja": "唐辛子の塩漬け（コチュジ）はスープに混ぜず、肉に乗せて食べてください。スープに混ぜると本来の澄んだ味が変わってしまいます。"
+                "ko": "고추지는 국물에 풀지 말고 고기에 얹어 드세요.",
+                "en": "Put the pepper pickle ON the meat, not in the broth.",
+                "ja": "コチュジはスープに混ぜず、肉に乗せて食べてください。"
             }
         }
     },
@@ -41,9 +41,38 @@ export const seoulSpots: TravelSpot[] = [
         "id": "seoul-trend-inwangsan-makgeolli",
         "title": {
             "ko": "인왕산 하산 루트 (체부동 잔치집)",
-            "en": "Inwangsan Hiker's Routine (Chebudong Janchijip)",
+            "en": "Inwangsan Hikers Routine (Chebudong Janchijip)",
             "ja": "仁王山下山ルート (チェブドン・ジャンチジプ)"
         },
+        "category": "food",
+        "image": "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&q=80",
+        "rating": 4.8,
+        "description": {
+            "ko": "인왕산 등산 후 막걸리 한 잔의 여유를 즐기는 코스.",
+            "en": "A hiking-to-pub course ending with makgeolli after Inwangsan summit.",
+            "ja": "仁王山登山後にマッコリを楽しむコース。"
+        },
+        "query": {
+            "ko": "체부동 잔치집 막걸리",
+            "en": "Chebudong Janchijip makgeolli Seoul",
+            "ja": "チェブドン ジャンチジプ マッコリ"
+        },
+        "lat": 37.5783,
+        "lng": 126.9655,
+        "price": 8000,
+        "vipContent": {
+            "secretMenu": {
+                "ko": "해물파전+막걸리 조합이 정석",
+                "en": "Seafood pancake + makgeolli is the classic combo",
+                "ja": "海鮮チヂミ+マッコリが定番の組み合わせ"
+            },
+            "ownerTip": {
+                "ko": "오후 3-5시가 가장 한적하고 분위기 좋아요",
+                "en": "3-5pm is the quietest with the best atmosphere",
+                "ja": "午後3-5時が最も静かで雰囲気が良い"
+            }
+        }
+    },
     {"id": "seoul-gangnam-1", "title": {"ko": "몽탄 (강남)", "en": "Mongtan Gangnam", "ja": "モンタン 江南"}, "category": "food", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", "rating": 4.8, "description": {"ko": "숯불 고기 전문점. 강남에서 가장 핫한 고기집.", "en": "Premium charcoal BBQ. The hottest meat restaurant in Gangnam.", "ja": "炭火焼肉専門店。江南で最もホットな焼肉店。"}, "query": {"ko": "몽탄 강남", "en": "Mongtan Gangnam BBQ", "ja": "モンタン 江南"}, "lat": 37.5172, "lng": 127.0286, "price": 45000, "vipContent": {"secretMenu": {"ko": "살치살+된장찌개 조합이 최고", "en": "Salchisal + Doenjang combo is the best", "ja": "サルチサル+テンジャンチゲの組み合わせが最高"}, "ownerTip": {"ko": "웨이팅 1시간 이상, 네이버 예약 필수", "en": "1hr+ wait, Naver reservation required", "ja": "1時間以上待ち、ネイバー予約必須"}}},
     {"id": "seoul-gangnam-2", "title": {"ko": "도산분식", "en": "Dosan Bunsik", "ja": "道山プンシク"}, "category": "food", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", "rating": 4.7, "description": {"ko": "강남 도산공원 근처 프리미엄 분식집.", "en": "Premium Korean street food near Dosan Park.", "ja": "道山公園近くのプレミアム粉食店。"}, "query": {"ko": "도산분식 강남", "en": "Dosan Bunsik Gangnam", "ja": "道山プンシク 江南"}, "lat": 37.5219, "lng": 127.0355, "price": 12000, "vipContent": {"secretMenu": {"ko": "떡볶이+김밥 세트가 인기", "en": "Tteokbokki+Gimbap set is popular", "ja": "トッポッキ+キンパセットが人気"}, "ownerTip": {"ko": "점심시간 피해서 가세요", "en": "Avoid lunch rush", "ja": "ランチタイムを避けて"}}},
     {"id": "seoul-gangnam-3", "title": {"ko": "르챔버 (압구정)", "en": "Le Chamber Apgujeong", "ja": "ル・シャンブル 狎鷗亭"}, "category": "nightlife", "image": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80", "rating": 4.9, "description": {"ko": "비밀번호를 알아야 입장 가능한 스피크이지 바.", "en": "Speakeasy bar requiring a password to enter.", "ja": "パスワードが必要なスピークイージーバー。"}, "query": {"ko": "르챔버 압구정", "en": "Le Chamber cocktail bar Apgujeong", "ja": "ル・シャンブル 狎鷗亭"}, "lat": 37.5267, "lng": 127.0365, "price": 25000, "vipContent": {"secretMenu": {"ko": "인스타에서 비밀번호 힌트 확인", "en": "Check Instagram for password hints", "ja": "Instagramでパスワードのヒントを確認"}, "ownerTip": {"ko": "예약 없이는 입장 불가", "en": "No entry without reservation", "ja": "予約なしでは入場不可"}}},
