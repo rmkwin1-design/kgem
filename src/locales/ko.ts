@@ -138,7 +138,8 @@ export const ko = {
         badge: "The Problem Solver",
         map: {
             title: "구글 지도의 한계 극복",
-            desc: "한국에서 구글 지도는 정확하지 않습니다. 네이버의 정밀 데이터와 글로벌 UI를 결합했습니다."
+            desc: "한국에서 구글 지도는 정확하지 않습니다. 네이버의 정밀 데이터와 글로벌 UI를 결합했습니다.",
+            iconLabel: "지도"
         },
         cash: {
             title: "현금 없는 한국 여행",
