@@ -601,43 +601,8 @@ export default function Home() {
             </button>
           </form>
 
-          {/* ⚡️ 2026 Strategy: One-Click Action Commands */}
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setSearchQuery(t.commands.gangnam);
-                handleSearch(undefined, t.commands.gangnam);
-              }}
-              className="px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30 hover:bg-[var(--primary)]/20 text-[var(--primary)] text-[11px] font-black uppercase tracking-widest transition-all"
-            >
-              {t.commands.gangnam}
-            </button>
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setSearchQuery(t.commands.bbq);
-                handleSearch(undefined, t.commands.bbq);
-              }}
-              className="px-4 py-2 rounded-full bg-[var(--secondary)]/10 border border-[var(--secondary)]/30 hover:bg-[var(--secondary)]/20 text-[var(--secondary)] text-[11px] font-black uppercase tracking-widest transition-all"
-            >
-              {t.commands.bbq}
-            </button>
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setSearchQuery(t.commands.tea);
-                handleSearch(undefined, t.commands.tea);
-              }}
-              className="px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30 hover:bg-[var(--primary)]/20 text-[var(--primary)] text-[11px] font-black uppercase tracking-widest transition-all"
-            >
-              {t.commands.tea}
-            </button>
-          </div>
-
-
           {/* 💼 Business Partnership Inquiry Relocated for Visibility */}
-          <div className="mt-5 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
+          <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
             <button
               onClick={handleCopyEmail}
               className="group inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-[var(--surface-dark)] hover:bg-[var(--primary)]/10 border border-[var(--primary)]/10 hover:border-[var(--primary)]/40 transition-all duration-500 font-bold text-[13px] text-slate-400 hover:text-[var(--primary)]"
@@ -660,27 +625,30 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Map USP */}
-              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">map_off</span>
+              <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-2 overflow-hidden">
+                  <span className="material-symbols-outlined text-2xl text-[var(--bg-dark)]">map_off</span>
+                  <span className="text-[10px] font-black text-[var(--bg-dark)] uppercase mt-1 truncate w-full text-center">{(t.usp.map as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.map.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.map.desc}</p>
               </div>
 
               {/* Solo USP */}
-              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--secondary)]/20">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">person</span>
+              <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--secondary)]/20 p-2 overflow-hidden">
+                  <span className="material-symbols-outlined text-2xl text-[var(--bg-dark)]">person</span>
+                  <span className="text-[10px] font-black text-[var(--bg-dark)] uppercase mt-1 truncate w-full text-center">{(t.usp.solo as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.solo.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.solo.desc}</p>
               </div>
 
               {/* Cashless USP */}
-              <div className="glass-card p-6 text-left group hover:translate-y-[-4px] transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20">
-                  <span className="material-symbols-outlined text-3xl text-[var(--bg-dark)]">contactless</span>
+              <div className="glass-card p-6 text-center group hover:translate-y-[-4px] transition-all duration-500 flex flex-col items-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex flex-col items-center justify-center mb-6 shadow-lg shadow-[var(--primary)]/20 p-2 overflow-hidden">
+                  <span className="material-symbols-outlined text-2xl text-[var(--bg-dark)]">contactless</span>
+                  <span className="text-[10px] font-black text-[var(--bg-dark)] uppercase mt-1 truncate w-full text-center">{(t.usp.cash as any).iconLabel}</span>
                 </div>
                 <h3 className="text-lg font-black text-[var(--primary)] mb-3">{t.usp.cash.title}</h3>
                 <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t.usp.cash.desc}</p>

@@ -138,15 +138,18 @@ export const zh = {
         badge: "问题解决者",
         map: {
             title: "克服 Google 地图的局限",
-            desc: "Google 地图在韩国并不准确。我们结合了 Naver 的精准数据和全球化 UI。"
+            desc: "Google 地图在韩国并不准确。我们结合了 Naver 的精准数据和全球化 UI。",
+            iconLabel: "地图"
         },
         solo: {
             title: "独行侠的救星",
-            desc: "拒绝一人食？K-Gem 只筛选支持一人份点餐的真实当地美食。"
+            desc: "拒绝一人食？K-Gem 只筛选支持一人份点餐的真实当地美食。",
+            iconLabel: "单人"
         },
         cash: {
             title: "无现金韩国行",
-            desc: "别再为了 T-money 充值找现金了。一个 App 搞定从支付到导航的所有需求。"
+            desc: "别再为了 T-money 充值找现金了。一个 App 搞定从支付到导航的所有需求。",
+            iconLabel: "支付"
         }
     }
 };

@@ -138,15 +138,18 @@ export const en = {
         badge: "The Problem Solver",
         map: {
             title: "Google Maps is a Void",
-            desc: "Stop getting lost. We use Naver's precision with an intuitive Global UX."
+            desc: "Stop getting lost. We use Naver's precision with an intuitive Global UX.",
+            iconLabel: "MAPS"
         },
         solo: {
             title: "Solo-Dining Hero",
-            desc: "BBQ for one? We filter spots that welcome solo travelers without the '2-person minimum' stress."
+            desc: "BBQ for one? We filter spots that welcome solo travelers without the '2-person minimum' stress.",
+            iconLabel: "SOLO"
         },
         cash: {
             title: "Cashless in Korea",
-            desc: "Forget T-money cash top-ups. Pay, Nav, and Book everything in one app."
+            desc: "Forget T-money cash top-ups. Pay, Nav, and Book everything in one app.",
+            iconLabel: "PAY"
         }
     }
 };

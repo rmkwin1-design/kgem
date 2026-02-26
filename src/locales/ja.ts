@@ -138,15 +138,18 @@ export const ja = {
         badge: "The Problem Solver",
         map: {
             title: "Googleマップの限界を克服",
-            desc: "韓国でGoogleマップは不正確です。ネイバーの精密データとグローバルUIを統合しました。"
+            desc: "韓国でGoogleマップは不正確です。ネイバーの精密データとグローバルUIを統合しました。",
+            iconLabel: "地図"
         },
         solo: {
             title: "一人旅の強い味方",
-            desc: "一人ご飯お断り？K-Gemは1人前から注文可能な本物のローカル名店だけを厳選します。"
+            desc: "一人ご飯お断り？K-Gemは1人前から注文可能な本物のローカル名店だけを厳選します。",
+            iconLabel: "1人"
         },
         cash: {
             title: "現金いらずの韓国旅行",
-            desc: "T-moneyのチャージに現金は不要です。アプリ一つで決済からナビまで完結。"
+            desc: "T-moneyのチャージに現金は不要です。アプリ一つで決済からナビまで完結。",
+            iconLabel: "決済"
         }
     }
 };
