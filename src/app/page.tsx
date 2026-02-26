@@ -17,7 +17,6 @@ import { usePreference } from "@/context/PreferenceContext";
 import { usePayment } from "@/context/PaymentContext";
 import { blufEngine } from "@/lib/data/bluf_engine";
 import { reservationService } from "@/lib/services/reservation_service";
-import { NaverMapV3 } from "@/components/Map/NaverMapV3";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 
@@ -885,25 +884,6 @@ export default function Home() {
               </div>
             )}
 
-            {/* 🗺️ 2026 Strategy: Hybrid Map View */}
-            <div className="mb-24">
-              <div className="flex items-center gap-3 mb-10">
-                <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-xl">🗺️</div>
-                <h2 className="text-3xl font-bold tracking-tight">Precision Live Map</h2>
-              </div>
-              <div className="w-full h-[500px] mb-8">
-                <NaverMapV3
-                  language={language as any}
-                  center={{ lat: 37.5665, lng: 126.9780 }}
-                  zoom={14}
-                  markers={displaySpots.slice(0, 5).map((s: any) => ({
-                    lat: s.lat || 37.5665,
-                    lng: s.lng || 126.9780,
-                    title: s.title[language] || s.title['ko']
-                  }))}
-                />
-              </div>
-            </div>
 
             <div className="flex items-center gap-4 mb-10">
 

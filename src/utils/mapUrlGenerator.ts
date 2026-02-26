@@ -26,11 +26,12 @@ export const isRealPOI = (name: string): boolean => {
     const trimmedName = name.trim();
 
     // 2026 Premium Placeholder Patterns
-    if (/^\[Premium\]/i.test(trimmedName)) return false;
-    // Detect Emoji at the start (Universal for 🚀, 🥩, 🍵, etc.)
-    if (/^[\u{1F300}-\u{1F9FF}]/u.test(trimmedName)) return false;
+    if (/\[Premium\]/i.test(trimmedName)) return false;
+    if (/\(Premium\)/i.test(trimmedName)) return false;
+    // Detect Emoji (Universal for 🚀, 🥩, 🍵, etc.)
+    if (/[\u{1F300}-\u{1F9FF}]/u.test(trimmedName)) return false;
     // Detect "#" digit pattern (e.g., "히든 스팟 #1", "Hidden Spot #1")
-    if (/(히든\s*스팟|Hidden\s*Spot|隠れスポット)\s*#\d+/i.test(trimmedName)) return false;
+    if (/(히든\s*스팟|Hidden\s*Spot|隠れスポット|Spot)\s*#\d+/i.test(trimmedName)) return false;
 
     // Korean auto-generated patterns
     if (/[-–]\s*(서울|부산|제주|대구|대전|광주|인천|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|기타)\s*\d+/i.test(trimmedName)) return false;
@@ -62,12 +63,22 @@ export const getMapScheme = (dest: Destination, type: MapType, isAndroid: boolea
     const hasCoords = lat !== undefined && lng !== undefined && lat !== 0 && lng !== 0;
 
     // Determine the display name for labels
-    let hybridName = language === 'ko' ? name : (enName || name);
+    const isAuto = !isRealPOI(name);
+    let rawName = language === 'ko' ? name : (enName || name);
+
+    // Clean label for auto-generated/premium spots
+    let hybridName = rawName;
+    if (isAuto) {
+        if (language === 'ko') hybridName = "AI 추천 기밀 장소";
+        else if (language === 'ja') hybridName = "AI おすすめ 秘密スポット";
+        else hybridName = "AI Curated Secret Spot";
+    }
+
     const encodedName = encodeURIComponent(hybridName);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
 
     // Determine if we should use coordinates or text search
-    const useCoords = hasCoords && !isRealPOI(name);
+    const useCoords = hasCoords && isAuto;
 
     switch (type) {
         case 'naver':
@@ -139,8 +150,17 @@ export const getWebFallbackUrl = (dest: Destination, type: MapType, language: st
     const hasCoords = lat !== undefined && lng !== undefined && lat !== 0 && lng !== 0;
     const useCoords = hasCoords && !isRealPOI(name);
 
+    const isAuto = !isRealPOI(name);
     const naverLang = language === 'ja' ? 'ja' : language === 'ko' ? 'ko' : 'en';
-    const displayName = language === 'ko' ? name : (enName || name);
+
+    let rawDisplayName = language === 'ko' ? name : (enName || name);
+    let displayName = rawDisplayName;
+    if (isAuto) {
+        if (language === 'ko') displayName = "AI 추천 기밀 장소";
+        else if (language === 'ja') displayName = "AI おすすめ 秘密スポット";
+        else displayName = "AI Curated Secret Spot";
+    }
+
     const encodedName = encodeURIComponent(displayName);
 
     if (type === 'naver') {
