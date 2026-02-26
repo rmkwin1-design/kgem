@@ -436,65 +436,8 @@ export default function Home() {
   const trendingSpots = rotatedSpots.filter(spot => spot.isTrending);
   const ladiesSpots = rotatedSpots.filter(spot => spot.category === 'beauty' || spot.category === 'dessert');
 
-  // 2026 Strategy: Si/Gun/Gu Regional Expansion (50+ items per region)
-  const displaySpots = (filteredSpots.length < 50 && searchQuery.length > 1)
-    ? [
-      ...filteredSpots,
-      ...Array.from({ length: Math.max(0, 50 - filteredSpots.length) }).map((_, i) => {
-        const isSolo = searchQuery.toLowerCase().includes('solo');
-        const isTrash = searchQuery.toLowerCase().includes('trash');
-        const isTMoney = searchQuery.toLowerCase().includes('t-money') || searchQuery.toLowerCase().includes('cash');
-        const isRegional = !isSolo && !isTrash && !isTMoney && searchQuery.length > 2;
-
-        return {
-          id: `ai-extended-${i}`,
-          title: {
-            ko: isRegional ? `[Premium] ${searchQuery} 히든 스팟 #${i + 1}` : isSolo ? `혼밥 가능 BBQ #${i + 1}` : isTrash ? `공공 쓰레기통 #${i + 1}` : `"${searchQuery}" AI 추천 ${i + 1}`,
-            en: isRegional ? `[Premium] ${searchQuery} Hidden Spot #${i + 1}` : isSolo ? `Solo-Friendly BBQ #${i + 1}` : isTrash ? `Public Trash Bin #${i + 1}` : `AI Recommend: ${searchQuery} #${i + 1}`,
-            ja: isRegional ? `[Premium] ${searchQuery} 隠れスポット #${i + 1}` : isSolo ? `一人焼肉 #${i + 1}` : isTrash ? `公共ゴミ箱 #${i + 1}` : `AI おすすめ: ${searchQuery} #${i + 1}`
-          },
-          vipContent: {
-            secretMenu: {
-              ko: isRegional ? "유료 회원 전용 비밀 정보" : isSolo ? "1인분 주문 가능 확인됨" : isTrash ? "분리수거 가능" : "현금 충전 전용",
-              en: isRegional ? "Premium Member Secret" : isSolo ? "1-portion confirmed" : isTrash ? "Recycling available" : "Cash only",
-              ja: isRegional ? "有料会員専用秘密情報" : isSolo ? "1人前注文可能" : isTrash ? "分別可能" : "現金チャージ専用"
-            },
-            ownerTip: {
-              ko: "해당 지역에서만 알 수 있는 0.1% 정보입니다.",
-              en: "Top 0.1% local-insider insight.",
-              ja: "その地域限定の0.1%情報です。"
-            }
-          },
-          description: {
-            ko: isRegional ? `${searchQuery} 지역의 숨겨진 보물 같은 장소입니다. 관광객은 모르는 현지인 전용 명소입니다.` : isSolo ? "혼자서도 눈치 보지 않고 즐길 수 있는 프리미엄 고깃집입니다." : isTrash ? "관광지 내 드문 공공 쓰레기통 위치입니다." : "T-money를 현금으로 충전할 수 있는 가장 가까운 곳입니다.",
-            en: isRegional ? `A hidden gem in ${searchQuery} known only to locals. Skip the tourist traps.` : isSolo ? "Premium BBQ spot that welcomes solo diners with no minimum." : isTrash ? "Rare public trash can location in a busy tourist area." : "Nearest point to top-up your T-money card with cash.",
-            ja: isRegional ? `${searchQuery}地域の隠れた宝物のような場所です。観光客は知らない地元民専用スポットです。` : isSolo ? "一人でも気兼ねなく楽しめるプレミアム焼肉店です。" : isTrash ? "観光地内の貴重な公共ゴミ箱の場所です。" : "T-moneyを現金でチャージできる最寄りの場所です。"
-          },
-          transport: {
-            ko: "현 위치 또는 지역 거점에서 도보 10분 내외",
-            en: "Within 10 min walk from local landmarks",
-            ja: "現在地または地域拠点から徒歩10分前後"
-          },
-          image: isRegional
-            ? `https://images.unsplash.com/photo-${1515000000000 + (i * 12345) % 800}?w=800&q=80`
-            : isSolo
-              ? `https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80`
-              : isTrash
-                ? `https://images.unsplash.com/photo-1591839843657-3f82e5ff699a?w=800&q=80`
-                : `https://images.unsplash.com/photo-${1500000000000 + (i * 12345) % 1000}?w=800&q=80`,
-          rating: (4.6 + Math.random() * 0.4).toFixed(1),
-          viewingCount: Math.floor(Math.random() * 15) + 5,
-
-          lat: 37.5665 + (Math.random() - 0.5) * 0.1,
-          lng: 126.9780 + (Math.random() - 0.5) * 0.1,
-          query: `${searchQuery} ${i + 1}`,
-          category: activeCategory, // Fix: ensures AI spots respect the current filter
-          isTrending: i < 5,
-          isFallback: true
-        };
-      })
-    ]
-    : filteredSpots;
+  // 2026 Strategy: Display only REAL spots from database - no auto-generated fakes
+  const displaySpots = filteredSpots;
 
   // --- GEO 최적화: AI 검색 엔진을 위한 JSON-LD Schema 생성 ---
   const schemaMarkup = {
