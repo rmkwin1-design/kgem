@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { useTranslation } from "@/context/LanguageContext";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
 import { growthEngine } from "@/utils/perpetualGrowth";
 import { SocialProof } from "@/components/SocialProof";
+import { PricingModal } from '@/components/PricingModal';
 import { activatePremiumPass } from "@/utils/payment";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -138,6 +139,10 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
 
 export default function Home() {
   const { t, language, setLanguage } = useTranslation();
+  const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
+  const { isProcessing, subscriptionStatus } = usePayment();
+  const { openMap } = useMapNavigation();
+  const { preferredMap, setPreferredMap } = usePreference();
 
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
@@ -147,6 +152,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiSearching, setIsAiSearching] = useState(false);
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
 
   const handleInstallApp = async () => {
     if (deferredPrompt) {
@@ -198,9 +204,6 @@ export default function Home() {
   }, []);
 
 
-  const { openMap } = useMapNavigation();
-  const { preferredMap, setPreferredMap } = usePreference();
-  const { user, loading, login, logout, isPremium, premiumUntil } = useAuth();
 
   // 🛡️ 2026 Strategy: Deterministic Filter Reset
   // Whenever the active category changes, we nuke the search query to ensure a clean slate.
@@ -272,36 +275,7 @@ export default function Home() {
 
 
   const handleAccommodation = (spot: any) => {
-    const nameKo = spot.title.ko;
-    const nameTarget = spot.title[language] || spot.title.en;
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    const formatDate = (date: Date) => date.toISOString().split('T')[0];
-
-    const agodaLangs: any = { ko: 'ko-kr', en: 'en-us', ja: 'ja-jp' };
-    const agodaCodes: any = { ko: 10, en: 1, ja: 2 };
-    const agodaPath = agodaLangs[language] || 'en-us';
-    const agodaCode = agodaCodes[language] || 1;
-    const currency = language === 'ko' ? 'KRW' : 'USD';
-
-    // 🏨 2026 CRO Advisor Strategy: Dynamic Landing
-    const isRural = /jeju|ulleung|island|mountain/i.test((spot.query.en || '').toLowerCase());
-    const landingType = isRural ? 'map' : 'list';
-    const filter = !isRural ? '&rating=8' : '';
-
-    // 🏨 2026 CRO Advisor Strategy: Pure Localization for International Users
-    // CRITICAL: Remove Korean name suffix for International users to avoid Agoda's Korean-bias.
-    const searchText = encodeURIComponent(nameTarget);
-
-    // Hyper-Aggressive Forcing: Added multiple redundant language IDs and ck_en
-    // 🔥 Strategy: Use the localized domain directly for Agoda
-    const agodaDomain = language === 'ja' ? 'www.agoda.com/ja-jp' : language === 'ko' ? 'www.agoda.com/ko-kr' : 'www.agoda.com/en-us';
-    const langId = language === 'ja' ? 2 : language === 'ko' ? 10 : 1;
-    const ckStr = language === 'ja' ? 'ck_ja=1' : language === 'ko' ? 'ck_ko=1' : 'ck_en=1';
-
-    const url = `https://${agodaDomain}/search?searchText=${searchText}&checkIn=${formatDate(today)}&checkOut=${formatDate(tomorrow)}&adults=2&rooms=1${filter}&landing=${landingType}&language=${agodaCode}&setlang=${agodaPath}&cur=${currency}&site_id=1&language_id=${langId}&headerlang=${agodaPath}&setlanguage=1&${ckStr}&locale=${agodaPath}&redirect=false`;
-
+    const url = reservationService.getAgodaDeepLink(spot, language);
     window.open(url, '_blank');
   };
 
@@ -351,6 +325,59 @@ export default function Home() {
     window.open(url, '_blank');
   };
 
+  // 14 days rotation logic (2 weeks)
+  const rotationTick = Math.floor(Date.now() / (14 * 24 * 60 * 60 * 1000));
+
+  // Next update calculation for UI display
+  const nextUpdateEpoch = (rotationTick + 1) * 14 * 24 * 60 * 60 * 1000;
+  const nextUpdateDate = new Date(nextUpdateEpoch).toLocaleDateString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : 'en-US', {
+    month: 'short', day: 'numeric'
+  });
+
+  const getRotatedSpots = (spots: TravelSpot[]) => {
+    const rotated = [...spots];
+    // Seed-based stable shuffle for the period
+    const offset = (rotationTick * 7) % Math.max(1, spots.length);
+    return [...rotated.slice(offset), ...rotated.slice(0, offset)];
+  };
+
+  const rotatedSpots = useMemo(() => getRotatedSpots(sampleSpots), [rotationTick]);
+
+  const keywords = searchQuery.trim().toLowerCase().split(/\s+/);
+
+  const matchesSearch = (spot: TravelSpot) => {
+    if (!searchQuery.trim()) return true;
+    const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
+    const description = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
+    const region = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
+    const query = `${(spot.query as any)?.[language] || ''} ${(spot.query as any)?.['ko'] || ''}`.toLowerCase();
+    const id = spot.id.toString().toLowerCase();
+    const searchBuffer = `${title} ${description} ${region} ${query} ${id}`;
+    return keywords.every(kw => searchBuffer.includes(kw));
+  };
+
+  const filteredSpots = useMemo(() => {
+    return rotatedSpots.filter(spot => {
+      const matchesCategory = activeCategory === 'all' || spot.category === activeCategory;
+      return matchesCategory && matchesSearch(spot);
+    });
+  }, [rotatedSpots, activeCategory, searchQuery, language]);
+
+  const trendingSpots = useMemo(() => rotatedSpots.filter(spot => spot.isTrending), [rotatedSpots]);
+
+  const ladiesSpots = useMemo(() => {
+    return sampleSpots.filter(spot => spot.category === 'beauty' || spot.category === 'cafe').slice(0, 10);
+  }, []);
+
+  // 2026 Strategy: Display only REAL spots from database - no auto-generated fakes
+  const displaySpots = filteredSpots;
+
+  const handleCategorySelect = (categoryKey: string) => {
+    setIsAiSearching(false);
+    setActiveCategory(categoryKey);
+    // Note: setSearchQuery('') is now handled by useEffect for maximum reliability
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[var(--bg-dark)] flex items-center justify-center">
@@ -392,53 +419,6 @@ export default function Home() {
     </div>
   );
 
-  // 14 days rotation logic (2 weeks)
-  const rotationTick = Math.floor(Date.now() / (14 * 24 * 60 * 60 * 1000));
-
-  // Next update calculation for UI display
-  const nextUpdateEpoch = (rotationTick + 1) * 14 * 24 * 60 * 60 * 1000;
-  const nextUpdateDate = new Date(nextUpdateEpoch).toLocaleDateString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : 'en-US', {
-    month: 'short', day: 'numeric'
-  });
-
-  const getRotatedSpots = (spots: TravelSpot[]) => {
-    const rotated = [...spots];
-    // Seed-based stable shuffle for the period
-    const offset = (rotationTick * 7) % Math.max(1, spots.length);
-    return [...rotated.slice(offset), ...rotated.slice(0, offset)];
-  };
-
-  const rotatedSpots = getRotatedSpots(sampleSpots);
-
-  const keywords = searchQuery.trim().toLowerCase().split(/\s+/);
-
-  const matchesSearch = (spot: TravelSpot) => {
-    if (!searchQuery.trim()) return true;
-    const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
-    const description = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
-    const region = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
-    const query = `${(spot.query as any)?.[language] || ''} ${(spot.query as any)?.['ko'] || ''}`.toLowerCase();
-    const id = spot.id.toString().toLowerCase();
-    const searchBuffer = `${title} ${description} ${region} ${query} ${id}`;
-    return keywords.every(kw => searchBuffer.includes(kw));
-  };
-
-  const filteredSpots = rotatedSpots.filter(spot => {
-    const matchesCategory = activeCategory === 'all' || spot.category === activeCategory;
-    return matchesCategory && matchesSearch(spot);
-  });
-
-  const handleCategorySelect = (categoryKey: string) => {
-    setIsAiSearching(false);
-    setActiveCategory(categoryKey);
-    // Note: setSearchQuery('') is now handled by useEffect for maximum reliability
-  };
-
-  const trendingSpots = rotatedSpots.filter(spot => spot.isTrending);
-  const ladiesSpots = rotatedSpots.filter(spot => spot.category === 'beauty' || spot.category === 'dessert');
-
-  // 2026 Strategy: Display only REAL spots from database - no auto-generated fakes
-  const displaySpots = filteredSpots;
 
   // --- GEO 최적화: AI 검색 엔진을 위한 JSON-LD Schema 생성 ---
   const schemaMarkup = {
@@ -904,9 +884,21 @@ export default function Home() {
                           </div>
                         </div>
                         {/* 2026 Strategy: BLUF Content for GEO */}
-                        <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">
-                          {blufEngine.formatDescription(spot, language as any)}
-                        </p>
+                        <div className="relative">
+                          <p className={`text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed transition-all ${subscriptionStatus === 'free' ? 'blur-sm select-none' : ''}`}>
+                            {blufEngine.formatDescription(spot, language as any)}
+                          </p>
+                          {subscriptionStatus === 'free' && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <button
+                                onClick={() => setIsPricingOpen(true)}
+                                className="px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--bg-dark)] text-[10px] font-black shadow-xl"
+                              >
+                                {t.vipModal?.restricted || 'UNLOCK SECRET TIP'}
+                              </button>
+                            </div>
+                          )}
+                        </div>
 
 
                         <div className="grid grid-cols-2 gap-2 mb-6">
