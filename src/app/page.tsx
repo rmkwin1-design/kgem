@@ -154,6 +154,8 @@ export default function Home() {
   const [isAiSearching, setIsAiSearching] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
 
+  const [liveSpots, setLiveSpots] = useState<TravelSpot[]>([]);
+
   const handleInstallApp = async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -210,6 +212,7 @@ export default function Home() {
   // This addresses the user feedback about "BBQ" sticking to "Filming" categories.
   useEffect(() => {
     setSearchQuery('');
+    setLiveSpots([]);
   }, [activeCategory]);
 
 
@@ -222,17 +225,48 @@ export default function Home() {
     const query = overrideQuery || searchQuery;
     if (query.trim().length > 1) {
       setIsAiSearching(true);
+
+      // 1. Process via KGEM Core Agent (existing logic)
       const sanitizedQuery = securityManager.sanitizeInput(query);
-      const response = await kgemAgent.processRequest(sanitizedQuery);
-      console.log("KGEM Agent Response:", response);
-      setTimeout(() => setIsAiSearching(false), 1500);
+      try {
+        await kgemAgent.processRequest(sanitizedQuery);
+      } catch (err) { }
+
+      // 2. Compute local matches
+      const localMatches = sampleSpots.filter(spot => {
+        const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
+        const desc = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
+        const reg = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
+        const buffer = `${title} ${desc} ${reg}`;
+        return query.split(/\\s+/).every(kw => buffer.includes(kw.toLowerCase()));
+      });
+
+      // 3. Live AI fetching fallback condition
+      if (localMatches.length < 10) {
+        try {
+          const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`);
+          if (res.ok) {
+            const dynamicSpots = await res.json();
+            setLiveSpots(dynamicSpots);
+          }
+        } catch (error) {
+          console.error("Live AI Search Failed:", error);
+        }
+      } else {
+        setLiveSpots([]); // Clear if we already have enough local matches
+      }
+
+      setTimeout(() => setIsAiSearching(false), 500);
+    } else {
+      setLiveSpots([]);
+      setIsAiSearching(false);
     }
   };
 
   const triggerSearch = (query: string) => {
+    setSearchQuery(query);
     handleSearch(undefined, query);
   };
-
 
   const getPriceTag = (price?: number) => {
     if (price === undefined) return null;
@@ -369,8 +403,11 @@ export default function Home() {
     return sampleSpots.filter(spot => spot.category === 'beauty' || spot.category === 'cafe').slice(0, 10);
   }, []);
 
-  // 2026 Strategy: Display only REAL spots from database - no auto-generated fakes
-  const displaySpots = filteredSpots;
+  // 2026 Strategy: Display local database + Live AI fetched spots
+  const displaySpots = useMemo(() => {
+    const activeLiveSpots = liveSpots.filter(spot => activeCategory === 'all' || spot.category === activeCategory);
+    return [...activeLiveSpots, ...filteredSpots];
+  }, [liveSpots, filteredSpots, activeCategory]);
 
   const handleCategorySelect = (categoryKey: string) => {
     setIsAiSearching(false);
