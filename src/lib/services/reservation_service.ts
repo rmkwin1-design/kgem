@@ -32,9 +32,31 @@ export const reservationService = {
      */
     async getPendingReservations() {
         const reservationsRef = collection(db, "reservation_requests");
-        const q = query(reservationsRef, where("status", "==", "pending"), orderBy("createdAt", "desc"));
+        const q = query(
+            reservationsRef,
+            where("status", "==", "pending"),
+            orderBy("createdAt", "desc"),
+            limit(50)
+        );
         const snapshot = await getDocs(q);
-
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Generates an Agoda Affiliate deep link for accommodation.
+     */
+    getAgodaDeepLink(spot: any, language: string = 'en') {
+        const partnerId = process.env.NEXT_PUBLIC_AGODA_CID || "1882852"; // Mock CID
+        const propertyId = spot.agodaPropertyId || "571217"; // Fallback to a popular SEO guest house if missing
+
+        // Default dates: tomorrow to day after tomorrow if none provided
+        const checkin = new Date();
+        checkin.setDate(checkin.getDate() + 1);
+        const checkout = new Date();
+        checkout.setDate(checkout.getDate() + 3);
+
+        const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+        return `https://www.agoda.com/partners/partnerlanding.aspx?pcs=1&cid=${partnerId}&hl=${language}&propertyId=${propertyId}&checkin=${formatDate(checkin)}&checkout=${formatDate(checkout)}`;
     }
 };
