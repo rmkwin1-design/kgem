@@ -26,10 +26,10 @@ export const zh = {
     categories: {
         all: "全部",
         food: "美食",
-        travel: "景点",
-        activity: "活动",
+        attraction: "景点",
+        experience: "活动",
         beauty: "美容",
-        dessert: "甜点/咖啡馆",
+        cafe: "甜点/咖啡馆",
         filming: "影视取景地"
     },
     card: {

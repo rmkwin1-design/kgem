@@ -8,8 +8,9 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 interface PaymentContextType {
     isProcessing: boolean;
     hasBillingKey: boolean;
+    subscriptionStatus: 'free' | '24h_pass' | 'monthly';
     registerCard: () => Promise<void>;
-    processPayment: (amount: number, orderName: string) => Promise<boolean>;
+    processPayment: (amount: number, orderName: string, type?: '24h_pass' | 'monthly') => Promise<boolean>;
 }
 
 const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
@@ -18,6 +19,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const { user } = useAuth();
     const [isProcessing, setIsProcessing] = useState(false);
     const [hasBillingKey, setHasBillingKey] = useState(false);
+    const [subscriptionStatus, setSubscriptionStatus] = useState<'free' | '24h_pass' | 'monthly'>('free');
 
     // Load Payment Scripts
     useEffect(() => {
@@ -27,10 +29,29 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         tossScript.async = true;
         document.body.appendChild(tossScript);
 
+        // Stripe
+        const stripeScript = document.createElement('script');
+        stripeScript.src = 'https://js.stripe.com/v3/';
+        stripeScript.async = true;
+        document.body.appendChild(stripeScript);
+
         return () => {
             document.body.removeChild(tossScript);
+            document.body.removeChild(stripeScript);
         };
     }, []);
+
+    // Check subscription status on user load
+    useEffect(() => {
+        const checkStatus = async () => {
+            if (user) {
+                // In a real app, we'd fetch from Firestore
+                // For now, we'll check local state or a mock
+                console.log("Checking subscription for:", user.uid);
+            }
+        };
+        checkStatus();
+    }, [user]);
 
     const registerCard = async () => {
         if (!user) return;
@@ -50,12 +71,17 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const processPayment = async (amount: number, orderName: string) => {
+    const processPayment = async (amount: number, orderName: string, type?: '24h_pass' | 'monthly') => {
         if (!user) return false;
         setIsProcessing(true);
         try {
             const result = await kgemPayment.payWithBillingKey(user.uid, amount, orderName);
-            return result.status === 'paid';
+            if (result.status === 'paid') {
+                if (type === '24h_pass') setSubscriptionStatus('24h_pass');
+                if (type === 'monthly') setSubscriptionStatus('monthly');
+                return true;
+            }
+            return false;
         } catch (error) {
             console.error('Payment failed:', error);
             return false;
@@ -72,7 +98,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     return (
         <PayPalScriptProvider options={initialOptions}>
-            <PaymentContext.Provider value={{ isProcessing, hasBillingKey, registerCard, processPayment }}>
+            <PaymentContext.Provider value={{ isProcessing, hasBillingKey, subscriptionStatus, registerCard, processPayment }}>
                 {children}
             </PaymentContext.Provider>
         </PayPalScriptProvider>

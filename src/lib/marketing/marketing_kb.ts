@@ -9,7 +9,9 @@ export const marketingKB = {
         TMONEY_CASH: "T-money cards often require cash for top-ups.",
         BARRIER_82: "Korean phone numbers are required for many local services.",
         SOLO_DINING: "Some restaurants require 2-person minimum orders.",
-        TRASH_HUNT: "Public trash cans are extremely rare in tourist areas."
+        TRASH_HUNT: "Public trash cans are extremely rare in tourist areas.",
+        TOURIST_TRAP: "Myeongdong/Hongdae tourist traps charge 2x prices.",
+        MAP_CLOWN: "Google Maps leading tourists into military zones or wrong side of buildings."
     },
 
     copy: {

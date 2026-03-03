@@ -48,6 +48,10 @@ export const metadata: Metadata = {
 
 export const viewport = {
   themeColor: "#d4af35",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 import ClientTracker from "@/components/ClientTracker";
@@ -58,19 +62,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={plusJakartaSans.className}>
+    <html lang="ko" className="overflow-hidden bg-[var(--bg-dark)] text-white">
+      {/* 
+        Moved main overflow restraints to fixed body and a scrolling sub-viewer wrapper to kill Safari/Chrome bounce.
+        IMPORTANT: Applied hardware paint containment to absolutely lock width to the device.
+      */}
+      <body className={`${plusJakartaSans.className} fixed inset-0 w-full max-w-[100vw] h-[100dvh] overflow-hidden m-0 p-0 overscroll-none`}>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=contactless,map_off,person" />
         <AuthProvider>
           <LanguageProvider>
             <PreferenceProvider>
               <PaymentProvider>
-                <ClientTracker />
-                {children}
-                <Analytics />
+                {/* 
+                  #app-clip contains all scrollable content.
+                  overscroll-y-none and overscroll-x-none strictly prevent scroll chaining.
+                */}
+                <div id="app-clip" className="relative w-full max-w-[100vw] h-[100dvh] overflow-y-auto overflow-x-hidden pt-safe pb-safe isolate overscroll-none scroll-smooth">
+                  <ClientTracker />
+                  {children}
+                  <Analytics />
+                </div>
               </PaymentProvider>
             </PreferenceProvider>
-
           </LanguageProvider>
         </AuthProvider>
       </body>

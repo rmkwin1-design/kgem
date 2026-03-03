@@ -2,44 +2,50 @@ import { marketingKB } from "./marketing_kb";
 import { signalGenerator } from "./signal_generator";
 
 /**
- * KGEM Viral Automation Engine
- * Repurposes community pain points (Reddit/TikTok) into viral K-Gem content.
+ * KGEM Viral Automation Engine (v2)
+ * Orchestrates 24/7 content generation for multiple global platforms.
  */
 export const viralAutomation = {
     /**
-     * Simulates collection of complaints from platforms like Reddit or TikTok.
+     * Simulates real-time market sentiment analysis.
      */
     async collectMarketSignals() {
         return [
             { platform: 'Reddit', content: "Why can't I find walking directions in Google Maps for Seoul?", tag: 'MAP_VOID' },
             { platform: 'TikTok', content: "Got rejected from a BBQ place because I was alone. So annoying.", tag: 'SOLO_DINING' },
-            { platform: 'Instagram', content: "T-money cash charging is so inconvenient.", tag: 'NO_CASH' }
+            { platform: 'Instagram', content: "T-money cash charging is so inconvenient.", tag: 'NO_CASH' },
+            { platform: 'Xiaohongshu', content: "Myeongdong street food is getting so expensive.", tag: 'TOURIST_TRAP' }
         ];
     },
 
     /**
-     * Synthesizes a daily 'Viral Script Set' for NotebookLM ingestion.
+     * Generates a high-conversion 24/7 marketing campaign package.
      */
     async generateDailyMarketingPackage(spots: any[]) {
         const signals = await this.collectMarketSignals();
         const viralPackage: any = {
-            date: new Date().toISOString().split('T')[0],
+            timestamp: new Date().toISOString(),
+            campaign_id: `viral_${Date.now()}`,
+            signals_analyzed: signals.length,
+            platforms: ['Reddit', 'TikTok', 'Instagram', 'Xiaohongshu', 'Shorts', 'Aggressive'],
             scripts: [],
-            hashtags: ["#KoreaTravel", "#SeoulHiddenGems", "#KGem", "#TravelHacks"]
+            hashtags: ["#KoreaTravel", "#SeoulHiddenGems", "#KGem", "#TravelHacks", "#SeoulFoodie", "#SouthKorea"]
         };
 
-        signals.forEach(signal => {
+        // Generate scripts for each platform using random spots
+        viralPackage.platforms.forEach((platform: any) => {
             const randomSpot = spots[Math.floor(Math.random() * spots.length)];
-            const script = signalGenerator.generateViralScript('Shorts', randomSpot, 'en');
+            const script = signalGenerator.generateViralScript(platform, randomSpot, 'en');
 
             viralPackage.scripts.push({
-                trigger: signal.content,
-                solution_usp: signal.tag,
-                script: script
+                platform,
+                spot_id: randomSpot.id,
+                spot_name: randomSpot.title.en,
+                script
             });
         });
 
-        console.log("[ViralAutomation] Daily package generated for NotebookLM.");
+        console.log(`[ViralAutomation] 24/7 Marketing package ${viralPackage.campaign_id} generated.`);
         return viralPackage;
     }
 };

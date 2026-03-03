@@ -52,6 +52,21 @@ export const activatePremiumPass = async (userId: string) => {
 
     await updateDoc(userDocRef, {
         premiumUntil: now + extension,
+        subscriptionStatus: '24h_pass',
+        totalPurchases: increment(1),
+        lastPurchaseAt: now,
+        paymentProvider: 'global_optimized_v2026'
+    });
+};
+
+export const activateMonthlySubscription = async (userId: string) => {
+    const userDocRef = doc(db, 'users', userId);
+    const now = Date.now();
+    const extension = 30 * 24 * 60 * 60 * 1000;
+
+    await updateDoc(userDocRef, {
+        premiumUntil: now + extension,
+        subscriptionStatus: 'monthly',
         totalPurchases: increment(1),
         lastPurchaseAt: now,
         paymentProvider: 'global_optimized_v2026'

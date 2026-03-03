@@ -26,10 +26,10 @@ export const ko = {
     categories: {
         all: "전체",
         food: "맛집",
-        travel: "명소",
-        activity: "체험",
+        attraction: "명소",
+        experience: "체험",
         beauty: "뷰티/미용",
-        dessert: "디저트/카페",
+        cafe: "디저트/카페",
         filming: "드라마/영화 촬영지"
     },
     card: {

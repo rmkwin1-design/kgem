@@ -26,10 +26,10 @@ export const ja = {
     categories: {
         all: "全体",
         food: "グルメ",
-        travel: "名所",
-        activity: "体験",
+        attraction: "名所",
+        experience: "体験",
         beauty: "ビューティー",
-        dessert: "デザート/カフェ",
+        cafe: "デザート/카페",
         filming: "ドラマ/映画撮影地"
     },
     card: {

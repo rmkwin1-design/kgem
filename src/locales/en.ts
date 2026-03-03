@@ -26,10 +26,10 @@ export const en = {
     categories: {
         all: "All",
         food: "Food",
-        travel: "Attractions",
-        activity: "Activity",
+        attraction: "Attractions",
+        experience: "Activity",
         beauty: "Beauty",
-        dessert: "Dessert/Cafe",
+        cafe: "Dessert/Cafe",
         filming: "Drama/Movie Sets"
     },
     card: {

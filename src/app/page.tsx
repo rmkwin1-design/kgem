@@ -480,7 +480,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[var(--bg-dark)] text-white font-sans">
+    <main className="relative flex flex-col min-h-screen w-full max-w-full overflow-x-hidden bg-[var(--bg-dark)] text-white font-sans">
       {/* 🧠 SEO/GEO Schema Injection */}
       <script
         type="application/ld+json"
@@ -551,7 +551,7 @@ export default function Home() {
       </nav>
 
       {/* 🚀 역발상 마케팅 배지 (GEO/SEO 전략 반영) */}
-      <div className="bg-[var(--primary)]/5 border-y border-[var(--primary)]/10 py-2 overflow-hidden whitespace-nowrap">
+      <div className="relative w-full overflow-hidden bg-[var(--primary)]/5 border-y border-[var(--primary)]/10 py-2 whitespace-nowrap isolate">
         <div className="flex animate-marquee gap-8 items-center">
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]">
             {t.marquee.warning}
@@ -569,25 +569,57 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 📍 Sticky Category Filter 2026 */}
-      <div className="sticky top-[64px] sm:top-[72px] z-40 bg-[var(--bg-dark)]/90 backdrop-blur-xl border-b border-[var(--primary)]/10 overflow-x-auto no-scrollbar py-3 px-4 flex gap-2 sm:justify-center shadow-xl">
-        {Object.entries(t.categories).map(([key, label]) => (
-          <button
-            key={`sticky-${key}`}
-            onClick={() => handleCategorySelect(key)}
-            className={`whitespace-nowrap px-5 py-1.5 rounded-full border transition-all duration-300 font-bold text-[11px] uppercase tracking-wider ${activeCategory === key
-              ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/20'
-              : 'bg-[var(--surface-dark)] border-[var(--primary)]/10 text-slate-500 hover:text-[var(--primary)] hover:border-[var(--primary)]/30'
-              }`}
+      {/* 📍 Unified Sticky Navigation Hub (Search + Categories) */}
+      <div className="sticky top-[64px] sm:top-[72px] z-40 w-full isolate flex flex-col gap-3 pt-4 pb-3">
+        {/* Background Blur layer */}
+        <div className="absolute inset-0 bg-[var(--bg-dark)]/95 backdrop-blur-2xl border-b border-[var(--primary)]/10 shadow-xl -z-10" />
+
+        {/* Compact Search Bar */}
+        <div className="px-5 sm:px-6 w-full max-w-4xl mx-auto">
+          <form
+            onSubmit={handleSearch}
+            className="w-full relative flex items-center rounded-full bg-[var(--surface-dark)] border border-[var(--primary)]/20 focus-within:border-[var(--primary)]/50 transition-all shadow-inner"
           >
-            {label as any}
-          </button>
-        ))}
+            <span className="absolute left-4 text-[var(--text-muted)] material-symbols-outlined text-[20px]">search</span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={t.hero.searchPlaceholder}
+              className="w-full pl-12 pr-16 py-3 bg-transparent rounded-full text-[15px] focus:outline-none placeholder:text-slate-500 text-[var(--text-main)]"
+            />
+            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[var(--primary)]/10 hover:bg-[var(--primary)] text-[var(--primary)] hover:text-[var(--bg-dark)] w-14 h-9 rounded-full font-black text-[11px] transition-all flex items-center justify-center">
+              {isAiSearching ? <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" /> : "GO"}
+            </button>
+          </form>
+        </div>
+
+        {/* Category Slider */}
+        <div className="allow-x-scroll w-full overflow-x-auto no-scrollbar overscroll-x-contain" style={{ WebkitOverflowScrolling: "touch" }}>
+          <div className="flex flex-nowrap items-center w-max sm:mx-auto">
+            <div className="shrink-0 w-5 sm:w-6 h-1" aria-hidden="true" /> {/* Left Spacer */}
+
+            {Object.entries(t.categories).map(([key, label]) => (
+              <button
+                key={`sticky-${key}`}
+                onClick={() => handleCategorySelect(key)}
+                className={`whitespace-nowrap flex-shrink-0 min-w-0 mr-2 px-5 py-2 rounded-full border transition-all duration-300 font-bold text-[12px] uppercase tracking-wider relative z-20 ${activeCategory === key
+                  ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/20'
+                  : 'bg-[var(--surface-dark)] border-[var(--primary)]/10 text-slate-500 hover:text-[var(--primary)] hover:border-[var(--primary)]/30'
+                  }`}
+              >
+                {label as any}
+              </button>
+            ))}
+
+            <div className="shrink-0 w-3 sm:w-4 h-1" aria-hidden="true" /> {/* Right Spacer */}
+          </div>
+        </div>
       </div>
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden bg-[var(--bg-dark)]">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[var(--primary)]/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 mx-auto top-0 w-full h-[500px] bg-gradient-to-b from-[var(--primary)]/20 to-transparent pointer-events-none paint-contain" />
 
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-[var(--secondary)] uppercase bg-[var(--primary)]/10 border border-[var(--primary)]/20 rounded-full">
@@ -602,21 +634,7 @@ export default function Home() {
 
           <SocialProof type="trust" className="justify-center mb-10" />
 
-          <form
-            onSubmit={handleSearch}
-            className="max-w-2xl mx-auto relative p-1 rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--primary)] shadow-2xl shadow-[var(--primary)]/10 group focus-within:ring-2 ring-[var(--primary)]/50 transition-all font-sans"
-          >
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t.hero.searchPlaceholder}
-              className="w-full px-6 py-4 bg-[var(--bg-dark)] rounded-full text-lg focus:outline-none placeholder:text-slate-500 text-[var(--text-main)]"
-            />
-            <button className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:brightness-110 px-5 sm:px-6 py-2.5 rounded-full font-black transition-all flex items-center gap-2 shadow-lg active:scale-95 text-[var(--bg-dark)]">
-              {isAiSearching ? <div className="w-4 h-4 border-2 border-[var(--bg-dark)]/20 border-t-[var(--bg-dark)] rounded-full animate-spin" /> : "GO"}
-            </button>
-          </form>
+          {/* Search Bar Relocated to Sticky Navigation Hub */}
 
           {/* 💼 Business Partnership Inquiry Relocated for Visibility */}
           <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
@@ -670,21 +688,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Category Filter Moved Here */}
-          <div className="mt-10 flex overflow-x-auto pb-4 gap-2 no-scrollbar px-2 justify-center">
-            {Object.entries(t.categories).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => handleCategorySelect(key)}
-                className={`whitespace-nowrap px-6 py-2.5 rounded-full border transition-all duration-300 font-bold text-sm ${activeCategory === key
-                  ? 'bg-[var(--primary)] border-[var(--primary)] shadow-xl shadow-[var(--primary)]/30 text-[var(--bg-dark)]'
-                  : 'bg-[var(--surface-dark)] border-[var(--primary)]/10 hover:border-[var(--primary)]/30 text-slate-500 hover:text-[var(--primary)]'
-                  }`}
-              >
-                {label as any}
-              </button>
-            ))}
-          </div>
+          {/* Categories have been relocated to the Sticky Nav Hub for performance and UX */}
         </div>
       </section>
 

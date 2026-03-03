@@ -18,7 +18,31 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   font-family: 'Plus Jakarta Sans', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
+  /* Prevent all window-level scrolling to kill rubber-banding */
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100dvh;
+  overscroll-behavior: none;
+  contain: paint layout size;
+  /* The ultimate layout clipping layer */
+}
+
+#app-clip {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: none;
+  /* Kill scroll chaining to fixed body completely */
+  background-color: var(--bg-dark);
+  contain: paint layout;
+  /* Hardware layer enforcement to stop Marquee expansion */
+  max-width: 100vw;
+}
+
+.paint-contain {
+  contain: paint;
 }
 
 .premium-gradient {
