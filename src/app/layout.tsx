@@ -68,7 +68,7 @@ export default function RootLayout({
         IMPORTANT: Applied hardware paint containment to absolutely lock width to the device.
       */}
       <body className={`${plusJakartaSans.className} fixed inset-0 w-full max-w-[100vw] h-[100dvh] overflow-hidden m-0 p-0 overscroll-none`}>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=contactless,map_off,person" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=check_circle,close,contactless,lock,map_off,person,search" />
         <AuthProvider>
           <LanguageProvider>
             <PreferenceProvider>

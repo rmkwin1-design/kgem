@@ -194,14 +194,24 @@ export default function Home() {
       setShowIosPrompt(true);
     }
 
+    const scrollContainer = document.getElementById('app-clip');
     const handleScroll = () => {
-      setShowTopButton(window.scrollY > 400);
+      setShowTopButton((scrollContainer?.scrollTop || window.scrollY) > 400);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+    } else {
+      window.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('scroll', handleScroll);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      } else {
+        window.removeEventListener('scroll', handleScroll);
+      }
     };
   }, []);
 
@@ -217,7 +227,12 @@ export default function Home() {
 
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const scrollContainer = document.getElementById('app-clip');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleSearch = async (e?: React.FormEvent, overrideQuery?: string) => {
@@ -391,8 +406,15 @@ export default function Home() {
   };
 
   const filteredSpots = useMemo(() => {
+    const categoryMap: Record<string, string> = {
+      'attraction': 'travel',
+      'experience': 'activity',
+      'cafe': 'dessert'
+    };
+
     return rotatedSpots.filter(spot => {
-      const matchesCategory = activeCategory === 'all' || spot.category === activeCategory;
+      const mappedCategory = categoryMap[activeCategory] || activeCategory;
+      const matchesCategory = activeCategory === 'all' || spot.category === mappedCategory;
       return matchesCategory && matchesSearch(spot);
     });
   }, [rotatedSpots, activeCategory, searchQuery, language]);
@@ -480,7 +502,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative flex flex-col min-h-screen w-full max-w-full overflow-x-hidden bg-[var(--bg-dark)] text-white font-sans">
+    <main className="relative flex flex-col min-h-screen w-full max-w-full bg-[var(--bg-dark)] text-white font-sans">
       {/* 🧠 SEO/GEO Schema Injection */}
       <script
         type="application/ld+json"
@@ -580,7 +602,10 @@ export default function Home() {
             onSubmit={handleSearch}
             className="w-full relative flex items-center rounded-full bg-[var(--surface-dark)] border border-[var(--primary)]/20 focus-within:border-[var(--primary)]/50 transition-all shadow-inner"
           >
-            <span className="absolute left-4 text-[var(--text-muted)] material-symbols-outlined text-[20px]">search</span>
+            <svg className="absolute left-4 w-5 h-5 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
             <input
               type="text"
               value={searchQuery}
