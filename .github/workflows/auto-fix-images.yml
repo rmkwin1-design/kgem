@@ -1,0 +1,105 @@
+name: Auto Fix Broken Spot Images
+
+on:
+  push:
+    paths:
+      - 'src/data/spots/**.ts'
+  workflow_dispatch:
+
+jobs:
+  fix-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate and fix broken image URLs
+        run: |
+          python - <<'PYEOF'
+          import re, json, time, urllib.request, urllib.parse, os
+
+          BASE = "src/data/spots"
+          HEADERS = {"User-Agent": "Mozilla/5.0 (KgemCI/1.0)"}
+
+          def check_url(url):
+              try:
+                  req = urllib.request.Request(url, headers=HEADERS)
+                  with urllib.request.urlopen(req, timeout=8) as r:
+                      return r.status == 200
+              except:
+                  return False
+
+          def search_wikimedia(keyword):
+              params = urllib.parse.urlencode({
+                  "action": "query", "generator": "search",
+                  "gsrnamespace": "6", "gsrsearch": keyword,
+                  "gsrlimit": "3", "prop": "imageinfo",
+                  "iiprop": "url", "iiurlwidth": "960", "format": "json"
+              })
+              url = f"https://commons.wikimedia.org/w/api.php?{params}"
+              try:
+                  req = urllib.request.Request(url, headers=HEADERS)
+                  with urllib.request.urlopen(req, timeout=10) as r:
+                      data = json.loads(r.read().decode('utf-8'))
+                  for page in data.get("query",{}).get("pages",{}).values():
+                      t = page.get("imageinfo",[{}])[0].get("thumburl","") or \
+                          page.get("imageinfo",[{}])[0].get("url","")
+                      if t.startswith("https://"):
+                          return t
+              except:
+                  pass
+              return None
+
+          FALLBACK = {
+              "seoul": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Gyeongbokgung_-_Seoul_%2812%29.jpg/960px-Gyeongbokgung_-_Seoul_%2812%29.jpg",
+              "busan": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Haeundae_Beach_in_Busan.jpg/960px-Haeundae_Beach_in_Busan.jpg",
+              "jeju":  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Seongsan_Ilchulbong.jpg/960px-Seongsan_Ilchulbong.jpg",
+          }
+
+          changed = False
+          for fname in ["seoul.ts", "busan.ts", "jeju.ts"]:
+              city = fname.replace(".ts","")
+              path = os.path.join(BASE, fname)
+              with open(path,'r',encoding='utf-8') as f:
+                  content = f.read()
+              spots = re.findall(
+                  r'"id":\s*"([^"]+)".*?"en":\s*"([^"]+)".*?"image":\s*"([^"]+)"',
+                  content, re.DOTALL)
+              for sid, en, img in spots:
+                  if check_url(img):
+                      continue
+                  print(f"[NG] {sid} ({en})")
+                  new = search_wikimedia(en + " Korea") or FALLBACK[city]
+                  pat = r'("id":\s*"'+re.escape(sid)+r'".*?"image":\s*")([^"]+)(")'
+                  content, n = re.subn(pat,
+                      lambda m,u=new: m.group(1)+u+m.group(3),
+                      content, count=1, flags=re.DOTALL)
+                  if n:
+                      changed = True
+                  time.sleep(0.2)
+              with open(path,'w',encoding='utf-8') as f:
+                  f.write(content)
+
+          with open("_changed.txt","w") as f:
+              f.write("yes" if changed else "no")
+          PYEOF
+
+      - name: Commit if changed
+        run: |
+          if [ "$(cat _changed.txt)" = "yes" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/spots/
+            git commit -m "ci: auto-fix broken spot images [skip ci]"
+            git push
+          else
+            echo "All image URLs OK"
+          fi
