@@ -24,11 +24,11 @@ export async function GET(request: Request) {
     }
 
     const prompt = `You are a Korean travel expert specializing in deep-location intelligence. 
-Generate EXACTLY 20 high-quality, real-world trending spots for the query: "${q}".
+Generate EXACTLY 12 high-quality, real-world trending spots for the query: "${q}".
 The user is looking for hidden gems, local favorites, or trending "hot places" specifically in THIS REGION.
 
 Rules:
-1. Return EXACTLY 20 items. No more, no less.
+1. Return EXACTLY 12 items. No more, no less.
 2. Mix categories: 'travel', 'food', 'dessert', 'activity', 'beauty', 'filming'.
 3. Use realistic data based on actual places in the requested region (e.g., if ${q} is Incheon, return Incheon spots).
 4. For names/descriptions, prioritize natural Korean expressions.

@@ -170,9 +170,6 @@ export default function Home() {
 
 
   useEffect(() => {
-    // 🔍 2026 Sync Check: If you see this, the code is updated!
-    alert("K-GEM Sync: Code Updated (21:15)");
-
     // 🧠 인앱 브라우저 감지 로직 (카카오톡, 인스타그램 등)
     const ua = navigator.userAgent.toLowerCase();
     const isInApp = /kakaotalk|instagram|fbav|line|naver|pinterst/i.test(ua);
@@ -249,6 +246,9 @@ export default function Home() {
       setLiveSpots([]);
       setIsAiSearching(true);
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 35000); // 35s timeout
+
       // 1. Process via KGEM Core Agent (existing logic)
       const sanitizedQuery = securityManager.sanitizeInput(query);
       try {
@@ -267,7 +267,10 @@ export default function Home() {
       // 3. Live AI fetching: always trigger if local results < 20
       if (localMatches.length < 20) {
         try {
-          const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`);
+          const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, {
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
           if (res.ok) {
             const dynamicSpots = await res.json();
             console.log(`[Diagnostic] API Success: ${Array.isArray(dynamicSpots) ? dynamicSpots.length : 'error'} spots`);
@@ -284,8 +287,13 @@ export default function Home() {
             setLiveSpots([]);
           }
         } catch (error: any) {
-          console.error("Live AI Search network error:", error);
-          alert(`Network Error: ${error.message}`);
+          clearTimeout(timeoutId);
+          console.error("Live AI Search error:", error);
+          if (error.name === 'AbortError') {
+            alert(language === 'ko' ? "서버 응답이 늦어지고 있습니다. 잠시 후 다시 시도해주세요." : "Server is taking too long. Please try again in a moment.");
+          } else {
+            alert(`Search Error: ${error.message}`);
+          }
           setLiveSpots([]);
         }
       } else {
@@ -534,7 +542,7 @@ export default function Home() {
       />
 
       {/* Navigation */}
-      <nav className="nav-blur px-6 py-4 flex justify-between items-center sticky top-0 z-50" style={{ borderTop: '4px solid #ff0000' }}>
+      <nav className="nav-blur px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-2 max-w-[60%]">
           <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[var(--primary)] flex items-center justify-center font-bold text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/30 text-sm">
             {t.header.logo}
@@ -1095,7 +1103,7 @@ export default function Home() {
             <div className="mt-3 pt-3 border-t border-[var(--glass)]/30">
               <p>{t.footer.info}</p>
               <p className="mt-1">{t.footer.extraInfo}</p>
-              <p className="mt-2 text-red-500 font-bold">Build Version: 2026-03-04-2125 (SYNC_FIX)</p>
+              <p className="mt-2 text-[var(--primary)]/20 font-bold">Build Version: 2026-03-04-2135 (STABLE)</p>
             </div>
           </div>
 
