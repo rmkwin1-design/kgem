@@ -26,11 +26,29 @@
 - **Mistake**: The prompt didn't strictly enforce regional boundaries or specific Korean language nuances.
 - **Prevention**: Use "Deep-Location Intelligence" instructions in prompts. Explicitly require region matching and localized terminology.
 
-### 5. Live-Site 500 Error (Post-Deployment)
+### 5. Live-Site 500 Error (Confirmed: Missing API Key on Vercel)
 
-- **Issue**: After pushing fixes, the live site returns Status 500 for search.
-- **Mistake**: Did not verify if OpenAI API Key was correctly configured in the Vercel dashboard environment variables, and the diagnostic alert didn't show the error details.
-- **Prevention**: Include response body in error alerts during the debugging phase. Provide a clear "Missing API Key" message if applicable.
+- **Issue**: After pushing fixes, the live site returned "Search service is currently unavailable".
+- **Root Cause**: The `OPENAI_API_KEY` was missing from the Vercel dashboard environment variables. This was caught by my diagnostic logic.
+- **Mistake**: Did not explicitly check or remind the user to configure API keys on the hosting provider (Vercel) after making code changes.
+- **Prevention**: Include a "Deployment Checklist" that covers Environment Variable synchronization between local and production.
+
+### 6. Vercel Project Naming Confusion
+
+- **Issue**: Instructed the user to add the API key to the `korea_travel_curator` project, but the active site (`kgem.vercel.app`) was linked to a different project named `kgem`.
+- **Mistake**: Assumed the Vercel project name would match the local folder name (`korea_travel_curator`).
+
+### 7. Result-Clearing Logic Bug (Regression)
+
+- **Issue**: Search started returning 0 results for regions with "enough" data.
+- **Mistake**: Introduced a logic branch `if (localMatches.length < 20) { fetch(...) } else { setLiveSpots([]) }`. If local matches were >= 20, I was clearing the results instead of displaying them.
+- **Prevention**: ALWAYS test both branches of a conditional (the 'if' and the 'else') especially when dealing with data display.
+
+### 8. The "Invisible Build" (Synchronization Paradox)
+
+- **Issue**: Applied fixes repeatedly but the user's UI didn't change (e.g., missing red background).
+- **Mistake**: Relied on Vercel "Building" status or local successful push. If the build fails silently or the user has a cached version, the "Production" site remains stale.
+- **Prevention**: Use a **Build Version Tag** in the footer or a high-priority `alert()` on load to verify the exact build being served.
 
 ## 🛠️ Improved Workflow for Future Tasks
 

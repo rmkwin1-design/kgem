@@ -170,12 +170,14 @@ export default function Home() {
 
 
   useEffect(() => {
+    // 🔍 2026 Sync Check: If you see this, the code is updated!
+    alert("K-GEM Sync: Code Updated (21:15)");
+
     // 🧠 인앱 브라우저 감지 로직 (카카오톡, 인스타그램 등)
     const ua = navigator.userAgent.toLowerCase();
     const isInApp = /kakaotalk|instagram|fbav|line|naver|pinterst/i.test(ua);
     console.log(`[Diagnostic] Browser UA: ${ua}, isInApp: ${isInApp}`);
     if (isInApp) {
-      // alert("In-App Browser Detected. Some features may be limited.");
       setShowInAppModal(true);
     }
     // 🚀 PWA 설치 프롬프트 제어 로직
@@ -287,7 +289,8 @@ export default function Home() {
           setLiveSpots([]);
         }
       } else {
-        setLiveSpots([]); // Clear if we already have enough local matches
+        console.log(`[Diagnostic] Sufficient local matches found: ${localMatches.length}`);
+        setLiveSpots(localMatches);
       }
 
       setIsAiSearching(false);
@@ -531,7 +534,7 @@ export default function Home() {
       />
 
       {/* Navigation */}
-      <nav className="nav-blur px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+      <nav className="nav-blur px-6 py-4 flex justify-between items-center sticky top-0 z-50" style={{ borderTop: '4px solid #ff0000' }}>
         <div className="flex items-center gap-2 max-w-[60%]">
           <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[var(--primary)] flex items-center justify-center font-bold text-[var(--bg-dark)] shadow-lg shadow-[var(--primary)]/30 text-sm">
             {t.header.logo}
@@ -1092,6 +1095,7 @@ export default function Home() {
             <div className="mt-3 pt-3 border-t border-[var(--glass)]/30">
               <p>{t.footer.info}</p>
               <p className="mt-1">{t.footer.extraInfo}</p>
+              <p className="mt-2 text-red-500 font-bold">Build Version: 2026-03-04-2125 (SYNC_FIX)</p>
             </div>
           </div>
 
