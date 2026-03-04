@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslation } from "@/context/LanguageContext";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { sampleSpots } from "@/data/spots";
 import { TravelSpot } from "@/types/spot";
@@ -155,6 +155,7 @@ export default function Home() {
   const [isPricingOpen, setIsPricingOpen] = useState(false);
 
   const [liveSpots, setLiveSpots] = useState<TravelSpot[]>([]);
+  const searchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleInstallApp = async () => {
     if (deferredPrompt) {
@@ -229,6 +230,7 @@ export default function Home() {
   const scrollToTop = () => {
     const scrollContainer = document.getElementById('app-clip');
     if (scrollContainer) {
+      scrollContainer.focus(); // 🚀 Prevent focus loss on some browsers
       scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -256,8 +258,8 @@ export default function Home() {
         return query.split(/\\s+/).every(kw => buffer.includes(kw.toLowerCase()));
       });
 
-      // 3. Live AI fetching fallback condition
-      if (localMatches.length < 10) {
+      // 3. Live AI fetching: always trigger if local results < 20
+      if (localMatches.length < 20) {
         try {
           const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`);
           if (res.ok) {
@@ -405,13 +407,13 @@ export default function Home() {
     return keywords.every(kw => searchBuffer.includes(kw));
   };
 
-  const filteredSpots = useMemo(() => {
-    const categoryMap: Record<string, string> = {
-      'attraction': 'travel',
-      'experience': 'activity',
-      'cafe': 'dessert'
-    };
+  const categoryMap: Record<string, string> = {
+    'attraction': 'travel',
+    'experience': 'activity',
+    'cafe': 'dessert'
+  };
 
+  const filteredSpots = useMemo(() => {
     return rotatedSpots.filter(spot => {
       const mappedCategory = categoryMap[activeCategory] || activeCategory;
       const matchesCategory = activeCategory === 'all' || spot.category === mappedCategory;
@@ -422,12 +424,14 @@ export default function Home() {
   const trendingSpots = useMemo(() => rotatedSpots.filter(spot => spot.isTrending), [rotatedSpots]);
 
   const ladiesSpots = useMemo(() => {
-    return sampleSpots.filter(spot => spot.category === 'beauty' || spot.category === 'cafe').slice(0, 10);
+    // 🧠 Fix: Use 'dessert' for cafe and 'beauty' for beauty category matching
+    return sampleSpots.filter(spot => spot.category === 'beauty' || spot.category === 'dessert').slice(0, 10);
   }, []);
 
   // 2026 Strategy: Display local database + Live AI fetched spots
   const displaySpots = useMemo(() => {
-    const activeLiveSpots = liveSpots.filter(spot => activeCategory === 'all' || spot.category === activeCategory);
+    const mappedCategory = categoryMap[activeCategory] || activeCategory;
+    const activeLiveSpots = liveSpots.filter(spot => activeCategory === 'all' || spot.category === mappedCategory);
     return [...activeLiveSpots, ...filteredSpots];
   }, [liveSpots, filteredSpots, activeCategory]);
 
@@ -592,7 +596,7 @@ export default function Home() {
       </div>
 
       {/* 📍 Unified Sticky Navigation Hub (Search + Categories) */}
-      <div className="sticky top-[64px] sm:top-[72px] z-40 w-full isolate flex flex-col gap-3 pt-4 pb-3">
+      <div className="sticky top-[72px] lg:top-[76px] z-40 w-full isolate flex flex-col gap-3 pt-4 pb-3">
         {/* Background Blur layer */}
         <div className="absolute inset-0 bg-[var(--bg-dark)]/95 backdrop-blur-2xl border-b border-[var(--primary)]/10 shadow-xl -z-10" />
 
@@ -600,21 +604,32 @@ export default function Home() {
         <div className="px-5 sm:px-6 w-full max-w-4xl mx-auto">
           <form
             onSubmit={handleSearch}
-            className="w-full relative flex items-center rounded-full bg-[var(--surface-dark)] border border-[var(--primary)]/20 focus-within:border-[var(--primary)]/50 transition-all shadow-inner"
+            className="w-full relative flex items-center rounded-full bg-[var(--surface-dark)] border border-[var(--primary)]/20 focus-within:border-[var(--primary)]/50 transition-all shadow-inner overflow-hidden"
           >
-            <svg className="absolute left-4 w-5 h-5 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="absolute left-4 w-5 h-5 text-[var(--text-muted)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                // debounce auto-search: trigger after 0.8s of no typing
+                if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+                searchDebounceRef.current = setTimeout(() => {
+                  if (e.target.value.trim().length > 1) {
+                    handleSearch(undefined, e.target.value);
+                  } else {
+                    setLiveSpots([]);
+                  }
+                }, 800);
+              }}
               placeholder={t.hero.searchPlaceholder}
-              className="w-full pl-12 pr-16 py-3 bg-transparent rounded-full text-[15px] focus:outline-none placeholder:text-slate-500 text-[var(--text-main)]"
+              className="w-full pl-12 pr-20 py-3 bg-transparent rounded-full text-[14px] sm:text-[15px] focus:outline-none placeholder:text-slate-500 text-[var(--text-main)] overflow-ellipsis"
             />
-            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[var(--primary)]/10 hover:bg-[var(--primary)] text-[var(--primary)] hover:text-[var(--bg-dark)] w-14 h-9 rounded-full font-black text-[11px] transition-all flex items-center justify-center">
-              {isAiSearching ? <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" /> : "GO"}
+            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--bg-dark)] w-16 h-9 rounded-full font-black text-[12px] transition-all flex items-center justify-center shadow-lg shadow-[var(--primary)]/20">
+              {isAiSearching ? <div className="w-3.5 h-3.5 border-2 border-[var(--bg-dark)] border-t-transparent rounded-full animate-spin" /> : "GO"}
             </button>
           </form>
         </div>

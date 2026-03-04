@@ -9,8 +9,8 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Query parameter q is missing' }, { status: 400 });
     }
 
-    const prompt = `You are a Korean travel expert. Generate 10 highly accurate and currently trending hot spots for the search query: "${q}".
-The output MUST be a valid JSON object containing a single key "spots" which is an array of objects.
+    const prompt = `You are a Korean travel expert. Generate exactly 20 highly accurate and currently trending hot spots for the search query: "${q}".
+The output MUST be a valid JSON object containing a single key "spots" which is an array of 20 objects.
 Each object in the array MUST strictly match this TypeScript interface representation:
 
 interface LocalizedString { ko: string; en: string; ja: string; }
@@ -20,17 +20,22 @@ interface TravelSpot {
     id: string; // Use a unique string starting with 'live-' + random numbers
     title: LocalizedString;
     category: string; // MUST be exactly one of: 'travel', 'food', 'dessert', 'activity', 'beauty', 'filming'
-    image: string; // Use a realistic random placeholder: "https://picsum.photos/seed/" + random_string + "/800/600"
+    image: string; // Use a realistic Wikimedia commons image URL based on the place type, or "https://picsum.photos/seed/" + place_name_slug + "/800/600"
     rating: number; // Decimal between 4.0 and 5.0
-    description: LocalizedString; // Engaging description
-    region: LocalizedString; // The region requested, e.g. Incheon
-    query: LocalizedString; // Exact pure venue name used for map searching (no extra words)
+    description: LocalizedString; // Engaging description of the actual place
+    region: LocalizedString; // The specific district/area e.g. Incheon Songdo
+    query: LocalizedString; // Exact pure venue name used for map searching
     isTrending: boolean; // true
     vipContent: VipContent;
     geoSchema: GeoSchema;
+    lat: number; // Accurate latitude
+    lng: number; // Accurate longitude
+    price: number; // 0 if free
 }
 
-Output ONLY the JSON object { "spots": [ ...10 items... ] }. No markdown blocks, no other text.`;
+IMPORTANT: Return EXACTLY 20 spots. Mix different categories (travel, food, dessert, activity etc).
+Output ONLY the JSON object { "spots": [ ...20 items... ] }. No markdown blocks, no other text.`;
+
 
     try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', {
