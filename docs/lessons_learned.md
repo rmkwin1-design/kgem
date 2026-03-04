@@ -35,4 +35,7 @@
 
 ## 📝 General Note
 
-Don't assume the user's environment is synced with your local state. Always verify the "Last Mile" (the browser the user is actually using).
+## 🛡️ Permanent Workflow Rule
+
+- **Every mistake, failure, or error encountered during development must be documented in this file immediately.**
+- **Before starting any new task, this file must be reviewed to prevent regression.**
