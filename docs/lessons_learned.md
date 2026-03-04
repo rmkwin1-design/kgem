@@ -26,6 +26,12 @@
 - **Mistake**: The prompt didn't strictly enforce regional boundaries or specific Korean language nuances.
 - **Prevention**: Use "Deep-Location Intelligence" instructions in prompts. Explicitly require region matching and localized terminology.
 
+### 5. Live-Site 500 Error (Post-Deployment)
+
+- **Issue**: After pushing fixes, the live site returns Status 500 for search.
+- **Mistake**: Did not verify if OpenAI API Key was correctly configured in the Vercel dashboard environment variables, and the diagnostic alert didn't show the error details.
+- **Prevention**: Include response body in error alerts during the debugging phase. Provide a clear "Missing API Key" message if applicable.
+
 ## 🛠️ Improved Workflow for Future Tasks
 
 1. **Verify Environment**: Check if working on `localhost` or a deployed site.

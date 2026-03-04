@@ -276,9 +276,9 @@ export default function Home() {
               setLiveSpots(dynamicSpots);
             }
           } else {
-            const errorText = await res.text();
-            console.error("Live AI Search Failed:", res.status, errorText);
-            alert(`Search Failed (Status ${res.status}). Check server logs.`);
+            const errorData = await res.json().catch(() => ({ message: "Unknown error" }));
+            console.error("Live AI Search Failed:", res.status, errorData);
+            alert(`Search Failed (Status ${res.status}): ${errorData.error || errorData.details || 'Check server config'}`);
             setLiveSpots([]);
           }
         } catch (error: any) {
