@@ -9,33 +9,38 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Query parameter q is missing' }, { status: 400 });
     }
 
-    const prompt = `You are a Korean travel expert. Generate exactly 20 highly accurate and currently trending hot spots for the search query: "${q}".
-The output MUST be a valid JSON object containing a single key "spots" which is an array of 20 objects.
-Each object in the array MUST strictly match this TypeScript interface representation:
+    const prompt = `You are a Korean travel expert specializing in deep-location intelligence. 
+Generate EXACTLY 20 high-quality, real-world trending spots for the query: "${q}".
+The user is likely looking for hidden gems, local favorites, or trending "hot places".
 
-interface LocalizedString { ko: string; en: string; ja: string; }
-interface VipContent { secretMenu: LocalizedString; ownerTip: LocalizedString; }
-interface GeoSchema { bluf: LocalizedString; }
-interface TravelSpot {
-    id: string; // Use a unique string starting with 'live-' + random numbers
-    title: LocalizedString;
-    category: string; // MUST be exactly one of: 'travel', 'food', 'dessert', 'activity', 'beauty', 'filming'
-    image: string; // Use a realistic Wikimedia commons image URL based on the place type, or "https://picsum.photos/seed/" + place_name_slug + "/800/600"
-    rating: number; // Decimal between 4.0 and 5.0
-    description: LocalizedString; // Engaging description of the actual place
-    region: LocalizedString; // The specific district/area e.g. Incheon Songdo
-    query: LocalizedString; // Exact pure venue name used for map searching
-    isTrending: boolean; // true
-    vipContent: VipContent;
-    geoSchema: GeoSchema;
-    lat: number; // Accurate latitude
-    lng: number; // Accurate longitude
-    price: number; // 0 if free
+Rules:
+1. Return EXACTLY 20 items. No more, no less.
+2. Mix categories: 'travel', 'food', 'dessert', 'activity', 'beauty', 'filming'.
+3. Use realistic data based on actual places in that region.
+4. If coordinates are unknown, provide highly plausible coordinates for that specific district.
+
+Each object must match this schema:
+{
+    "id": "live-" + UUID/Random,
+    "title": { "ko": "한국어명", "en": "English Name", "ja": "日本語名" },
+    "category": "one of the categories above",
+    "image": "Wikimedia Commons URL or 'https://picsum.photos/seed/' + name_slug + '/800/600'",
+    "rating": 4.0 ~ 5.0,
+    "description": { "ko": "설명", "en": "Description", "ja": "説明" },
+    "region": { "ko": "지역(예: 인천 송도)", "en": "Region", "ja": "地域" },
+    "query": { "ko": "검색용 상호명", "en": "Search Query", "ja": "検索クエリ" },
+    "isTrending": true,
+    "vipContent": { "secretMenu": { "ko": "...", "en": "...", "ja": "..." }, "ownerTip": { "ko": "...", "en": "...", "ja": "..." } },
+    "geoSchema": { "bluf": { "ko": "...", "en": "...", "ja": "..." } },
+    "lat": number,
+    "lng": number,
+    "price": number (0 if free)
 }
 
-IMPORTANT: Return EXACTLY 20 spots. Mix different categories (travel, food, dessert, activity etc).
-Output ONLY the JSON object { "spots": [ ...20 items... ] }. No markdown blocks, no other text.`;
+Output ONLY valid JSON.
+{ "spots": [...] }`;
 
+    console.log(`[LiveSearch] Initiating AI search for query: "${q}"`);
 
     try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -48,25 +53,25 @@ Output ONLY the JSON object { "spots": [ ...20 items... ] }. No markdown blocks,
                 model: 'gpt-4o-mini',
                 response_format: { type: "json_object" },
                 messages: [{ role: 'user', content: prompt }],
-                temperature: 0.7,
+                temperature: 0.8,
             }),
         });
 
         const data = await res.json();
         if (!res.ok) {
-            console.error("OpenAI API Error:", data.error);
+            console.error("[LiveSearch] OpenAI API Error:", data.error);
             throw new Error(data.error?.message || 'OpenAI API Error');
         }
 
         const content = data.choices[0].message.content;
         const parsed = JSON.parse(content);
-
-        // Typecast just to be safe it's treated as what we expect
         const spots: TravelSpot[] = parsed.spots;
+
+        console.log(`[LiveSearch] Successfully generated ${spots.length} spots for "${q}"`);
 
         return NextResponse.json(spots);
     } catch (error: any) {
-        console.error('Live Search Error:', error);
+        console.error('[LiveSearch] Critical Error:', error);
         return NextResponse.json({ error: 'Failed to generate live results' }, { status: 500 });
     }
 }

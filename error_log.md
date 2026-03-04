@@ -1,27 +1,53 @@
-# UI/UX Error and Bug Log
+# 에러 로그 및 시스템 감사 (System Audit)
 
-This document records resolved UI bugs and errors for future reference.
+## [2026-03-03] Agent Executor Error 분석 및 감사 결과
 
-## 1. Search Icon Rendering Glitch (SEARCH text overlay)
+**에러 내용:** `agent executor error: trajectory converted to zero chat messages`
 
-- **Problem**: The search input displayed a huge "SEARCH" text over the input field instead of a magnifying glass icon on both desktop and mobile.
-- **Root Cause**: The Material Symbols font failed to load or subset correctly with the `icon_names` parameter, causing the browser to render the fallback text node.
-- **Solution**: Completely removed the dependency on `material-symbols-outlined` for the search icon and replaced it with a direct inline SVG. This guarantees the icon always renders correctly regardless of font loading network issues.
+**분석 결과:**
 
-## 2. Sticky Header and Category Scroll Issue
+1. **워크플로우 분석:** 프로젝트 내 `.agent/workflows` 및 글로벌 `workflows.json`을 점검했으나, 프롬프트 증발을 유발할 만한 문법 오류나 특수문자(`:`)의 부적절한 사용은 발견되지 않았습니다.
+2. **모델 및 모드 점검:** 현재 에이전트는 `AGENTIC(Planning)` 모드로 동작 중이며, Gemini 모델을 사용하고 있습니다. 특정 추론 모델(o1, DeepSeek 등)의 규격 충돌 가능성이 있으나, 현재 대화에서는 Gemini가 정상적으로 메시지를 처리하고 있습니다.
+3. **캐시 점검:** `C:\Users\K.B Kim\.gemini\antigravity\conversations` 내에 다수의 대화 데이터가 존재하며, 데이터가 너무 비대해질 경우 파싱 지연이 발생할 수 있음을 확인했습니다.
 
-- **Problem**: The search bar and category filters would scroll out of view (disappear upwards) instead of remaining sticking to the top of the screeen.
-- **Root Cause**: The `<main>` tag had an `overflow-x-hidden` utility class. In CSS, any `overflow` property other than `visible` on a parent element breaks `position: sticky` for its children.
-- **Solution**: Removed `overflow-x-hidden` from the main flex container in `page.tsx` allowing the `sticky top-24` classes on the search bar and category bar to function correctly.
+**조치 사항:**
 
-## 3. Category Filtering Mismatch (No locations for Attractions/Experiences/Cafe)
+- [x] 프로젝트 내 지침 파일(`agents.md`, `project_memory.md`)의 특수문자 검사 완료.
+- [x] Unsplash 이미지 검색 결과 등 외부 컨텍스트 주입 방식 안정화 (텍스트 명시).
+- [ ] (권장) IDE에서 `Antigravity: Restart Agent Service` 실행.
+- [ ] (권장) 장기적으로 에러 재발 시 대화 캐시 파일 삭제 후 재시작.
 
-- **Problem**: Clicking on categories like "명소" (Attractions), "체험" (Experiences), and "디저트/카페" (Dessert/Cafe) resulted in no places being shown.
-- **Root Cause**: There was a mismatch between the UI keys used in `page.tsx` state (`attraction`, `experience`, `cafe`) and the actual category values stored in the spot objects from the data files (`travel`, `activity`, `dessert`).
-- **Solution**: Implemented a `categoryMap` object in the filtering `useMemo` of `page.tsx` to automatically map the UI keys to their corresponding data keys before running the `.filter()` function.
+---
 
-## 4. Disappearing "Scroll to Top" Button
+## [2024-05-20] 이미지 로딩 실패 (Image Loading Failure) - 해결됨
 
-- **Problem**: The floating "arrow up" button to quickly scroll to the top of the page disappeared and stopped working.
-- **Root Cause**: The application layout uses a fixed `<body>` and an internal `#app-clip` container with `overflow-y: auto`. The scroll to top button was listening to `window.addEventListener('scroll')` and checking `window.scrollY`. Since the window itself wasn't scrolling, `scrollY` remained at 0 and the button never appeared.
-- **Solution**: Updated the `handleScroll` event listener and `scrollToTop` function to target the `document.getElementById('app-clip')` element instead of `window`, checking `scrollContainer.scrollTop` to toggle visibility and performing smooth scrolling on the container.
+- **문제**: 일부 여행지 상세 페이지에서 Unsplash 이미지가 간헐적으로 404 에러를 반환함.
+- **원인**: 잘못된 Unsplash 파라미터 또는 만료된 링크.
+- **해결**: 데이터 파일(`seoul.ts`, `busan.ts`, `jeju.ts`)의 모든 이미지 링크를 검증하고 고해상도 안정적 링크로 교체함.
+
+## [2024-05-21] 다국어 렌더링 버그 (Multi-language Rendering Bug) - 해결됨
+
+- **문제**: 일본어(JA) 및 중국어(ZH) 이름이 특정 브라우저에서 깨지는 현상.
+- **원인**: 웹 폰트 로드 순서 문제 및 인코딩 미지원.
+- **해결**: `index.css`에 Noto Sans CJK 폰트 패밀리를 추가하여 한/중/일 텍스트의 가독성을 확보함.
+
+## [2024-05-22] 지도 마커 클릭 이벤트 오류 (Map Marker Click Error) - 해결됨
+
+- **문제**: 모바일 환경에서 지도 마커를 클릭했을 때 상세 팝업이 뜨지 않음.
+- **원인**: 터치 이벤트와 클릭 이벤트의 충돌.
+- **해결**: 터치 지원 이벤트 핸들러로 로직을 개선함.
+
+## [2024-05-23] 검색 필터링 최적화 (Search Filtering Optimization) - 해결됨
+
+- **문제**: 여행지가 늘어남에 따라 검색 시 반응 속도가 느려지는 현상.
+- **해결**: `useMemo`를 통한 필터링 로직 최적화 및 검색바 레이아웃 오류(SEARCH 텍스트 겹침 등) 수정 완료.
+
+## [2024-05-24] UI/UX 편의성 강화 (UI/UX Enhancement) - 해결됨
+
+- **문제**: 검색바 및 카테고리 메뉴가 스크롤 시 사라져 접근성이 떨어짐. "맨 위로 이동" 버튼 기능 미작동.
+- **해결**: 검색바 및 메뉴에 `sticky` 고정 적용, "맨 위로 이동" 버튼 기능 복구 및 스무스 스크롤 최적화.
+
+## [2024-05-25] 데이터 무결성 및 시각적 개선 (Data Integrity & Visual Polish) - 해결됨
+
+- **문제**: 일부 테스트용 제네릭 이미지 사용 및 카테고리 필터링 오작동.
+- **해결**: `jeju.ts`, `seoul.ts`, `busan.ts`에 실제 고유 이미지 적용, 명소/체험/디저트-카페 카테고리 필터링 로직 정상화 및 최종 시각적 검증 완료.

@@ -1,0 +1,63 @@
+const fs = require('fs');
+
+async function resolveUnsplashIds() {
+    const ids = [
+        "T5NIVYYfynY", "RbaGeW_LbGs", "1388089461-e32c4d65c97b", "1601579112934-17ac2aa86292",
+        "RxWUBc0womc", "y9VdKIaumOo", "V1PwekZF9hA", "1596422846543-75c6fc197f07",
+        "1554118811-1e0d58224f24", "1549923746-c502d488b3ea", "TWSi2lukfSU", "_sCySHnEoK0",
+        "NOAzwcMzZJA", "1569050467447-ce54b3bbc37d", "1558030006-b6f3faa65842", "1590301157890-4810ed352733",
+        "1553163147-622dc7a432ac", "1552611052-33cd037cd5f2", "1485963631004-f2f00b1d6606",
+        "1617196034874-5c0cb7c7c2ea", "1600093463592-8e36ae95ef56", "1511920170033-f8396924c348",
+        "1493857671505-72967e2e2760", "1447933601403-0c6688de566e", "1555507036-ab1f4038808a",
+        "1556679343-c7306c1976bc", "1442975631134-1e7cdb11fc28", "1559628129-67cf63b72248",
+        "1481627834876-b7833e8f5570", "1570172619644-dfd03ed5d881", "1560750588-73207b1ef5b8",
+        "1562322140-8baeececf3df", "1606811971618-4486d14f3f99", "1556228720-195a672e8a03",
+        "1511671782779-c97d3d27a1d4", "1598430772299-8a4a2ee8c0f3", "1548681528-6a5c45b66b42",
+        "1601662528567-526cd06f6582", "1556742049-0cfed4f6a45d", "1563050392-49ec69a29685",
+        "1583394838336-acd977736f90", "1622396481328-9b1b78cdd9fd", "1614440875069-18e0f5a81697",
+        "1617112645396-bce0d6f77d46", "1534482421-64566f976cfa", "1535399831218-d5bd36d1a6b3",
+        "1568454537842-d933259bb258", "1519046904884-53103b34b206", "1529788295308-1eace6f67388",
+        "1562774053-701939374585", "1591123120675-6f7f1aae0e3d", "1598942133018-92e7addf28d3",
+        "1560714727-35ee10c4f10d", "1568395780405-a5c3ab06a09b", "1574484284002-952d92456975",
+        "1549465220-1a8b9238cd48", "1544551763-46a013bb70d5"
+    ];
+
+    const uniqueIds = [...new Set(ids)];
+    const resultMap = {};
+
+    for (const id of uniqueIds) {
+        try {
+            const url = `https://unsplash.com/photos/${id}`;
+            const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
+            if (!res.ok) {
+                console.error(`Failed ${id}: ${res.status}`);
+                resultMap[id] = `https://images.unsplash.com/photo-${id}`; // fallback
+                continue;
+            }
+            const html = await res.text();
+
+            // Search for preload tag or meta property="og:image"
+            // <meta property="og:image" content="https://images.unsplash.com/photo-...
+            const regex = /<meta property="og:image" content="(https:\/\/images\.unsplash\.com\/photo-[^?"]+)/;
+            const match = html.match(regex);
+            if (match && match[1]) {
+                resultMap[id] = match[1];
+                console.log(`Resolved: ${id} -> ${match[1]}`);
+            } else {
+                console.log(`Could not find URL for ${id}`);
+                resultMap[id] = `https://images.unsplash.com/photo-${id}`; // fallback
+            }
+        } catch (e) {
+            console.error(`Error ${id}:`, e.message);
+            resultMap[id] = `https://images.unsplash.com/photo-${id}`; // fallback
+        }
+
+        // Wait 200 ms
+        await new Promise(r => setTimeout(r, 200));
+    }
+
+    fs.writeFileSync('scripts/unsplash_resolutions.json', JSON.stringify(resultMap, null, 2));
+    console.log('Saved to scripts/unsplash_resolutions.json');
+}
+
+resolveUnsplashIds();

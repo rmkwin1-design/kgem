@@ -219,7 +219,7 @@ def main():
 
     env = load_env()
     openai_key   = env.get("OPENAI_API_KEY", "")
-    naver_id     = env.get("NEXT_PUBLIC_NAVER_CLIENT_ID", "")
+    naver_id     = env.get("NAVER_SEARCH_CLIENT_ID", "")
     naver_secret = env.get("NAVER_CLIENT_SECRET", "")
 
     if not openai_key:

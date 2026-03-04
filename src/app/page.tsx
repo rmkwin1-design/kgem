@@ -240,7 +240,9 @@ export default function Home() {
   const handleSearch = async (e?: React.FormEvent, overrideQuery?: string) => {
     if (e) e.preventDefault();
     const query = overrideQuery || searchQuery;
+
     if (query.trim().length > 1) {
+      setLiveSpots([]); // Clear previous live results before new search
       setIsAiSearching(true);
 
       // 1. Process via KGEM Core Agent (existing logic)
@@ -255,7 +257,7 @@ export default function Home() {
         const desc = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
         const reg = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
         const buffer = `${title} ${desc} ${reg}`;
-        return query.split(/\\s+/).every(kw => buffer.includes(kw.toLowerCase()));
+        return query.split(/\s+/).every(kw => buffer.includes(kw.toLowerCase()));
       });
 
       // 3. Live AI fetching: always trigger if local results < 20
@@ -273,7 +275,7 @@ export default function Home() {
         setLiveSpots([]); // Clear if we already have enough local matches
       }
 
-      setTimeout(() => setIsAiSearching(false), 500);
+      setIsAiSearching(false);
     } else {
       setLiveSpots([]);
       setIsAiSearching(false);
@@ -910,7 +912,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight">
                 {searchQuery ? (
                   <span className="flex items-center gap-3">
-                    {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (10+)`}
+                    {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (20+)`}
                     {!isAiSearching && <span className="text-[var(--primary)] text-xs font-black bg-[var(--primary)]/10 px-2 py-1 rounded">{t.ui.verified}</span>}
                   </span>
                 ) : t.sections.curated}
