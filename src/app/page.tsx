@@ -173,7 +173,9 @@ export default function Home() {
     // 🧠 인앱 브라우저 감지 로직 (카카오톡, 인스타그램 등)
     const ua = navigator.userAgent.toLowerCase();
     const isInApp = /kakaotalk|instagram|fbav|line|naver|pinterst/i.test(ua);
+    console.log(`[Diagnostic] Browser UA: ${ua}, isInApp: ${isInApp}`);
     if (isInApp) {
+      // alert("In-App Browser Detected. Some features may be limited.");
       setShowInAppModal(true);
     }
     // 🚀 PWA 설치 프롬프트 제어 로직
@@ -219,11 +221,10 @@ export default function Home() {
 
 
   // 🛡️ 2026 Strategy: Deterministic Filter Reset
-  // Whenever the active category changes, we nuke the search query to ensure a clean slate.
-  // This addresses the user feedback about "BBQ" sticking to "Filming" categories.
   useEffect(() => {
-    setSearchQuery('');
-    setLiveSpots([]);
+    console.log(`[Diagnostic] Active category changed to: ${activeCategory}`);
+    // setSearchQuery(''); // DISABLED: Too aggressive, clears search results unexpectedly
+    // setLiveSpots([]);   // DISABLED: Too aggressive
   }, [activeCategory]);
 
 
@@ -240,9 +241,10 @@ export default function Home() {
   const handleSearch = async (e?: React.FormEvent, overrideQuery?: string) => {
     if (e) e.preventDefault();
     const query = overrideQuery || searchQuery;
+    console.log(`[Diagnostic] handleSearch triggered with query: "${query}"`);
 
     if (query.trim().length > 1) {
-      setLiveSpots([]); // Clear previous live results before new search
+      setLiveSpots([]);
       setIsAiSearching(true);
 
       // 1. Process via KGEM Core Agent (existing logic)
@@ -266,10 +268,23 @@ export default function Home() {
           const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`);
           if (res.ok) {
             const dynamicSpots = await res.json();
-            setLiveSpots(dynamicSpots);
+            console.log(`[Diagnostic] API Success: ${Array.isArray(dynamicSpots) ? dynamicSpots.length : 'error'} spots`);
+            if (dynamicSpots.error) {
+              alert(`API Error: ${dynamicSpots.error}`);
+              setLiveSpots([]);
+            } else {
+              setLiveSpots(dynamicSpots);
+            }
+          } else {
+            const errorText = await res.text();
+            console.error("Live AI Search Failed:", res.status, errorText);
+            alert(`Search Failed (Status ${res.status}). Check server logs.`);
+            setLiveSpots([]);
           }
-        } catch (error) {
-          console.error("Live AI Search Failed:", error);
+        } catch (error: any) {
+          console.error("Live AI Search network error:", error);
+          alert(`Network Error: ${error.message}`);
+          setLiveSpots([]);
         }
       } else {
         setLiveSpots([]); // Clear if we already have enough local matches
@@ -625,7 +640,7 @@ export default function Home() {
                   } else {
                     setLiveSpots([]);
                   }
-                }, 800);
+                }, 300);
               }}
               placeholder={t.hero.searchPlaceholder}
               className="w-full pl-12 pr-20 py-3 bg-transparent rounded-full text-[14px] sm:text-[15px] focus:outline-none placeholder:text-slate-500 text-[var(--text-main)] overflow-ellipsis"
@@ -736,11 +751,11 @@ export default function Home() {
 
       {/* Featured Content & Login Gate */}
       {
-        user ? (
+        (user || searchQuery) ? (
           <section className="px-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-1000">
 
             {/* Trending Section */}
-            {!searchQuery && activeCategory === 'all' && (
+            {!searchQuery && activeCategory === 'all' && user && (
               <div className="mb-24">
                 {isInstallable && (
                   <button
@@ -867,7 +882,7 @@ export default function Home() {
             )}
 
             {/* Ladies Choice Section */}
-            {!searchQuery && activeCategory === 'all' && (
+            {!searchQuery && activeCategory === 'all' && user && (
               <div className="mb-24 p-8 rounded-[40px] bg-gradient-to-br from-[var(--primary)]/10 via-[var(--surface-dark)] to-[var(--secondary)]/5 border border-[var(--primary)]/10">
                 <div className="flex items-center gap-3 mb-10">
                   <div className="w-10 h-10 rounded-2xl bg-[var(--secondary)]/20 flex items-center justify-center text-xl">✨</div>
@@ -912,7 +927,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight">
                 {searchQuery ? (
                   <span className="flex items-center gap-3">
-                    {isAiSearching ? t.ui.analyzing : `"${searchQuery}" AI Results (20+)`}
+                    {isAiSearching ? (language === 'ko' ? '로컬 데이터 분석 중...' : 'Analyzing Local Data...') : `"${searchQuery}" Premium Results (${displaySpots.length})`}
                     {!isAiSearching && <span className="text-[var(--primary)] text-xs font-black bg-[var(--primary)]/10 px-2 py-1 rounded">{t.ui.verified}</span>}
                   </span>
                 ) : t.sections.curated}
@@ -1036,8 +1051,20 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-32 bg-slate-900/30 rounded-[40px] border border-dashed border-slate-800">
-                <p className="text-slate-500 text-lg">"{searchQuery}" {language === 'ko' ? '에 대한 지역 특화 결과를 찾고 있습니다...' : ' - Looking for regional results...'}</p>
+              <div className="text-center py-40 bg-[var(--surface-dark)]/40 rounded-[60px] border border-dashed border-slate-800 backdrop-blur-sm">
+                <div className="w-24 h-24 rounded-full bg-slate-800/50 flex items-center justify-center text-4xl mb-8 mx-auto animate-pulse">
+                  {isAiSearching ? '🧠' : '🔍'}
+                </div>
+                <p className="text-slate-300 text-xl font-bold mb-4">
+                  {isAiSearching
+                    ? (language === 'ko' ? `"${searchQuery}" 지역의 0.1% 숨은 명소를 찾는 중입니다...` : `Finding 0.1% local gems in "${searchQuery}"...`)
+                    : (language === 'ko' ? `"${searchQuery}"에 대한 검색 결과가 없습니다.` : `No results found for "${searchQuery}".`)}
+                </p>
+                <p className="text-slate-500 text-sm italic">
+                  {isAiSearching
+                    ? (language === 'ko' ? 'AI 큐레이터가 실시간으로 소셜 트렌드와 현지 리뷰를 분석하고 있습니다.' : 'Our AI curator is analyzing social trends and local reviews in real-time.')
+                    : (language === 'ko' ? '다른 검색어나 지역명으로 다시 검색해보세요.' : 'Try searching with different keywords or regions.')}
+                </p>
               </div>
             )}
           </section>
