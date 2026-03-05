@@ -243,6 +243,7 @@ export default function Home() {
     console.log(`[Diagnostic] handleSearch triggered with query: "${query}"`);
 
     if (query.trim().length > 1) {
+      setActiveCategory('all'); // 🚀 2026 Strategy: Reset to 'all' to show comprehensive results on new search
       setLiveSpots([]);
       setIsAiSearching(true);
 
@@ -502,18 +503,30 @@ export default function Home() {
   // 2026 Strategy: Display local database + Live AI fetched spots
   const displaySpots = useMemo(() => {
     const mappedCategory = categoryMap[activeCategory] || activeCategory;
-
-    // 🚀 NEW: If there's a search query, prioritize query over category for better UX
-    // This fixes the issue where "Incheon Food" shows 0 results because "Attraction" tab is selected.
     const isSearching = searchQuery.trim().length > 1;
 
+    // Filter live spots by both search keywords AND the active category
     const activeLiveSpots = liveSpots.filter(spot => {
-      if (isSearching) return true; // Show all search results regardless of tab
-      return activeCategory === 'all' || spot.category === mappedCategory;
+      const matchesKW = matchesSearch(spot);
+      const matchesCat = activeCategory === 'all' || spot.category === mappedCategory;
+      return matchesKW && matchesCat;
     });
 
-    return [...activeLiveSpots, ...filteredSpots];
-  }, [liveSpots, filteredSpots, activeCategory, searchQuery]);
+    // Combine with filtered local city spots (also matching KW and Cat)
+    const combined = [...activeLiveSpots, ...filteredSpots];
+
+    // Final uniqueness check by ID
+    const uniqueSpots: TravelSpot[] = [];
+    const seenIds = new Set();
+    for (const spot of combined) {
+      if (!seenIds.has(spot.id)) {
+        seenIds.add(spot.id);
+        uniqueSpots.push(spot);
+      }
+    }
+
+    return uniqueSpots;
+  }, [liveSpots, filteredSpots, activeCategory, searchQuery, language]);
 
   const handleCategorySelect = (categoryKey: string) => {
     setIsAiSearching(false);
