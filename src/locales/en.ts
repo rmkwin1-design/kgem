@@ -74,7 +74,17 @@ export const en = {
         copyUrl: "Copy URL",
         premiumPassDesc: "Get 24h unlimited access to all 0.1% K-Secret Tips",
         buyPass: "Get 24h Pass ($4.99)",
-        noSubscription: "No Subscription • One-time Payment"
+        noSubscription: "No Subscription • One-time Payment",
+        processing: "Processing...",
+        payWithCard: "💎 Credit Card ($4.99)",
+        orPayWith: "or pay with",
+        paypalError: "PayPal payment failed. Please try again.",
+        go: "GO",
+        searchTimeout: "Generating results is taking a bit longer. Your search results will be updated shortly.",
+        searchError: "Search error occurred. Please check your server settings.",
+        searchResultCount: "\"{query}\" Premium Results ({count})",
+        noResultsFound: "No results found for \"{query}\".",
+        searchingLocal: "Analyzing Local Data..."
     },
     footer: {
         powered: "Powered by K-AI 0.1% Intelligence",

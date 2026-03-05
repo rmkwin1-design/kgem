@@ -74,7 +74,17 @@ export const ko = {
         copyUrl: "URL 복사하기",
         premiumPassDesc: "24시간 모든 0.1% 시크릿 팁을 무제한으로 열람하세요.",
         buyPass: "24시간 시크릿 패스 구매 ($4.99)",
-        noSubscription: "구독 없음 • 일회성 결제"
+        noSubscription: "구독 없음 • 일회성 결제",
+        processing: "처리 중...",
+        payWithCard: "💎 신용카드 ($4.99)",
+        orPayWith: "또는 다음으로 결제",
+        paypalError: "PayPal 결제에 실패했습니다. 다시 시도해 주세요.",
+        go: "검색",
+        searchTimeout: "데이터 생성에 시간이 오래 걸리고 있습니다. 잠시 후 검색 결과가 업데이트됩니다.",
+        searchError: "검색 오류가 발생했습니다. 서버 설정을 확인해주세요.",
+        searchResultCount: "\"{query}\" 프리미엄 검색 결과 ({count}건)",
+        noResultsFound: "\"{query}\"에 대한 검색 결과가 없습니다.",
+        searchingLocal: "로컬 데이터를 분석 중입니다..."
     },
     footer: {
         powered: "K-AI 0.1% 인텔리전스 기반",

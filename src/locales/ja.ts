@@ -74,7 +74,14 @@ export const ja = {
         copyUrl: "URLをコピー",
         premiumPassDesc: "24時間すべての0.1%シークレットチップを無制限に閲覧可能",
         buyPass: "24時間パスを購入 ($4.99)",
-        noSubscription: "定期購入なし • 1回払い"
+        noSubscription: "定期購入なし • 1回払い",
+        processing: "処理中...",
+        payWithCard: "💎 クレジットカード ($4.99)",
+        orPayWith: "または次で支払う",
+        paypalError: "PayPal決済に失敗しました。もう一度お試しください。",
+        go: "検索",
+        searchTimeout: "データの生成に時間がかかっています。まもなく検索結果が更新されます。",
+        searchError: "検索エラーが発生しました。サーバー設定を確認してください。"
     },
     footer: {
         powered: "K-AI 0.1% インテリジェンス基盤",

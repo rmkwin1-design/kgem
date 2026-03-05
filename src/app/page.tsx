@@ -90,12 +90,12 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
             disabled={isProcessing}
             className="w-full py-4 rounded-2xl bg-[var(--primary)] hover:brightness-110 text-[var(--bg-dark)] font-black text-sm transition-all shadow-xl shadow-[var(--primary)]/20 active:scale-95 disabled:opacity-50"
           >
-            {isProcessing ? "Processing..." : `💎 Credit Card ($4.99)`}
+            {isProcessing ? t.ui.processing : t.ui.payWithCard}
           </button>
 
           <div className="relative py-2">
             <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--primary)]/20" />
-            <span className="relative z-10 px-3 bg-[var(--surface-dark)] text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">or pay with</span>
+            <span className="relative z-10 px-3 bg-[var(--surface-dark)] text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">{t.ui.orPayWith}</span>
           </div>
 
           <PayPalButtons
@@ -123,7 +123,7 @@ const PremiumGate = ({ t, userId, onUnlock }: { t: any, userId: string, onUnlock
             }}
             onError={(err) => {
               console.error("PayPal Error:", err);
-              alert("PayPal payment failed. Please try again.");
+              alert(t.ui.paypalError);
             }}
           />
         </div>
@@ -247,58 +247,101 @@ export default function Home() {
       setIsAiSearching(true);
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 35000); // 35s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 60000); // Increased to 60s for better stability
 
-      // 1. Process via KGEM Core Agent (existing logic)
+      // 1. Compute local matches first
       const sanitizedQuery = securityManager.sanitizeInput(query);
-      try {
-        await kgemAgent.processRequest(sanitizedQuery);
-      } catch (err) { }
-
-      // 2. Compute local matches
       const localMatches = sampleSpots.filter(spot => {
         const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
         const desc = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
         const reg = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
-        const buffer = `${title} ${desc} ${reg}`;
-        return query.split(/\s+/).every(kw => buffer.includes(kw.toLowerCase()));
+        const bufferStr = `${title} ${desc} ${reg}`;
+        return query.split(/\s+/).every(kw => bufferStr.includes(kw.toLowerCase()));
       });
 
-      // 3. Live AI fetching: always trigger if local results < 20
-      if (localMatches.length < 20) {
-        try {
-          const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, {
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (res.ok) {
-            const dynamicSpots = await res.json();
-            console.log(`[Diagnostic] API Success: ${Array.isArray(dynamicSpots) ? dynamicSpots.length : 'error'} spots`);
-            if (dynamicSpots.error) {
-              alert(`API Error: ${dynamicSpots.error}`);
-              setLiveSpots([]);
-            } else {
-              setLiveSpots(dynamicSpots);
-            }
-          } else {
-            const errorData = await res.json().catch(() => ({ message: "Unknown error" }));
-            console.error("Live AI Search Failed:", res.status, errorData);
-            alert(`Search Failed (Status ${res.status}): ${errorData.error || errorData.details || 'Check server config'}`);
-            setLiveSpots([]);
-          }
-        } catch (error: any) {
-          clearTimeout(timeoutId);
-          console.error("Live AI Search error:", error);
-          if (error.name === 'AbortError') {
-            alert(language === 'ko' ? "서버 응답이 늦어지고 있습니다. 잠시 후 다시 시도해주세요." : "Server is taking too long. Please try again in a moment.");
-          } else {
-            alert(`Search Error: ${error.message}`);
-          }
-          setLiveSpots([]);
-        }
-      } else {
-        console.log(`[Diagnostic] Sufficient local matches found: ${localMatches.length}`);
+      // 🚀 2026 Strategy: Show local results IMMEDIATELY
+      if (localMatches.length > 0) {
+        console.log(`[Diagnostic] Improving UX: Showing ${localMatches.length} local matches instantly.`);
         setLiveSpots(localMatches);
+      }
+
+      // 2. Process via KGEM Core Agent (Non-blocking background)
+      kgemAgent.processRequest(sanitizedQuery).catch(err => console.warn("Agent processing error:", err));
+
+      // Quick exit if we have plenty of local results
+      if (localMatches.length >= 8) {
+        setIsAiSearching(false);
+        clearTimeout(timeoutId);
+        return;
+      }
+
+      // 3. Live AI fetching (Background context if local exists)
+      try {
+        const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, {
+          signal: controller.signal
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({ message: "알 수 없는 오류" }));
+          if (localMatches.length === 0) {
+            console.warn(`${t.ui.searchError} (Code ${res.status}): ${errorData.error || errorData.details || ''}`);
+          }
+          setIsAiSearching(false);
+          return;
+        }
+
+        // 🚀 NEW: Progressive Stream Consumption
+        if (!res.body) throw new Error("No response body");
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        const processChunk = (chunk: string) => {
+          const lines = chunk.split("\n");
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || !trimmed.startsWith("{")) continue;
+            try {
+              const spot = JSON.parse(trimmed);
+              if (spot && spot.id) {
+                setLiveSpots(prev => {
+                  if (prev.find(p => p.id === spot.id)) return prev;
+                  return [...prev, spot];
+                });
+              }
+            } catch (e) {
+              console.warn("Partial JSON chunk skipped:", trimmed);
+            }
+          }
+        };
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split("\n");
+          buffer = parts.pop() || ""; // Save incomplete line
+
+          if (parts.length > 0) {
+            processChunk(parts.join("\n"));
+          }
+        }
+
+        // 🚀 CRITICAL: Process final leftover buffer
+        if (buffer.trim()) {
+          processChunk(buffer.trim());
+        }
+
+        clearTimeout(timeoutId);
+      } catch (error: any) {
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+          if (localMatches.length === 0) console.warn(t.ui.searchTimeout);
+        } else {
+          console.error("Live AI Search error:", error);
+          if (localMatches.length === 0) console.warn(`${t.ui.searchError}: ${error.message}`);
+        }
       }
 
       setIsAiSearching(false);
@@ -459,9 +502,18 @@ export default function Home() {
   // 2026 Strategy: Display local database + Live AI fetched spots
   const displaySpots = useMemo(() => {
     const mappedCategory = categoryMap[activeCategory] || activeCategory;
-    const activeLiveSpots = liveSpots.filter(spot => activeCategory === 'all' || spot.category === mappedCategory);
+
+    // 🚀 NEW: If there's a search query, prioritize query over category for better UX
+    // This fixes the issue where "Incheon Food" shows 0 results because "Attraction" tab is selected.
+    const isSearching = searchQuery.trim().length > 1;
+
+    const activeLiveSpots = liveSpots.filter(spot => {
+      if (isSearching) return true; // Show all search results regardless of tab
+      return activeCategory === 'all' || spot.category === mappedCategory;
+    });
+
     return [...activeLiveSpots, ...filteredSpots];
-  }, [liveSpots, filteredSpots, activeCategory]);
+  }, [liveSpots, filteredSpots, activeCategory, searchQuery]);
 
   const handleCategorySelect = (categoryKey: string) => {
     setIsAiSearching(false);
@@ -657,7 +709,7 @@ export default function Home() {
               className="w-full pl-12 pr-20 py-3 bg-transparent rounded-full text-[14px] sm:text-[15px] focus:outline-none placeholder:text-slate-500 text-[var(--text-main)] overflow-ellipsis"
             />
             <button className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--bg-dark)] w-16 h-9 rounded-full font-black text-[12px] transition-all flex items-center justify-center shadow-lg shadow-[var(--primary)]/20">
-              {isAiSearching ? <div className="w-3.5 h-3.5 border-2 border-[var(--bg-dark)] border-t-transparent rounded-full animate-spin" /> : "GO"}
+              {isAiSearching ? <div className="w-3.5 h-3.5 border-2 border-[var(--bg-dark)] border-t-transparent rounded-full animate-spin" /> : t.ui.go}
             </button>
           </form>
         </div>
@@ -938,7 +990,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight">
                 {searchQuery ? (
                   <span className="flex items-center gap-3">
-                    {isAiSearching ? (language === 'ko' ? '로컬 데이터 분석 중...' : 'Analyzing Local Data...') : `"${searchQuery}" Premium Results (${displaySpots.length})`}
+                    {isAiSearching ? t.ui.searchingLocal : t.ui.searchResultCount.replace('{query}', searchQuery).replace('{count}', displaySpots.length.toString())}
                     {!isAiSearching && <span className="text-[var(--primary)] text-xs font-black bg-[var(--primary)]/10 px-2 py-1 rounded">{t.ui.verified}</span>}
                   </span>
                 ) : t.sections.curated}
@@ -947,7 +999,7 @@ export default function Home() {
             </div>
 
 
-            {isAiSearching ? (
+            {isAiSearching && displaySpots.length === 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={`skel-${i}`} />)}
               </div>
@@ -1068,8 +1120,8 @@ export default function Home() {
                 </div>
                 <p className="text-slate-300 text-xl font-bold mb-4">
                   {isAiSearching
-                    ? (language === 'ko' ? `"${searchQuery}" 지역의 0.1% 숨은 명소를 찾는 중입니다...` : `Finding 0.1% local gems in "${searchQuery}"...`)
-                    : (language === 'ko' ? `"${searchQuery}"에 대한 검색 결과가 없습니다.` : `No results found for "${searchQuery}".`)}
+                    ? t.ui.searchingLocal
+                    : t.ui.noResultsFound.replace('{query}', searchQuery)}
                 </p>
                 <p className="text-slate-500 text-sm italic">
                   {isAiSearching

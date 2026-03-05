@@ -74,7 +74,14 @@ export const zh = {
         copyUrl: "复制链接",
         premiumPassDesc: "获取 24 小时无限访问所有 0.1% 韩国秘密贴士",
         buyPass: "获取 24 小时通行证 ($4.99)",
-        noSubscription: "无订阅 • 一次性付费"
+        noSubscription: "无订阅 • 一次性付费",
+        processing: "处理中...",
+        payWithCard: "💎 信用卡 ($4.99)",
+        orPayWith: "或使用以下方式支付",
+        paypalError: "PayPal 支付失败。请重试。",
+        go: "搜索",
+        searchTimeout: "生成结果需要更长的时间。您的搜索结果将很快更新。",
+        searchError: "发生搜索错误。请检查您的服务器设置。"
     },
     footer: {
         powered: "由 K-AI 0.1% 智能驱动",
