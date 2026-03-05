@@ -473,6 +473,13 @@ export default function Home() {
     const liveMatches = liveSpots.filter(spot => {
       const matchesCat = activeCategory === 'all' || spot.category === mappedCategory;
       if (isFoodSearch && activeCategory === 'all') {
+        // AI Hallucination Safeguard: drop obvious non-food elements
+        const title = (spot.title?.['ko'] || '').toLowerCase();
+        const desc = (spot.description?.['ko'] || '').toLowerCase();
+        const text = `${title} ${desc}`;
+        if (text.includes('박물관') || text.includes('미술관') || text.includes('유적지') || text.includes('공원')) {
+          return false;
+        }
         return spot.category === 'food' || spot.category === 'dessert';
       }
       return matchesCat;
@@ -990,15 +997,17 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
 
                         {/* 💎 2026 Strategy: Premium Badges (Screenshot Match) */}
-                        <div className="absolute top-4 left-4 flex flex-col gap-2">
-                          <div className="bg-[var(--bg-dark)]/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-[var(--primary)] border border-[var(--primary)]/30 flex items-center gap-1.5">
-                            <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
-                            AI 광고 필터링
+                        {isPremium && (
+                          <div className="absolute top-4 left-4 flex flex-col gap-2">
+                            <div className="bg-[var(--bg-dark)]/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-[var(--primary)] border border-[var(--primary)]/30 flex items-center gap-1.5">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
+                              AI 광고 필터링
+                            </div>
+                            <div className="bg-[var(--secondary)] px-3 py-1 rounded-full text-[10px] font-black text-white shadow-lg shadow-[var(--secondary)]/20 uppercase tracking-wider">
+                              0.1% SECRET
+                            </div>
                           </div>
-                          <div className="bg-[var(--secondary)] px-3 py-1 rounded-full text-[10px] font-black text-white shadow-lg shadow-[var(--secondary)]/20 uppercase tracking-wider">
-                            0.1% SECRET
-                          </div>
-                        </div>
+                        )}
 
                         {/* 🔥 2026 Strategy: Real-time Social Proof */}
                         <div className="absolute bottom-4 left-4 flex items-center gap-2 text-[10px] font-bold text-slate-300">

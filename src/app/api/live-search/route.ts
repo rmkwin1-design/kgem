@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     // Category detection
     const foodKW = ['맛집', '식당', '카페', 'food', '음식', '밥', '고기', '갈비', '치킨', '국밥', '냉면', 'restaurant', 'ramen', 'sushi'];
     const isFood = foodKW.some(w => q.toLowerCase().includes(w));
-    const catRule = isFood ? 'category MUST be "food" or "dessert". NEVER "travel".' : '';
+    const catRule = isFood ? 'CRITICAL: You MUST ONLY output real restaurants, cafes, or eateries. NEVER output museums, parks, historical sites, or tourist attractions. Set category to "food" or "dessert".' : '';
 
     const prompt = `Output EXACTLY 10 real places for "${q}" as NDJSON. One JSON per line. No markdown.
 ${catRule}
