@@ -302,50 +302,46 @@ export default function Home() {
           for (const line of lines) {
             const trimmed = line.trim();
             if (!trimmed || !trimmed.startsWith("{")) continue;
+            if (!line.trim()) continue;
             try {
-              const spot = JSON.parse(trimmed);
+              const spot = JSON.parse(line);
               if (spot && spot.id) {
                 setLiveSpots(prev => {
-                  if (prev.find(p => p.id === spot.id)) return prev;
+                  // Deduplicate in real-time
+                  if (prev.some(s => s.id === spot.id)) return prev;
                   return [...prev, spot];
                 });
               }
-            } catch (e) {
-              console.warn("Partial JSON chunk skipped:", trimmed);
+            } catch (err) {
+              console.warn('[LiveSearch] Failed to parse line:', line, err);
             }
           }
-        };
+        }
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const parts = buffer.split("\n");
-          buffer = parts.pop() || ""; // Save incomplete line
-
-          if (parts.length > 0) {
-            processChunk(parts.join("\n"));
+        // Final buffer processing
+        if (buffer.trim()) {
+          try {
+            const spot = JSON.parse(buffer);
+            if (spot && spot.id) {
+              setLiveSpots(prev => {
+                if (prev.some(s => s.id === spot.id)) return prev;
+                return [...prev, spot];
+              });
+            }
+          } catch (e) {
+            console.warn('[LiveSearch] Final buffer parse failed', e);
           }
         }
-
-        // 🚀 CRITICAL: Process final leftover buffer
-        if (buffer.trim()) {
-          processChunk(buffer.trim());
-        }
-
-        clearTimeout(timeoutId);
-      } catch (error: any) {
-        clearTimeout(timeoutId);
-        if (error.name === 'AbortError') {
-          if (localMatches.length === 0) console.warn(t.ui.searchTimeout);
+      } catch (err: any) {
+        if (err.name === 'AbortError') {
+          console.warn('[LiveSearch] Request timed out or aborted');
         } else {
-          console.error("Live AI Search error:", error);
-          if (localMatches.length === 0) console.warn(`${t.ui.searchError}: ${error.message}`);
+          console.error('[LiveSearch] Error:', err);
         }
+      } finally {
+        clearTimeout(timeoutId);
+        setIsAiSearching(false);
       }
-
-      setIsAiSearching(false);
     } else {
       setLiveSpots([]);
       setIsAiSearching(false);
@@ -505,27 +501,26 @@ export default function Home() {
     const mappedCategory = categoryMap[activeCategory] || activeCategory;
     const isSearching = searchQuery.trim().length > 1;
 
-    // Filter live spots by both search keywords AND the active category
-    const activeLiveSpots = liveSpots.filter(spot => {
+    // 1. Get filtered local spots
+    const localMatches = filteredSpots;
+
+    // 2. Get filtered live spots
+    const liveMatches = liveSpots.filter(spot => {
       const matchesKW = matchesSearch(spot);
       const matchesCat = activeCategory === 'all' || spot.category === mappedCategory;
       return matchesKW && matchesCat;
     });
 
-    // Combine with filtered local city spots (also matching KW and Cat)
-    const combined = [...activeLiveSpots, ...filteredSpots];
-
-    // Final uniqueness check by ID
-    const uniqueSpots: TravelSpot[] = [];
-    const seenIds = new Set();
-    for (const spot of combined) {
-      if (!seenIds.has(spot.id)) {
-        seenIds.add(spot.id);
-        uniqueSpots.push(spot);
+    // 3. Combine and deduplicate
+    const combined = [...liveMatches, ...localMatches];
+    const uniqueMap = new Map();
+    combined.forEach(spot => {
+      if (!uniqueMap.has(spot.id)) {
+        uniqueMap.set(spot.id, spot);
       }
-    }
+    });
 
-    return uniqueSpots;
+    return Array.from(uniqueMap.values());
   }, [liveSpots, filteredSpots, activeCategory, searchQuery, language]);
 
   const handleCategorySelect = (categoryKey: string) => {
