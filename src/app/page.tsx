@@ -269,8 +269,8 @@ export default function Home() {
       // 2. Core Agent Call (Non-blocking)
       kgemAgent.processRequest(sanitized).catch(() => { });
 
-      // 3. Live AI Stream
-      const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
+      // 3. Live AI Stream (Optimized: pass current language)
+      const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}&lang=${language}`, { signal: controller.signal });
       if (!res.ok) throw new Error('Search failed');
 
       const reader = res.body?.getReader();
