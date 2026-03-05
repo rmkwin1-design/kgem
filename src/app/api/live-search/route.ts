@@ -9,58 +9,48 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const q = searchParams.get('q');
-    const lang = searchParams.get('lang') || 'ko';
+    if (!q) return NextResponse.json({ error: 'Missing q' }, { status: 400 });
 
-    if (!q) {
-        return NextResponse.json({ error: 'Missing q' }, { status: 400 });
-    }
+    // Category detection
+    const foodKW = ['맛집', '식당', '카페', 'food', '음식', '밥', '고기', '갈비', '치킨', '국밥', '냉면', 'restaurant', 'ramen', 'sushi'];
+    const isFood = foodKW.some(w => q.toLowerCase().includes(w));
+    const catRule = isFood ? 'category MUST be "food" or "dessert". NEVER "travel".' : '';
 
-    // 🚀 SPEED OPTIMIZATION: Generate only 1 language instead of 3 (60% fewer tokens = 2-3x faster)
-    const langMap: Record<string, string> = { ko: '한국어', en: 'English', ja: '日本語' };
-    const langName = langMap[lang] || '한국어';
-
-    // Determine category hint from query
-    const foodWords = ['맛집', '식당', '카페', 'food', '음식', '밥', '고기', '갈비', '치킨', '국밥', '냉면'];
-    const isFoodQuery = foodWords.some(w => q.toLowerCase().includes(w));
-    const categoryHint = isFoodQuery
-        ? 'ONLY use category "food" or "dessert". NEVER use "travel".'
-        : 'Use any appropriate category.';
-
-    const prompt = `Generate 10 real Korean spots for "${q}" as NDJSON (1 JSON per line, no markdown).
-Language: ${langName} only. ${categoryHint}
-Schema: {"id":"live-<num>","title":{"${lang}":"..."},"category":"food|travel|dessert|activity","image":"https://picsum.photos/seed/<name>/800/600","rating":4.5,"description":{"${lang}":"..."},"region":{"${lang}":"..."},"lat":0,"lng":0,"price":0}`;
+    const prompt = `Output EXACTLY 10 real places for "${q}" as NDJSON. One JSON per line. No markdown.
+${catRule}
+Format: {"id":"live-N","title":{"ko":"...","en":"...","ja":"..."},"category":"food|travel|dessert|activity","image":"https://picsum.photos/seed/NAME/800/600","rating":4.5,"description":{"ko":"한줄","en":"one line","ja":"一行"},"region":{"ko":"...","en":"...","ja":"..."},"lat":0,"lng":0,"price":0}`;
 
     try {
         const stream = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Fast NDJSON generator. Output raw JSON lines only. No explanation.' },
+                { role: 'system', content: 'You output NDJSON only. No text. No code blocks. 10 lines exactly.' },
                 { role: 'user', content: prompt }
             ],
             temperature: 0,
-            max_tokens: 2500,
+            max_tokens: 4000,
             stream: true,
         });
 
-        const encoder = new TextEncoder();
+        const enc = new TextEncoder();
         const readable = new ReadableStream({
-            async start(controller) {
-                let buf = "";
+            async start(ctrl) {
+                let buf = '';
                 try {
                     for await (const chunk of stream) {
-                        const c = chunk.choices[0]?.delta?.content || "";
+                        const c = chunk.choices[0]?.delta?.content || '';
                         if (!c) continue;
                         buf += c;
                         let i;
-                        while ((i = buf.indexOf("\n")) !== -1) {
+                        while ((i = buf.indexOf('\n')) !== -1) {
                             const line = buf.slice(0, i).trim();
                             buf = buf.slice(i + 1);
-                            if (line) controller.enqueue(encoder.encode(line + "\n"));
+                            if (line) ctrl.enqueue(enc.encode(line + '\n'));
                         }
                     }
-                    if (buf.trim()) controller.enqueue(encoder.encode(buf.trim() + "\n"));
-                    controller.close();
-                } catch (e) { controller.error(e); }
+                    if (buf.trim()) ctrl.enqueue(enc.encode(buf.trim() + '\n'));
+                    ctrl.close();
+                } catch (e) { ctrl.error(e); }
             },
         });
 

@@ -246,7 +246,6 @@ export default function Home() {
       return;
     }
 
-    // 🚀 Update Search UI State
     setActiveCategory('all');
     setLiveSpots([]);
     setIsAiSearching(true);
@@ -255,22 +254,20 @@ export default function Home() {
     const timeoutId = setTimeout(() => controller.abort(), 60000);
 
     try {
-      // 1. Instant Local Matches
+      // 1. Show local matches instantly
       const sanitized = securityManager.sanitizeInput(query);
       const localMatches = sampleSpots.filter(spot => {
         const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
         const desc = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
-        const bufferStr = `${title} ${desc}`.toLowerCase();
-        return query.split(/\s+/).every(kw => bufferStr.includes(kw.toLowerCase()));
+        return query.split(/\s+/).every(kw => `${title} ${desc}`.includes(kw.toLowerCase()));
       });
-
       if (localMatches.length > 0) setLiveSpots(localMatches);
 
-      // 2. Core Agent Call (Non-blocking)
+      // 2. Background agent
       kgemAgent.processRequest(sanitized).catch(() => { });
 
-      // 3. Live AI Stream (Optimized: pass current language)
-      const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}&lang=${language}`, { signal: controller.signal });
+      // 3. AI Stream — use mutable counter to avoid React closure stale-count bug
+      const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
       if (!res.ok) throw new Error('Search failed');
 
       const reader = res.body?.getReader();
@@ -278,7 +275,7 @@ export default function Home() {
 
       const decoder = new TextDecoder();
       let buffer = '';
-      let count = 0;
+      const counter = { n: 0 }; // Mutable object survives React batching
 
       while (true) {
         const { done, value } = await reader.read();
@@ -293,22 +290,22 @@ export default function Home() {
           try {
             const spot = JSON.parse(line);
             if (spot && spot.id) {
+              counter.n++;
               setLiveSpots(prev => {
                 if (prev.some(s => s.id === spot.id)) return prev;
-                count++;
                 return [...prev, spot];
               });
-              if (count >= 10) {
+              if (counter.n >= 12) { // Get up to 12 to guarantee 10+ after dedup
                 reader.cancel();
                 break;
               }
             }
-          } catch (e) { /* partial line */ }
+          } catch { /* partial JSON line, skip */ }
         }
-        if (count >= 10) break;
+        if (counter.n >= 12) break;
       }
     } catch (err: any) {
-      console.warn('[LiveSearch] Info:', err.name === 'AbortError' ? 'Aborted' : err.message);
+      console.warn('[LiveSearch]', err.name === 'AbortError' ? 'Timeout' : err.message);
     } finally {
       clearTimeout(timeoutId);
       setIsAiSearching(false);
@@ -467,39 +464,32 @@ export default function Home() {
   const displaySpots = useMemo(() => {
     const mappedCategory = categoryMap[activeCategory] || activeCategory;
     const q = searchQuery.toLowerCase();
-    const isFoodSearch = q.includes('맛집') || q.includes('식당') || q.includes('레스토랑') || q.includes('food');
+    const isFoodSearch = q.includes('맛집') || q.includes('식당') || q.includes('레스토랑') || q.includes('food') || q.includes('restaurant');
 
-    // 1. Get filtered local spots
+    // 1. Local matches (already filtered by filteredSpots)
     const localMatches = filteredSpots.filter(spot => {
-      // If user searched for "Restaurant", don't show "Attractions" even if description matches
       if (isFoodSearch && activeCategory === 'all') {
         return spot.category === 'food' || spot.category === 'dessert';
       }
       return true;
     });
 
-    // 2. Get filtered live spots
+    // 2. AI live spots — DON'T re-filter with matchesSearch (AI already returns query-relevant data)
     const liveMatches = liveSpots.filter(spot => {
-      const matchesKW = matchesSearch(spot);
       const matchesCat = activeCategory === 'all' || spot.category === mappedCategory;
-
-      // Secondary filter: If "맛집" search, only show food/dessert
       if (isFoodSearch && activeCategory === 'all') {
-        return matchesKW && (spot.category === 'food' || spot.category === 'dessert');
+        return spot.category === 'food' || spot.category === 'dessert';
       }
-      return matchesKW && matchesCat;
+      return matchesCat;
     });
 
-    // 3. Combine and deduplicate
+    // 3. Combine: AI results first (fresher), then local
     const combined = [...liveMatches, ...localMatches];
     const uniqueMap = new Map();
     combined.forEach(spot => {
-      if (!uniqueMap.has(spot.id)) {
-        uniqueMap.set(spot.id, spot);
-      }
+      if (!uniqueMap.has(spot.id)) uniqueMap.set(spot.id, spot);
     });
 
-    // Ensure we don't accidentally over-filter
     return Array.from(uniqueMap.values());
   }, [liveSpots, filteredSpots, activeCategory, searchQuery, language]);
 
