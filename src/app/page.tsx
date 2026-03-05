@@ -365,18 +365,15 @@ export default function Home() {
   const handleAction = (e: React.MouseEvent, type: string, spot: any) => {
     e.stopPropagation();
 
-    // Unified Map Navigation: Use the same successful hook logic as "Directions"
     if (type === 'map') {
       openMap(spot, 'search');
       return;
     }
 
-    let url = "";
-    // Use target language query first, fallback to Korean
-    const targetQuery = spot.query[language] || spot.query['en'] || spot.title[language];
-    const koQuery = spot.query['ko'] || spot.title['ko'];
+    // Safe access: AI spots may not have `query` field
+    const targetQuery = spot.query?.[language] || spot.query?.['en'] || spot.title?.[language] || spot.title?.['ko'] || '';
+    const koQuery = spot.query?.['ko'] || spot.title?.['ko'] || '';
 
-    // 🔥 Clean up auto-generated labels: remove [Premium], emojis, 히든 스팟 patterns
     const cleanQuery = (q: string) => q
       .replace(/\[Premium\]\s*/gi, '')
       .replace(/\(Premium\)\s*/gi, '')
@@ -389,22 +386,20 @@ export default function Home() {
     const finalSearchQuery = cleanQuery(language === 'ko' ? koQuery : targetQuery);
     const encodedQuery = encodeURIComponent(finalSearchQuery);
 
+    let url = "";
     const googleRegions: any = { en: 'us', ja: 'jp', ko: 'kr' };
     const region = googleRegions[language] || 'us';
     const langParam = language === 'ja' ? 'ja' : 'en';
     const lrParam = language === 'ja' ? 'lang_ja' : 'lang_en';
 
-    // For details search
     if (language === 'ko') {
       url = `https://search.naver.com/search.naver?query=${encodedQuery}`;
     } else {
       const googleTlds: any = { en: 'com', ja: 'co.jp' };
       const tld = googleTlds[language] || 'com';
-      // 🔥 Ultra Strategy: Specific TLD domain forcing for search
-      url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}&num=10&sourceid=chrome&ie=UTF-8&set_language=${langParam}`;
+      url = `https://www.google.${tld}/search?q=${encodedQuery}&hl=${langParam}&gl=${region}&lr=${lrParam}`;
     }
 
-    // Search (details) works fine with window.open and doesn't need "Open with" popup.
     window.open(url, '_blank');
   };
 
