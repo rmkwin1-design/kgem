@@ -240,110 +240,77 @@ export default function Home() {
   const handleSearch = async (e?: React.FormEvent, overrideQuery?: string) => {
     if (e) e.preventDefault();
     const query = overrideQuery || searchQuery;
-    console.log(`[Diagnostic] handleSearch triggered with query: "${query}"`);
-
-    if (query.trim().length > 1) {
-      setActiveCategory('all'); // 🚀 2026 Strategy: Reset to 'all' to show comprehensive results on new search
+    if (query.trim().length <= 1) {
       setLiveSpots([]);
-      setIsAiSearching(true);
+      setIsAiSearching(false);
+      return;
+    }
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 60000); // Increased to 60s for better stability
+    // 🚀 Update Search UI State
+    setActiveCategory('all');
+    setLiveSpots([]);
+    setIsAiSearching(true);
 
-      // 1. Compute local matches first
-      const sanitizedQuery = securityManager.sanitizeInput(query);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+    try {
+      // 1. Instant Local Matches
+      const sanitized = securityManager.sanitizeInput(query);
       const localMatches = sampleSpots.filter(spot => {
         const title = `${(spot.title as any)[language] || ''} ${spot.title['ko'] || ''}`.toLowerCase();
         const desc = `${(spot.description as any)[language] || ''} ${spot.description['ko'] || ''}`.toLowerCase();
-        const reg = `${(spot.region as any)?.[language] || ''} ${(spot.region as any)?.['ko'] || ''}`.toLowerCase();
-        const bufferStr = `${title} ${desc} ${reg}`;
+        const bufferStr = `${title} ${desc}`.toLowerCase();
         return query.split(/\s+/).every(kw => bufferStr.includes(kw.toLowerCase()));
       });
 
-      // 🚀 2026 Strategy: Show local results IMMEDIATELY
-      if (localMatches.length > 0) {
-        console.log(`[Diagnostic] Improving UX: Showing ${localMatches.length} local matches instantly.`);
-        setLiveSpots(localMatches);
-      }
+      if (localMatches.length > 0) setLiveSpots(localMatches);
 
-      // 2. Process via KGEM Core Agent (Non-blocking background)
-      kgemAgent.processRequest(sanitizedQuery).catch(err => console.warn("Agent processing error:", err));
+      // 2. Core Agent Call (Non-blocking)
+      kgemAgent.processRequest(sanitized).catch(() => { });
 
-      // Quick exit if we have plenty of local results
-      if (localMatches.length >= 8) {
-        setIsAiSearching(false);
-        clearTimeout(timeoutId);
-        return;
-      }
+      // 3. Live AI Stream
+      const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
+      if (!res.ok) throw new Error('Search failed');
 
-      // 3. Live AI fetching (Background context if local exists)
-      try {
-        const res = await fetch(`/api/live-search?q=${encodeURIComponent(query)}`, {
-          signal: controller.signal
-        });
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error('No body');
 
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({ message: "알 수 없는 오류" }));
-          if (localMatches.length === 0) {
-            console.warn(`${t.ui.searchError} (Code ${res.status}): ${errorData.error || errorData.details || ''}`);
-          }
-          setIsAiSearching(false);
-          return;
-        }
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let count = 0;
 
-        // 🚀 NEW: Progressive Stream Consumption
-        if (!res.body) throw new Error("No response body");
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-        const processChunk = (chunk: string) => {
-          const lines = chunk.split("\n");
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || !trimmed.startsWith("{")) continue;
-            if (!line.trim()) continue;
-            try {
-              const spot = JSON.parse(line);
-              if (spot && spot.id) {
-                setLiveSpots(prev => {
-                  // Deduplicate in real-time
-                  if (prev.some(s => s.id === spot.id)) return prev;
-                  return [...prev, spot];
-                });
-              }
-            } catch (err) {
-              console.warn('[LiveSearch] Failed to parse line:', line, err);
-            }
-          }
-        }
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
 
-        // Final buffer processing
-        if (buffer.trim()) {
+        for (const line of lines) {
+          if (!line.trim()) continue;
           try {
-            const spot = JSON.parse(buffer);
+            const spot = JSON.parse(line);
             if (spot && spot.id) {
               setLiveSpots(prev => {
                 if (prev.some(s => s.id === spot.id)) return prev;
+                count++;
                 return [...prev, spot];
               });
+              if (count >= 10) {
+                reader.cancel();
+                break;
+              }
             }
-          } catch (e) {
-            console.warn('[LiveSearch] Final buffer parse failed', e);
-          }
+          } catch (e) { /* partial line */ }
         }
-      } catch (err: any) {
-        if (err.name === 'AbortError') {
-          console.warn('[LiveSearch] Request timed out or aborted');
-        } else {
-          console.error('[LiveSearch] Error:', err);
-        }
-      } finally {
-        clearTimeout(timeoutId);
-        setIsAiSearching(false);
+        if (count >= 10) break;
       }
-    } else {
-      setLiveSpots([]);
+    } catch (err: any) {
+      console.warn('[LiveSearch] Info:', err.name === 'AbortError' ? 'Aborted' : err.message);
+    } finally {
+      clearTimeout(timeoutId);
       setIsAiSearching(false);
     }
   };
@@ -499,15 +466,27 @@ export default function Home() {
   // 2026 Strategy: Display local database + Live AI fetched spots
   const displaySpots = useMemo(() => {
     const mappedCategory = categoryMap[activeCategory] || activeCategory;
-    const isSearching = searchQuery.trim().length > 1;
+    const q = searchQuery.toLowerCase();
+    const isFoodSearch = q.includes('맛집') || q.includes('식당') || q.includes('레스토랑') || q.includes('food');
 
     // 1. Get filtered local spots
-    const localMatches = filteredSpots;
+    const localMatches = filteredSpots.filter(spot => {
+      // If user searched for "Restaurant", don't show "Attractions" even if description matches
+      if (isFoodSearch && activeCategory === 'all') {
+        return spot.category === 'food' || spot.category === 'dessert';
+      }
+      return true;
+    });
 
     // 2. Get filtered live spots
     const liveMatches = liveSpots.filter(spot => {
       const matchesKW = matchesSearch(spot);
       const matchesCat = activeCategory === 'all' || spot.category === mappedCategory;
+
+      // Secondary filter: If "맛집" search, only show food/dessert
+      if (isFoodSearch && activeCategory === 'all') {
+        return matchesKW && (spot.category === 'food' || spot.category === 'dessert');
+      }
       return matchesKW && matchesCat;
     });
 
@@ -520,6 +499,7 @@ export default function Home() {
       }
     });
 
+    // Ensure we don't accidentally over-filter
     return Array.from(uniqueMap.values());
   }, [liveSpots, filteredSpots, activeCategory, searchQuery, language]);
 

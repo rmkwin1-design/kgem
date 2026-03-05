@@ -17,26 +17,27 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Query parameter q is missing' }, { status: 400 });
     }
 
-    // 2. 프롬프트 최적화: NDJSON 포맷으로 한 줄씩 출력하도록 지시 (지역/키워드 엄격성 강화 및 수량 증액)
+    // 2. 프롬프트 최적화: NDJSON 포맷으로 한 줄씩 출력하도록 지시 (속도 및 정확도 극대화)
     const prompt = `You are a Korean travel expert.
-Generate EXACTLY 12 real-world trending spots for the query: "${q}".
+Generate EXACTLY 10 real-world trending spots for the query: "${q}".
 Output ONLY as NDJSON (one JSON object per line). No markdown code blocks.
 
 Rules:
 1. One spot per line. 
 2. Use natural Korean.
 3. Be EXTREMELY fast. Priority: Speed.
-4. STRICT LOCATION & KEYWORD: Only return spots that are DIRECTLY related to the city and keywords in "${q}". 
-   - If "${q}" contains "맛집", "food", or "eat", you MUST use "category": "food" or "dessert". Do NOT return "travel" (attractions) for these queries.
-   - Do NOT return locations from unrelated regions (e.g., no Incheon/Seoul spots for a Suwon search).
-5. Schema per line:
+4. STRICT CATEGORY:
+   - If "${q}" contains "맛집", "식당", "카페", or "food", you MUST use "category": "food" or "dessert". 
+   - FORBIDDEN: Do NOT return "travel" (attractions/parks) for food-related queries.
+5. STRICT LOCATION: Only return spots in ${q}.
+6. Schema:
 {"id":"live-<ID>","title":{"ko":"...","en":"...","ja":"..."},"category":"travel|food|dessert|activity|beauty|filming","image":"https://picsum.photos/seed/<NAME>/800/600","rating":4.5,"description":{"ko":"...","en":"...","ja":"..."},"region":{"ko":"...","en":"...","ja":"..."},"query":{"ko":"...","en":"...","ja":"..."},"lat":37.5,"lng":127.0,"price":0}`;
 
     try {
         const stream = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [{ role: 'system', content: 'You are a fast NDJSON generator for Korean travel.' }, { role: 'user', content: prompt }],
-            temperature: 0.1,
+            temperature: 0,
             stream: true,
         });
 
